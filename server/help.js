@@ -46,6 +46,7 @@ function loadXML(xmlPath) {
   let userData = xlsx.parse(xmlPath);
   let outData = [];
   userData.forEach(item => {
+    console.log(item.data);
     outData = item.data;
     outData.shift();
     return false;

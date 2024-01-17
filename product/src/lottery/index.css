@@ -177,6 +177,8 @@ button:active {
   padding-left: 1.2vh;
   top: 1.2vh;
   z-index: 2;
+  overflow: auto;
+  height: 100%;
 }
 
 .prize-list {

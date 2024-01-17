@@ -208,7 +208,8 @@ function loadData() {
   let cfgData = {};
 
   // curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
-  curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
+  // curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
+  curData.users = loadUser();
   // 重新洗牌
   shuffle(curData.users);
 
@@ -221,6 +222,19 @@ function loadData() {
     .catch(data => {
       curData.leftUsers = Object.assign([], curData.users);
     });
+}
+
+function loadUser() {
+  // loop for 650 times to generate 650 users
+  let users = [];
+  for (let i = 0; i < 1000; i++) {
+    users.push([`00${i}`, i, `Hana-musubi`, 1]);
+  }
+  for (let i = 1000; i <= 1100; i++) {
+    users.push([`00${i}`, i, `Guest`, 2]);
+  }
+  console.log(users.length, "users loaded");
+  return users;
 }
 
 function getLeftUsers() {

@@ -22,8 +22,8 @@ let TOTAL_CARDS,
   },
   prizes,
   EACH_COUNT,
-  ROW_COUNT = 7,
-  COLUMN_COUNT = 17,
+  ROW_COUNT = 9,
+  COLUMN_COUNT = 23,
   COMPANY,
   HIGHLIGHT_CELL = [],
   // 当前的比例
@@ -93,7 +93,6 @@ function initAll() {
         currentPrize = basicData.prizes[currentPrizeIndex];
         break;
       }
-
       showPrizeList(currentPrizeIndex);
       let curLucks = basicData.luckyUsers[currentPrize.type];
       setPrizeData(currentPrizeIndex, curLucks ? curLucks.length : 0, true);
@@ -303,6 +302,7 @@ function bindEvent() {
 }
 
 function switchScreen(type) {
+  // console.log(type);
   switch (type) {
     case "enter":
       btns.enter.classList.remove("none");
@@ -370,6 +370,7 @@ function addHighlight() {
  */
 function transform(targets, duration) {
   // TWEEN.removeAll();
+  // console.log(threeDCards);
   for (var i = 0; i < threeDCards.length; i++) {
     var object = threeDCards[i];
     var target = targets[i];
@@ -625,17 +626,22 @@ function lottery() {
     let perCount = EACH_COUNT[currentPrizeIndex],
       luckyData = basicData.luckyUsers[currentPrize.type],
       leftCount = basicData.leftUsers.length,
-      leftPrizeCount = currentPrize.count - (luckyData ? luckyData.length : 0);
+      leftPrizeCount = currentPrize.count - (luckyData ? luckyData.length : 0),
+      prizeKind = currentPrize.kind;
 
     if (leftCount < perCount) {
       addQipao("剩余参与抽奖人员不足，现在重新设置所有人员可以进行二次抽奖！");
       basicData.leftUsers = basicData.users.slice();
       leftCount = basicData.leftUsers.length;
     }
-
     for (let i = 0; i < perCount; i++) {
       let luckyId = random(leftCount);
-      currentLuckys.push(basicData.leftUsers.splice(luckyId, 1)[0]);
+      let luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
+
+      while (luckyUser === undefined || (luckyUser[3] == 2 && prizeKind != 2)) {
+        luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
+      }
+      currentLuckys.push(luckyUser);
       leftCount--;
       leftPrizeCount--;
 
@@ -650,7 +656,6 @@ function lottery() {
       }
     }
 
-    // console.log(currentLuckys);
     selectCard();
   });
 }
@@ -803,11 +808,12 @@ function reset() {
   });
 }
 
+// 2024
 function createHighlight() {
   let year = new Date().getFullYear() + "";
   let step = 4,
-    xoffset = 1,
-    yoffset = 1,
+    xoffset = 4,
+    yoffset = 2,
     highlight = [];
 
   year.split("").forEach(n => {
