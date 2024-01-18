@@ -211,7 +211,7 @@ function bindEvent() {
     if (isLotting) {
       if (e.target.id === "lottery") {
         rotateObj.stop();
-        btns.lottery.innerHTML = "开始抽奖";
+        btns.lottery.innerHTML = "開始抽獎";
       } else {
         addQipao("正在抽奖，抽慢一点点～～");
       }
@@ -617,7 +617,7 @@ function lottery() {
   //   btns.lottery.innerHTML = "开始抽奖";
   //   return;
   // }
-  btns.lottery.innerHTML = "结束抽奖";
+  btns.lottery.innerHTML = "結束抽獎";
   rotateBall().then(() => {
     // 将之前的记录置空
     currentLuckys = [];
