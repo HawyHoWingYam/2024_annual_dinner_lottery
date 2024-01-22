@@ -19,7 +19,7 @@ const DEFAULT_MESS = [
 ];
 
 let lastDanMuList = [];
-
+let prizeBar = document.querySelector("#prizeBar");
 let prizeElement = {},
   lasetPrizeIndex = 0;
 class DanMu {
@@ -132,18 +132,7 @@ class Qipao {
 let addQipao = (() => {
   let qipaoList = [];
   return function (text) {
-    let qipao;
-    if (qipaoList.length > 0) {
-      qipao = qipaoList.shift();
-    } else {
-      qipao = new Qipao({
-        onComplete() {
-          qipaoList.push(qipao);
-        }
-      });
-    }
-
-    qipao.start(text);
+    return;
   };
 })();
 
@@ -158,9 +147,9 @@ function showPrizeList(currentPrizeIndex) {
   if (currentPrize.type === defaultType) {
     currentPrize.count === "不限制";
   }
-  let htmlCode = `<div class="prize-mess">正在抽取<label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>  剩余<label id="prizeLeft" class="prize-shine">${currentPrize.count}</label>个</div><ul class="prize-list">`;
+  let htmlCode = `<div class="prize-mess"><label id="prizeType" class="prize-shine"></label><label id="prizeText" class="prize-shine"></label><label id="prizeLeft" class="prize-shine"></label></div><ul class="prize-list">`;
   prizes.forEach(item => {
-    if (item.type === defaultType) {
+    if (item.type === defaultType || item.kind === 1) {
       return true;
     }
     htmlCode += `<li id="prize-item-${item.type}" class="prize-item ${
@@ -226,30 +215,35 @@ let setPrizeData = (function () {
     if (isInit) {
       for (let i = prizes.length - 1; i > currentPrizeIndex; i--) {
         let type = prizes[i]["type"];
-        document.querySelector(`#prize-item-${type}`).className =
-          "prize-item done";
-        document.querySelector(`#prize-bar-${type}`).style.width = "0";
-        document.querySelector(`#prize-count-${type}`).textContent =
-          "0" + "/" + prizes[i]["count"];
+        if (prizes[i].kind != 1) {
+          document.querySelector(`#prize-item-${type}`).className =
+            "prize-item done";
+          document.querySelector(`#prize-bar-${type}`).style.width = "0";
+          document.querySelector(`#prize-count-${type}`).textContent =
+            "0" + "/" + prizes[i]["count"];
+        }
       }
     }
 
     if (lasetPrizeIndex !== currentPrizeIndex) {
       let lastPrize = prizes[lasetPrizeIndex],
         lastBox = document.querySelector(`#prize-item-${lastPrize.type}`);
+      if (lastBox == undefined) {
+        return;
+      }
       lastBox.classList.remove("shine");
       lastBox.classList.add("done");
       elements.box && elements.box.classList.add("shine");
-      prizeElement.prizeType.textContent = currentPrize.text;
-      prizeElement.prizeText.textContent = currentPrize.title;
+      // prizeElement.prizeType.textContent = currentPrize.text;
+      // prizeElement.prizeText.textContent = currentPrize.title;
 
       lasetPrizeIndex = currentPrizeIndex;
     }
 
     if (currentPrizeIndex === 0) {
-      prizeElement.prizeType.textContent = "特别奖";
-      prizeElement.prizeText.textContent = " ";
-      prizeElement.prizeLeft.textContent = "不限制";
+      // prizeElement.prizeType.textContent = "特别奖";
+      // prizeElement.prizeText.textContent = " ";
+      // prizeElement.prizeLeft.textContent = "不限制";
       return;
     }
 
@@ -258,7 +252,14 @@ let setPrizeData = (function () {
     let percent = (count / totalCount).toFixed(2);
     elements.bar && (elements.bar.style.width = percent * 100 + "%");
     elements.text && (elements.text.textContent = count + "/" + totalCount);
-    prizeElement.prizeLeft.textContent = count;
+    if (elements.box != undefined){
+      prizeBar.scrollTo({
+        top: elements.box.offsetTop - 120,
+        behavior: "smooth"
+      }) 
+    }  
+
+    // prizeElement.prizeLeft.textContent = count;
   };
 })();
 

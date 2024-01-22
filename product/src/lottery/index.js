@@ -55,7 +55,8 @@ let selectedCardIndex = [],
   currentPrize,
   // 正在抽奖
   isLotting = false,
-  currentLuckys = [];
+  currentLuckys = [],
+  audio = new Audio("../data/audio.mp3");
 
 initAll();
 
@@ -68,6 +69,7 @@ function initAll() {
     success(data) {
       // 获取基础数据
       prizes = data.cfgData.prizes;
+      console.log(prizes);
       EACH_COUNT = data.cfgData.EACH_COUNT;
       COMPANY = data.cfgData.COMPANY;
       HIGHLIGHT_CELL = createHighlight();
@@ -90,6 +92,7 @@ function initAll() {
           continue;
         }
         currentPrizeIndex = prizeIndex;
+        // console.log(111111);
         currentPrize = basicData.prizes[currentPrizeIndex];
         break;
       }
@@ -211,6 +214,9 @@ function bindEvent() {
     if (isLotting) {
       if (e.target.id === "lottery") {
         rotateObj.stop();
+        e.target.style.display = "";
+        // btns.style.display = "none";
+
         btns.lottery.innerHTML = "開始抽獎";
       } else {
         addQipao("正在抽奖，抽慢一点点～～");
@@ -228,7 +234,7 @@ function bindEvent() {
       // 进入抽奖
       case "enter":
         removeHighlight();
-        addQipao(`马上抽取[${currentPrize.title}],不要走开。`);
+        // addQipao(`马上抽取[${currentPrize.title}],不要走开。`);
         // rotate = !rotate;
         rotate = true;
         switchScreen("lottery");
@@ -258,7 +264,7 @@ function bindEvent() {
       // 抽奖
       case "lottery":
         setLotteryStatus(true);
-        // 每次抽奖前先保存上一次的抽奖数据
+        // // 每次抽奖前先保存上一次的抽奖数据
         saveData();
         //更新剩余抽奖数目的数据显示
         changePrize();
@@ -266,25 +272,14 @@ function bindEvent() {
           // 抽奖
           lottery();
         });
-        addQipao(`正在抽取[${currentPrize.title}],调整好姿势`);
+        audio.play();
+        setTimeout(() => {
+          e.target.click();
+        }, 2800);
+        // stoplottery();
+        // addQipao(`正在抽取[${currentPrize.title}],调整好姿势`);
         break;
       // 重新抽奖
-      case "reLottery":
-        if (currentLuckys.length === 0) {
-          addQipao(`当前还没有抽奖，无法重新抽取喔~~`);
-          return;
-        }
-        setErrorData(currentLuckys);
-        addQipao(`重新抽取[${currentPrize.title}],做好准备`);
-        setLotteryStatus(true);
-        // 重新抽奖则直接进行抽取，不对上一次的抽奖数据进行保存
-        // 抽奖
-        resetCard().then(res => {
-          // 抽奖
-          lottery();
-        });
-        break;
-      // 导出抽奖结果
       case "save":
         saveData().then(res => {
           resetCard().then(res => {
@@ -293,10 +288,35 @@ function bindEvent() {
           });
           exportData();
           addQipao(`数据已保存到EXCEL中。`);
-        });
+        });    
         break;
     }
   });
+
+  // press space
+  document.addEventListener('keydown', event => {
+
+    if (event.code === 'Space') {   
+      if (isLotting || btns.lotteryBar.classList.contains("none")) {
+        return false;
+      };     
+      event.stopPropagation();
+      setLotteryStatus(true);
+      // // 每次抽奖前先保存上一次的抽奖数据
+      saveData();
+      //更新剩余抽奖数目的数据显示
+      changePrize();
+      resetCard().then(res => {
+        // 抽奖
+        lottery();
+      });
+      audio.play();
+      setTimeout(() => {
+        btns.lottery.click();
+      }, 2800);
+
+    }
+  })
 
   window.addEventListener("resize", onWindowResize, false);
 }
@@ -345,11 +365,11 @@ function createCard(user, isBold, id, showTable) {
       "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
   }
   //添加公司标识
-  element.appendChild(createElement("company", COMPANY));
+  // element.appendChild(createElement("company", COMPANY));
 
   element.appendChild(createElement("name", user[1]));
 
-  element.appendChild(createElement("details", user[0] + "<br/>" + user[2]));
+  // element.appendChild(createElement("details", user[0] + "<br/>" + user[2]));
   return element;
 }
 
@@ -617,7 +637,8 @@ function lottery() {
   //   btns.lottery.innerHTML = "开始抽奖";
   //   return;
   // }
-  btns.lottery.innerHTML = "結束抽獎";
+  // btns.lottery.innerHTML = "結束抽獎";
+  btns.lottery.style.display = "none";
   rotateBall().then(() => {
     // 将之前的记录置空
     currentLuckys = [];
@@ -630,7 +651,7 @@ function lottery() {
       prizeKind = currentPrize.kind;
 
     if (leftCount < perCount) {
-      addQipao("剩余参与抽奖人员不足，现在重新设置所有人员可以进行二次抽奖！");
+      // addQipao("剩余参与抽奖人员不足，现在重新设置所有人员可以进行二次抽奖！");
       basicData.leftUsers = basicData.users.slice();
       leftCount = basicData.leftUsers.length;
     }
@@ -657,6 +678,10 @@ function lottery() {
     }
 
     selectCard();
+    // 每次抽奖前先保存上一次的抽奖数据
+    // saveData();
+
+
   });
 }
 
@@ -682,6 +707,11 @@ function saveData() {
       currentPrizeIndex = 0;
     }
     currentPrize = basicData.prizes[currentPrizeIndex];
+    while (currentPrize.kind === 1) {
+      currentPrizeIndex--;
+      currentPrize = basicData.prizes[currentPrizeIndex];
+    }
+    // console.log(currentPrize);
   }
 
   if (currentLuckys.length > 0) {
@@ -692,6 +722,7 @@ function saveData() {
 }
 
 function changePrize() {
+  console.log(currentPrizeIndex);
   let luckys = basicData.luckyUsers[currentPrize.type];
   let luckyCount = (luckys ? luckys.length : 0) + EACH_COUNT[currentPrizeIndex];
   // 修改左侧prize的数目和百分比
@@ -712,9 +743,9 @@ function random(num) {
 function changeCard(cardIndex, user) {
   let card = threeDCards[cardIndex].element;
 
-  card.innerHTML = `<div class="company">${COMPANY}</div><div class="name">${
+  card.innerHTML = `<div class="name">${
     user[1]
-  }</div><div class="details">${user[0] || ""}<br/>${user[2] || "PSST"}</div>`;
+  }`;
 }
 
 /**
@@ -827,52 +858,3 @@ function createHighlight() {
 
   return highlight;
 }
-
-let onload = window.onload;
-
-window.onload = function () {
-  onload && onload();
-
-  let music = document.querySelector("#music");
-
-  let rotated = 0,
-    stopAnimate = false,
-    musicBox = document.querySelector("#musicBox");
-
-  function animate() {
-    requestAnimationFrame(function () {
-      if (stopAnimate) {
-        return;
-      }
-      rotated = rotated % 360;
-      musicBox.style.transform = "rotate(" + rotated + "deg)";
-      rotated += 1;
-      animate();
-    });
-  }
-
-  musicBox.addEventListener(
-    "click",
-    function (e) {
-      if (music.paused) {
-        music.play().then(
-          () => {
-            stopAnimate = false;
-            animate();
-          },
-          () => {
-            addQipao("背景音乐自动播放失败，请手动播放！");
-          }
-        );
-      } else {
-        music.pause();
-        stopAnimate = true;
-      }
-    },
-    false
-  );
-
-  setTimeout(function () {
-    musicBox.click();
-  }, 1000);
-};

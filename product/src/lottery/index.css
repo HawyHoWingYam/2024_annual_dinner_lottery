@@ -5,6 +5,7 @@ body {
 
 body {
   background: linear-gradient(to bottom, #131313 0%, #02101c 100%);
+  /* background-color: transparent !important; */
   margin: 0;
   font-family: Helvetica, sans-serif;
   overflow: hidden;
@@ -81,10 +82,10 @@ a {
 
 .element .name {
   position: absolute;
-  top: 4.6vh;
+  top: 5.5vh;
   left: 0;
   right: 0;
-  font-size: 2.9vh;
+  font-size: 4.5vh;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
@@ -99,7 +100,18 @@ a {
   color: rgba(127, 255, 255, 0.75);
 }
 
-button {
+button.button{
+  color: rgba(127, 255, 255, 0.75);
+  background: transparent;
+  outline: 1px solid rgba(127, 255, 255, 0.75);
+  border: 0;
+  padding: 1.6vh 4vh;
+  margin: 0 4.6vh;
+  font-size: 2vh;
+  font-weight: bold;
+  cursor: pointer;
+}
+button.reset{
   color: rgba(127, 255, 255, 0.75);
   background: transparent;
   outline: 1px solid rgba(127, 255, 255, 0.75);
@@ -179,6 +191,7 @@ button:active {
   z-index: 2;
   overflow: auto;
   height: 100%;
+  width: 100%;
 }
 
 .prize-list {
@@ -189,7 +202,7 @@ button:active {
 
 .prize-item {
   padding: 9px;
-  margin: 6px 0;
+  margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -16,7 +16,7 @@
 
   var c = canvas.getContext("2d");
 
-  var numStars = 800;
+  var numStars = 40000;
   var radius = "0." + Math.floor(Math.random() * 9) + 1;
   var focalLength = canvas.width * 2;
   var warp = 0;
@@ -103,4 +103,6 @@
   // });
 
   executeFrame();
+
+  // fff();
 })();
