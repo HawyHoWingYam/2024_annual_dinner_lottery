@@ -189,7 +189,7 @@ const prizes = [
     title: "",
     text: " 01 ",
     img: "../img/22.jpg",
-    kind: 1
+    kind: 0
   },
   {
     type: 23,
@@ -197,7 +197,7 @@ const prizes = [
     title: "",
     text: "02",
     img: "../img/23.jpg",
-    kind: 1
+    kind: 0
   },
   {
     type: 24,
@@ -205,7 +205,7 @@ const prizes = [
     title: "",
     text: "03",
     img: "../img/24.jpg",
-    kind: 1
+    kind: 0
   },
   {
     type: 25,
@@ -213,7 +213,7 @@ const prizes = [
     title: "",
     text: "04",
     img: "../img/25.jpg",
-    kind: 1
+    kind: 0
   },
   {
     type: 26,
@@ -221,7 +221,7 @@ const prizes = [
     title: "",
     text: "05",
     img: "../img/26.jpg",
-    kind: 1
+    kind: 0
   },
   // cupon
   {
