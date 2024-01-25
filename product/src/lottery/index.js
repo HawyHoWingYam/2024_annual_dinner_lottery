@@ -659,7 +659,7 @@ function lottery() {
       let luckyId = random(leftCount);
       let luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
 
-      while (luckyUser === undefined || (luckyUser[3] == 2 && prizeKind != 2)) {
+      while (luckyUser === undefined || (luckyUser[3] == 2 && prizeKind != 3)) {
         luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
       }
       currentLuckys.push(luckyUser);
@@ -707,10 +707,6 @@ function saveData() {
       currentPrizeIndex = 0;
     }
     currentPrize = basicData.prizes[currentPrizeIndex];
-    while (currentPrize.kind === 1) {
-      currentPrizeIndex--;
-      currentPrize = basicData.prizes[currentPrizeIndex];
-    }
     // console.log(currentPrize);
   }
 

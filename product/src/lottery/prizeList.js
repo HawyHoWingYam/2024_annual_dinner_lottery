@@ -149,7 +149,7 @@ function showPrizeList(currentPrizeIndex) {
   }
   let htmlCode = `<div class="prize-mess"><label id="prizeType" class="prize-shine"></label><label id="prizeText" class="prize-shine"></label><label id="prizeLeft" class="prize-shine"></label></div><ul class="prize-list">`;
   prizes.forEach(item => {
-    if (item.type === defaultType || item.kind === 1) {
+    if (item.type === defaultType) {
       return true;
     }
     htmlCode += `<li id="prize-item-${item.type}" class="prize-item ${
@@ -160,7 +160,7 @@ function showPrizeList(currentPrizeIndex) {
                             <img src="${item.img}" alt="${item.title}">
                         </div>
                         <div class="prize-text">
-                            <h5 class="prize-title">${item.text} ${
+                            <h5 class="prize-title text_shadow">${item.text} ${
       item.title
     }</h5>
                             <div class="prize-count">
@@ -215,13 +215,11 @@ let setPrizeData = (function () {
     if (isInit) {
       for (let i = prizes.length - 1; i > currentPrizeIndex; i--) {
         let type = prizes[i]["type"];
-        if (prizes[i].kind != 1) {
-          document.querySelector(`#prize-item-${type}`).className =
-            "prize-item done";
-          document.querySelector(`#prize-bar-${type}`).style.width = "0";
-          document.querySelector(`#prize-count-${type}`).textContent =
-            "0" + "/" + prizes[i]["count"];
-        }
+        document.querySelector(`#prize-item-${type}`).className =
+          "prize-item done";
+        document.querySelector(`#prize-bar-${type}`).style.width = "0";
+        document.querySelector(`#prize-count-${type}`).textContent =
+          "0" + "/" + prizes[i]["count"];
       }
     }
 
@@ -233,11 +231,18 @@ let setPrizeData = (function () {
       }
       lastBox.classList.remove("shine");
       lastBox.classList.add("done");
+      elements.box.classList.remove("done");
       elements.box && elements.box.classList.add("shine");
-      // prizeElement.prizeType.textContent = currentPrize.text;
-      // prizeElement.prizeText.textContent = currentPrize.title;
+      // let currentTitle = elements.box.querySelector(".prize-title");
+      // console.log(currentTitle);
+      // currentTitle.classList.remove('text_shadow')
 
       lasetPrizeIndex = currentPrizeIndex;
+      // let nextBox = document.querySelector(`#prize-item-${prizes[currentPrizeIndex - 1]}`);
+      // if (nextBox != undefined) {
+      //   let nextTitle = nextBox.querySelector(".prize-title");
+      //   nextTitle.classList.remove('text_shadow');
+      // }
     }
 
     if (currentPrizeIndex === 0) {
@@ -254,12 +259,15 @@ let setPrizeData = (function () {
     elements.text && (elements.text.textContent = count + "/" + totalCount);
     if (elements.box != undefined){
       prizeBar.scrollTo({
-        top: elements.box.offsetTop - 120,
+        top: elements.box.offsetTop - 160,
         behavior: "smooth"
       }) 
     }  
-
-    // prizeElement.prizeLeft.textContent = count;
+    elements.box.querySelector(".prize-title").classList.remove("text_shadow");
+    let nextBox = document.querySelector("#prize-item-" + (currentPrizeIndex - 1));
+    if (nextBox != undefined) {
+      nextBox.querySelector(".prize-title").classList.remove("text_shadow");
+    }
   };
 })();
 
