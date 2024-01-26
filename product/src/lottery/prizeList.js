@@ -161,7 +161,7 @@ function showPrizeList(currentPrizeIndex) {
                             <img src="${item.img}" alt="${item.title}">
                         </div>
                         <div class="prize-text">
-                            <h5 class="prize-sponsor">${item.title != '' ?  item.title : item.text}</h5>
+                            <h5 class="prize-sponsor text_shadow">${item.title != '' ?  item.title : item.text}</h5>
                             <h5 class="prize-title text_shadow">${item.title != '' ? item.text : ''}</h5>
                             <div class="prize-count">
                                 <div class="progress">
@@ -264,8 +264,11 @@ let setPrizeData = (function () {
       }) 
     }  
     elements.box.querySelector(".prize-title").classList.remove("text_shadow");
+    elements.box.querySelector(".prize-sponsor").classList.remove("text_shadow");
+
     let nextBox = document.querySelector("#prize-item-" + (currentPrizeIndex - 1));
     if (nextBox != undefined) {
+      nextBox.querySelector(".prize-sponsor").classList.remove("text_shadow");
       nextBox.querySelector(".prize-title").classList.remove("text_shadow");
     }
   };
