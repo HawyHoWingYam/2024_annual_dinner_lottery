@@ -149,20 +149,20 @@ function showPrizeList(currentPrizeIndex) {
   }
   let htmlCode = `<div class="prize-mess"><label id="prizeType" class="prize-shine"></label><label id="prizeText" class="prize-shine"></label><label id="prizeLeft" class="prize-shine"></label></div><ul class="prize-list">`;
   prizes.forEach(item => {
+    console.log(item.title === '');
     if (item.type === defaultType) {
       return true;
     }
     htmlCode += `<li id="prize-item-${item.type}" class="prize-item ${
       item.type == currentPrize.type ? "shine" : ""
     }">
-                        <span></span><span></span><span></span><span></span>
+        
                         <div class="prize-img">
                             <img src="${item.img}" alt="${item.title}">
                         </div>
                         <div class="prize-text">
-                            <h5 class="prize-title text_shadow">${item.text} ${
-      item.title
-    }</h5>
+                            <h5 class="prize-sponsor">${item.title != '' ?  item.title : item.text}</h5>
+                            <h5 class="prize-title text_shadow">${item.title != '' ? item.text : ''}</h5>
                             <div class="prize-count">
                                 <div class="progress">
                                     <div id="prize-bar-${
@@ -259,7 +259,7 @@ let setPrizeData = (function () {
     elements.text && (elements.text.textContent = count + "/" + totalCount);
     if (elements.box != undefined){
       prizeBar.scrollTo({
-        top: elements.box.offsetTop - 160,
+        top: elements.box.offsetTop - 190,
         behavior: "smooth"
       }) 
     }  

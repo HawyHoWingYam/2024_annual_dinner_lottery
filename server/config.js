@@ -186,7 +186,7 @@ const prizes = [
   {
     type: 22,
     count: 1,
-    title: "",
+    title: "明正(香港)",
     text: "Apple iPad Air (第5代）10.9”",
     img: "../img/gift.jpeg",
     kind: 1
@@ -194,7 +194,7 @@ const prizes = [
   {
     type: 23,
     count: 2,
-    title: "",
+    title: "Prizm",
     text: "CASH $5000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -202,7 +202,7 @@ const prizes = [
   {
     type: 24,
     count: 1,
-    title: "",
+    title: "萬友富士",
     text: "CASH $5000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -210,15 +210,15 @@ const prizes = [
   {
     type: 25,
     count: 1,
-    title: "",
-    text: "CITYSUPER VOUCHER $1000 * 2",
+    title: "農林中央金庫",
+    text: "CITYSUPER VOUCHER $2000",
     img: "../img/gift.jpeg",
     kind: 1
   },
   {
     type: 26,
     count: 1,
-    title: "",
+    title: "宏利人壽",
     text: "CASH COUPON $2000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -226,7 +226,7 @@ const prizes = [
   {
     type: 27,
     count: 2,
-    title: "",
+    title: "aimHigher",
     text: "LANE CRAWFORD GIFT CARD $1000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -234,7 +234,7 @@ const prizes = [
   {
     type: 28,
     count: 1,
-    title: "",
+    title: "Eggcellent",
     text: "GUCCI WALLET",
     img: "../img/gift.jpeg",
     kind: 1
@@ -242,7 +242,7 @@ const prizes = [
   {
     type: 29,
     count: 5,
-    title: "",
+    title: "Eggcellent",
     text: "CASH $1000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -250,7 +250,7 @@ const prizes = [
   {
     type: 30,
     count: 3,
-    title: "",
+    title: "香港靜岡",
     text: "YATA $1000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -258,7 +258,7 @@ const prizes = [
   {
     type: 31,
     count: 2,
-    title: "",
+    title: "The Bubble Creation",
     text: "CASH $1000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -266,7 +266,7 @@ const prizes = [
   {
     type: 32,
     count: 2,
-    title: "",
+    title: "IVC",
     text: "CASH $1000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -274,7 +274,7 @@ const prizes = [
   {
     type: 33,
     count: 2,
-    title: "",
+    title: "Grand Fortune",
     text: "CASH COUPON $1000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -282,7 +282,7 @@ const prizes = [
   {
     type: 34,
     count: 1,
-    title: "",
+    title: "三井物產",
     text: "DONKI COUPON $1000",
     img: "../img/gift.jpeg",
     kind: 1
@@ -290,7 +290,7 @@ const prizes = [
   {
     type: 35,
     count: 1,
-    title: "",
+    title: "ANA",
     text: "10萬日元旅行支票",
     img: "../img/gift.jpeg",
     kind: 2
@@ -298,7 +298,7 @@ const prizes = [
   {
     type: 36,
     count: 1,
-    title: "",
+    title: "ANA",
     text: "BE＠RBRICK 100% & 400%",
     img: "../img/gift.jpeg",
     kind: 2
@@ -306,7 +306,7 @@ const prizes = [
   {
     type: 37,
     count: 1,
-    title: "",
+    title: "ANA",
     text: "BE＠RBRICK 制服VER. + 1 TOTE BAG",
     img: "../img/gift.jpeg",
     kind: 2
@@ -314,7 +314,7 @@ const prizes = [
   {
     type: 38,
     count: 3,
-    title: "",
+    title: "ANA",
     text: "ANA禮品包 (MINI AIRPLANE + TOWEL)",
     img: "../img/gift.jpeg",
     kind: 2
@@ -323,7 +323,7 @@ const prizes = [
   {
     type: 39,
     count: 1,
-    title: "",
+    title: "ANA",
     text: "ANA禮品包 (TOWEL + BAG)",
     img: "../img/gift.jpeg",
     kind: 2
@@ -333,7 +333,7 @@ const prizes = [
     type: 40,
     count: 10,
     title: "",
-    text: "花膠鮑魚海味套裝 ",
+    text: "花膠鮑魚海味套裝",
     img: "../img/gift.jpeg",
     kind: 3
   },
@@ -341,7 +341,7 @@ const prizes = [
     type: 41,
     count: 10,
     title: "",
-    text: "CITYSUPER COUPON",
+    text: "CITYSUPER COUPON $600",
     img: "../img/gift.jpeg",
     kind: 3
   },
@@ -349,7 +349,7 @@ const prizes = [
     type: 42,
     count: 20,
     title: "",
-    text: "DONKI COUPON",
+    text: "DONKI COUPON $500",
     img: "../img/gift.jpeg",
     kind: 3
   },
@@ -357,7 +357,7 @@ const prizes = [
     type: 43,
     count: 20,
     title: "",
-    text: "VENCHI COUPON",
+    text: "VENCHI COUPON $300",
     img: "../img/gift.jpeg",
     kind: 3
   },
@@ -365,7 +365,7 @@ const prizes = [
     type: 44,
     count: 20,
     title: "",
-    text: "百佳 COUPON ",
+    text: "百佳 COUPON $200",
     img: "../img/gift.jpeg",
     kind: 3
   },
@@ -373,7 +373,7 @@ const prizes = [
     type: 45,
     count: 20,
     title: "",
-    text: "LADY M COUPON",
+    text: "LADY M COUPON $150",
     img: "../img/gift.jpeg",
     kind: 3
   }
