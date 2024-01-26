@@ -290,16 +290,16 @@ const prizes = [
   {
     type: 35,
     count: 1,
-    title: "ANA",
-    text: "10萬日元旅行支票",
+    title: "鉅發源",
+    text: "清酒",
     img: "../img/gift.jpeg",
-    kind: 2
+    kind: 1
   },
   {
     type: 36,
     count: 1,
     title: "ANA",
-    text: "BE＠RBRICK 100% & 400%",
+    text: "10萬日元旅行支票",
     img: "../img/gift.jpeg",
     kind: 2
   },
@@ -307,12 +307,20 @@ const prizes = [
     type: 37,
     count: 1,
     title: "ANA",
-    text: "BE＠RBRICK 制服VER. + 1 TOTE BAG",
+    text: "BE＠RBRICK 100% & 400%",
     img: "../img/gift.jpeg",
     kind: 2
   },
   {
     type: 38,
+    count: 1,
+    title: "ANA",
+    text: "BE＠RBRICK 制服VER. + 1 TOTE BAG",
+    img: "../img/gift.jpeg",
+    kind: 2
+  },
+  {
+    type: 39,
     count: 3,
     title: "ANA",
     text: "ANA禮品包 (MINI AIRPLANE + TOWEL)",
@@ -321,7 +329,7 @@ const prizes = [
   },
 
   {
-    type: 39,
+    type: 40,
     count: 1,
     title: "ANA",
     text: "ANA禮品包 (TOWEL + BAG)",
@@ -330,7 +338,7 @@ const prizes = [
   },
   // cupon
   {
-    type: 40,
+    type: 41,
     count: 10,
     title: "",
     text: "花膠鮑魚海味套裝",
@@ -338,7 +346,7 @@ const prizes = [
     kind: 3
   },
   {
-    type: 41,
+    type: 42,
     count: 10,
     title: "",
     text: "CITYSUPER COUPON $600",
@@ -346,7 +354,7 @@ const prizes = [
     kind: 3
   },
   {
-    type: 42,
+    type: 43,
     count: 20,
     title: "",
     text: "DONKI COUPON $500",
@@ -354,7 +362,7 @@ const prizes = [
     kind: 3
   },
   {
-    type: 43,
+    type: 44,
     count: 20,
     title: "",
     text: "VENCHI COUPON $300",
@@ -362,7 +370,7 @@ const prizes = [
     kind: 3
   },
   {
-    type: 44,
+    type: 45,
     count: 20,
     title: "",
     text: "百佳 COUPON $200",
@@ -370,7 +378,7 @@ const prizes = [
     kind: 3
   },
   {
-    type: 45,
+    type: 46,
     count: 20,
     title: "",
     text: "LADY M COUPON $150",
@@ -383,7 +391,8 @@ const prizes = [
  * 一次抽取的奖品个数与prizes对应
  */
 const EACH_COUNT = [1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 
-  1, 2, 1, 1, 1, 2, 1, 5, 3, 2, 2, 2, 1, 1, 1, 1, 3, 1,
+  1, 2, 1, 1, 1, 2, 1, 5, 3, 2, 2, 2, 1, 1,
+  1, 1, 1, 3, 1,
   10, 10, 10, 10, 10, 10]
 /**
  * 卡片公司名称标识
