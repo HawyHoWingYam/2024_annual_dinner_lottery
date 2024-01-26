@@ -234,7 +234,7 @@ const prizes = [
   {
     type: 28,
     count: 1,
-    title: "Eggcellent",
+    title: "Talwin Consultants Ltd",
     text: "GUCCI WALLET",
     img: "../img/gift.jpeg",
     kind: 1
