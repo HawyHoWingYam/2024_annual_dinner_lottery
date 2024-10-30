@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
 });
 
 //设置跨域访问
-app.all("*", function(req, res, next) {
+app.all("*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -207,8 +207,8 @@ function loadData() {
   console.log("加载EXCEL数据文件");
   let cfgData = {};
 
-  // curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
-  // curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
+  //curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
+  //curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
   curData.users = loadUser();
   // 重新洗牌
   shuffle(curData.users);
@@ -234,8 +234,8 @@ function loadUser() {
     users.push([`00${i}`, name, `Hana-musubi`, 1]);
   }
   for (let i = 1000; i < 1096; i++) {
-    if (i != 1043 && i != 1009){
-      users.push([i , i, `Guest`, 2]);
+    if (i != 1043 && i != 1009) {
+      users.push([i, i, `Guest`, 2]);
     }
   }
   console.log(users.length, "users loaded");
@@ -266,7 +266,7 @@ function getLeftUsers() {
 loadData();
 
 module.exports = {
-  run: function(devPort, noOpen) {
+  run: function (devPort, noOpen) {
     let openBrowser = true;
     if (process.argv.length > 3) {
       if (process.argv[3] && (process.argv[3] + "").toLowerCase() === "n") {

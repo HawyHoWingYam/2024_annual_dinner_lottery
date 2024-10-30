@@ -69,7 +69,7 @@ function initAll() {
     success(data) {
       // 获取基础数据
       prizes = data.cfgData.prizes;
-      console.log(prizes);
+      console.log("prizes", prizes);
       EACH_COUNT = data.cfgData.EACH_COUNT;
       COMPANY = data.cfgData.COMPANY;
       HIGHLIGHT_CELL = createHighlight();
@@ -87,7 +87,7 @@ function initAll() {
         if (
           data.luckyData[prizeIndex] &&
           data.luckyData[prizeIndex].length >=
-            basicData.prizes[prizeIndex].count
+          basicData.prizes[prizeIndex].count
         ) {
           continue;
         }
@@ -288,7 +288,7 @@ function bindEvent() {
           });
           exportData();
           addQipao(`数据已保存到EXCEL中。`);
-        });    
+        });
         break;
     }
   });
@@ -296,10 +296,10 @@ function bindEvent() {
   // press space
   document.addEventListener('keydown', event => {
 
-    if (event.code === 'Space') {   
+    if (event.code === 'Space') {
       if (isLotting || btns.lotteryBar.classList.contains("none")) {
         return false;
-      };     
+      };
       event.stopPropagation();
       setLotteryStatus(true);
       // // 每次抽奖前先保存上一次的抽奖数据
@@ -739,9 +739,8 @@ function random(num) {
 function changeCard(cardIndex, user) {
   let card = threeDCards[cardIndex].element;
 
-  card.innerHTML = `<div class="name">${
-    user[1]
-  }`;
+  card.innerHTML = `<div class="name">${user[1]
+    }`;
 }
 
 /**
@@ -837,7 +836,8 @@ function reset() {
 
 // 2024
 function createHighlight() {
-  let year = new Date().getFullYear() + "";
+  // let year = new Date().getFullYear() + "";
+  let year = "2025";
   let step = 4,
     xoffset = 4,
     yoffset = 2,

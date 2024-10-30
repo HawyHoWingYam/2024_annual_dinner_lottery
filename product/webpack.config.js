@@ -36,6 +36,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_OPTIONS': JSON.stringify('--openssl-legacy-provider')
+    }),
     new webpack.BannerPlugin("版权所有，翻版必究"),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "/src/index.html"),

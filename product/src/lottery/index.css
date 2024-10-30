@@ -105,7 +105,7 @@ a {
   color: rgba(127, 255, 255, 0.75);
 }
 
-button.button{
+button.button {
   color: rgba(127, 255, 255, 0.75);
   background: transparent;
   outline: 1px solid rgba(127, 255, 255, 0.75);
@@ -116,7 +116,8 @@ button.button{
   font-weight: bold;
   cursor: pointer;
 }
-button.reset{
+
+button.reset {
   color: rgba(127, 255, 255, 0.75);
   background: transparent;
   outline: 1px solid rgba(127, 255, 255, 0.75);
@@ -138,7 +139,7 @@ button:active {
 }
 
 .highlight {
-  background-color: rgba(253, 105, 0, 0.95) !important;
+  background-color: rgb(241, 208, 137) !important;
   box-shadow: 0 0 12px rgba(253, 105, 0, 0.95);
   border: 1px solid rgba(253, 105, 0, 0.25);
 }
@@ -244,6 +245,7 @@ button:active {
 .prize-text {
   flex: 1;
 }
+
 .prize-sponsor {
   font-size: 2.5vh;
   margin-bottom: 10px;
@@ -252,6 +254,7 @@ button:active {
   /* text-align: center; */
   /* color:; */
 }
+
 .prize-title {
   margin: 1px 0 10px 0;
   font-size: 2vh;
