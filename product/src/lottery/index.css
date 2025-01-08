@@ -1,3 +1,4 @@
+/* Global styles */
 html,
 body {
   height: 100%;
@@ -11,30 +12,37 @@ body {
   overflow: hidden;
 }
 
+/* Text shadow effect */
 .text_shadow {
   color: transparent;
   text-shadow: 0 0 7px rgba(0, 255, 255, 0.95);
 }
 
+/* Anchor tag styles */
 a {
   color: #ffffff;
 }
 
+/* Utility class to hide elements */
 .none {
   display: none;
 }
 
+/* Container styles */
 #container {
   z-index: 3;
   position: relative;
-  margin: 0 15vh;
+  margin-left: 220px;
+  margin-top: 100px;
 }
 
+/* Menu styles */
 #menu {
   z-index: 4;
   margin-left: 15vh;
 }
 
+/* Canvas box styles */
 .canvas-box {
   position: fixed;
   left: 0;
@@ -42,6 +50,7 @@ a {
   z-index: -1;
 }
 
+/* Info section styles */
 #info {
   position: absolute;
   width: 100%;
@@ -54,6 +63,7 @@ a {
   z-index: 1;
 }
 
+/* Menu positioning */
 #menu {
   position: absolute;
   bottom: 2vh;
@@ -61,9 +71,10 @@ a {
   text-align: center;
 }
 
+/* Element styles */
 .element {
-  width: 12vh;
-  height: 16vh;
+  width: 100px;
+  height: 45px;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
   border: 1px solid rgba(127, 255, 255, 0.25);
   text-align: center;
@@ -76,6 +87,7 @@ a {
   border: 1px solid rgba(127, 255, 255, 0.75);
 }
 
+/* Company name inside element */
 .element .company {
   position: absolute;
   top: 1.2vh;
@@ -85,9 +97,10 @@ a {
   color: rgba(127, 255, 255, 0.75);
 }
 
+/* Name inside element */
 .element .name {
-  position: absolute;
-  top: 5.5vh;
+  position: center;
+  top: 0px;
   left: 0;
   right: 0;
   font-size: 4.5vh;
@@ -96,6 +109,7 @@ a {
   text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
 }
 
+/* Details inside element */
 .element .details {
   position: absolute;
   bottom: 1.2vh;
@@ -105,18 +119,8 @@ a {
   color: rgba(127, 255, 255, 0.75);
 }
 
-button.button {
-  color: rgba(127, 255, 255, 0.75);
-  background: transparent;
-  outline: 1px solid rgba(127, 255, 255, 0.75);
-  border: 0;
-  padding: 1.6vh 4vh;
-  margin: 0 4.6vh;
-  font-size: 2vh;
-  font-weight: bold;
-  cursor: pointer;
-}
-
+/* Button styles */
+button.button,
 button.reset {
   color: rgba(127, 255, 255, 0.75);
   background: transparent;
@@ -138,6 +142,7 @@ button:active {
   background-color: rgba(0, 255, 255, 0.75);
 }
 
+/* Highlighted element styles */
 .highlight {
   background-color: rgb(228, 58, 115) !important;
   box-shadow: 0 0 12px rgba(255, 255, 255);
@@ -148,6 +153,7 @@ button:active {
   text-shadow: 0 0 16px rgba(255, 255, 255);
 }
 
+/* Prize element styles */
 .prize.element .name {
   text-shadow: none;
 }
@@ -167,6 +173,7 @@ button:active {
   color: rgba(255, 255, 255, 0.85);
 }
 
+/* Dan-mu styles */
 .dan-mu {
   visibility: hidden;
   position: fixed;
@@ -189,6 +196,7 @@ button:active {
   visibility: visible;
 }
 
+/* Prize bar styles */
 #prizeBar {
   position: fixed;
   left: 0;
@@ -200,12 +208,14 @@ button:active {
   width: 100%;
 }
 
+/* Prize list styles */
 .prize-list {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* Prize item styles */
 .prize-item {
   padding: 9px;
   margin: 25px 0;
@@ -223,6 +233,7 @@ button:active {
   transition: transform 1s ease-in;
 }
 
+/* Prize image styles */
 .prize-item .prize-img {
   width: 8vh;
   height: 8vh;
@@ -242,10 +253,12 @@ button:active {
   transform: translate(-50%, -50%);
 }
 
+/* Prize text styles */
 .prize-text {
   flex: 1;
 }
 
+/* Prize sponsor styles */
 .prize-sponsor {
   font-size: 2.5vh;
   margin-bottom: 10px;
@@ -255,11 +268,13 @@ button:active {
   /* color:; */
 }
 
+/* Prize title styles */
 .prize-title {
   margin: 1px 0 10px 0;
   font-size: 2vh;
 }
 
+/* Prize count styles */
 .prize-count {
   padding: 4px 0;
   position: relative;
@@ -318,6 +333,7 @@ button:active {
   background-size: 8px 8px;
 }
 
+/* Progress bar animations */
 @-webkit-keyframes animate-positive {
   0% {
     width: 0;
@@ -360,6 +376,7 @@ button:active {
   }
 }
 
+/* Prize count left styles */
 .prize-count-left {
   position: absolute;
   color: #fff;
@@ -370,6 +387,7 @@ button:active {
   transform: translateY(-50%);
 }
 
+/* Shine effect styles */
 .shine {
   box-shadow: 0 0 15px 0 rgba(0, 255, 255, 0.5);
   transform: scale(1.2);
@@ -393,10 +411,10 @@ button:active {
   cursor: not-allowed;
 }
 
-
+/* Shine animation spans */
 .shine span {
   position: absolute;
-  display: block
+  display: block;
 }
 
 .shine span:nth-child(1) {
@@ -405,17 +423,17 @@ button:active {
   width: 100%;
   height: 2px;
   background: linear-gradient(90deg, transparent, #03e9f4);
-  animation: animate1 1s linear infinite
+  animation: animate1 1s linear infinite;
 }
 
 @keyframes animate1 {
   0% {
-    left: -100%
+    left: -100%;
   }
 
   50%,
   100% {
-    left: 100%
+    left: 100%;
   }
 }
 
@@ -426,17 +444,17 @@ button:active {
   height: 100%;
   background: linear-gradient(180deg, transparent, #03e9f4);
   animation: animate2 1s linear infinite;
-  animation-delay: .25s
+  animation-delay: .25s;
 }
 
 @keyframes animate2 {
   0% {
-    top: -100%
+    top: -100%;
   }
 
   50%,
   100% {
-    top: 100%
+    top: 100%;
   }
 }
 
@@ -447,17 +465,17 @@ button:active {
   height: 2px;
   background: linear-gradient(270deg, transparent, #03e9f4);
   animation: animate3 1s linear infinite;
-  animation-delay: .50s
+  animation-delay: .50s;
 }
 
 @keyframes animate3 {
   0% {
-    right: -100%
+    right: -100%;
   }
 
   50%,
   100% {
-    right: 100%
+    right: 100%;
   }
 }
 
@@ -468,26 +486,27 @@ button:active {
   height: 100%;
   background: linear-gradient(360deg, transparent, #03e9f4);
   animation: animate4 1s linear infinite;
-  animation-delay: .75s
+  animation-delay: .75s;
 }
 
 @keyframes animate4 {
   0% {
-    bottom: -100%
+    bottom: -100%;
   }
 
   50%,
   100% {
-    bottom: 100%
+    bottom: 100%;
   }
 }
 
-
+/* Shine prize item styles */
 .shine.prize-item {
   /* width: 24vh; */
   margin: 1.8vh 0;
 }
 
+/* Prize message styles */
 .prize-mess {
   color: #fff;
   line-height: 5vh;
@@ -495,6 +514,7 @@ button:active {
   margin: 2.4vh 0;
 }
 
+/* Prize shine styles */
 .prize-shine {
   font-size: 5vh;
   font-weight: bold;
@@ -503,6 +523,7 @@ button:active {
   padding: 0 6px;
 }
 
+/* Qipao container styles */
 .qipao-container {
   position: fixed;
   right: 0;
@@ -512,6 +533,7 @@ button:active {
   z-index: 2;
 }
 
+/* Qipao styles */
 .qipao {
   width: 100%;
   padding: 1.8vh 1.4vh;
@@ -523,6 +545,7 @@ button:active {
   color: rgba(127, 255, 255, 0.75);
 }
 
+/* Music styles */
 .music {
   position: fixed;
   top: 3vh;
@@ -562,16 +585,19 @@ button:active {
   }
 }
 
+/* Margin utility class */
 .margin-l-40 {
-  margin-left: 40px;
+  margin-left: 0px;
 }
 
+/* Fixed bar styles */
 .fixed-bar {
   position: fixed;
   bottom: 20px;
   right: 20px;
 }
 
+/* Fixed button styles */
 .fixed-btn {
   margin: 20px 0 0;
   width: 200px;
@@ -579,6 +605,7 @@ button:active {
   display: block;
 }
 
+/* Lottery animation styles */
 #lottery {
   animation: breath 1.6s linear infinite;
   box-shadow: 0px 0px 15px rgb(127 255 255 / 75%);
