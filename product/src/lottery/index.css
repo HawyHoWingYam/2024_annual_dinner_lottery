@@ -26,13 +26,19 @@ a {
 
 #container {
   z-index: 3;
-  position: relative;
-  margin: 0 15vh;
+  position: absolute;
+  /* margin-top: 0vh;
+  margin-left: 0vh; */
 }
 
 #menu {
   z-index: 4;
-  margin-left: 15vh;
+  position: absolute;
+
+  width: 100%;
+  text-align: center;
+  /* margin-left: 0vh;
+  bottom: 2vh; */
 }
 
 .canvas-box {
@@ -54,16 +60,9 @@ a {
   z-index: 1;
 }
 
-#menu {
-  position: absolute;
-  bottom: 2vh;
-  width: 100%;
-  text-align: center;
-}
-
 .element {
-  width: 12vh;
-  height: 16vh;
+  width: 11vh;
+  height: 5vh;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
   border: 1px solid rgba(127, 255, 255, 0.25);
   text-align: center;
@@ -87,7 +86,7 @@ a {
 
 .element .name {
   position: absolute;
-  top: 5.5vh;
+  top: 0vh;
   left: 0;
   right: 0;
   font-size: 4.5vh;

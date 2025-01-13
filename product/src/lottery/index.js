@@ -23,7 +23,7 @@ let TOTAL_CARDS,
   prizes,
   EACH_COUNT,
   ROW_COUNT = 9,
-  COLUMN_COUNT = 23,
+  COLUMN_COUNT = 19,
   COMPANY,
   HIGHLIGHT_CELL = [],
   // 当前的比例
@@ -159,7 +159,7 @@ function initCards() {
 
       var object = new THREE.Object3D();
       object.position.x = j * 140 - position.x;
-      object.position.y = -(i * 180) + position.y;
+      object.position.y = -(i * 120) + position.y;
       targets.table.push(object);
       index++;
     }
@@ -492,14 +492,130 @@ function render() {
   renderer.render(scene, camera);
 }
 
-function selectCard(duration = 600) {
+function selectCard(duration = 100) {
   rotate = false;
   let width = 140,
     tag = -(currentLuckys.length - 1) / 2,
     locates = [];
 
-  // 计算位置信息, 大于5个分两排显示
-  if (currentLuckys.length > 5) {
+  // 计算位置信息, 大于10个分三排,大于5个分两排显示
+  // 计算位置信息
+  if (currentLuckys.length > 20) {
+    // Five rows
+    let yPosition = [-248, -124, 0, 124, 248],
+      l = selectedCardIndex.length,
+      row1 = Math.ceil(l / 5),
+      row2 = Math.ceil((l - row1) / 4),
+      row3 = Math.ceil((l - row1 - row2) / 3),
+      row4 = Math.ceil((l - row1 - row2 - row3) / 2);
+
+    // First row
+    tag = -(row1 - 1) / 2;
+    for (let i = 0; i < row1; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[0] * Resolution });
+      tag++;
+    }
+
+    // Second row
+    tag = -(row2 - 1) / 2;
+    for (let i = row1; i < row1 + row2; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[1] * Resolution });
+      tag++;
+    }
+
+    // Third row  
+    tag = -(row3 - 1) / 2;
+    for (let i = row1 + row2; i < row1 + row2 + row3; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[2] * Resolution });
+      tag++;
+    }
+
+    // Fourth row
+    tag = -(row4 - 1) / 2;
+    for (let i = row1 + row2 + row3; i < row1 + row2 + row3 + row4; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[3] * Resolution });
+      tag++;
+    }
+
+    // Fifth row
+    tag = -(l - row1 - row2 - row3 - row4 - 1) / 2;
+    for (let i = row1 + row2 + row3 + row4; i < l; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[4] * Resolution });
+      tag++;
+    }
+
+  } else if (currentLuckys.length > 15) {
+    // Four rows
+    let yPosition = [-174, -58, 58, 174],
+      l = selectedCardIndex.length,
+      row1 = Math.ceil(l / 4),
+      row2 = Math.ceil((l - row1) / 3),
+      row3 = Math.ceil((l - row1 - row2) / 2);
+
+    // First row
+    tag = -(row1 - 1) / 2;
+    for (let i = 0; i < row1; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[0] * Resolution });
+      tag++;
+    }
+
+    // Second row
+    tag = -(row2 - 1) / 2;
+    for (let i = row1; i < row1 + row2; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[1] * Resolution });
+      tag++;
+    }
+
+    // Third row
+    tag = -(row3 - 1) / 2;
+    for (let i = row1 + row2; i < row1 + row2 + row3; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[2] * Resolution });
+      tag++;
+    }
+
+    // Fourth row
+    tag = -(l - row1 - row2 - row3 - 1) / 2;
+    for (let i = row1 + row2 + row3; i < l; i++) {
+      locates.push({ x: tag * width * Resolution, y: yPosition[3] * Resolution });
+      tag++;
+    }
+
+  } else if (currentLuckys.length > 10) {
+    let yPosition = [-174, 0, 174], // Three row positions
+      l = selectedCardIndex.length,
+      row1 = Math.ceil(l / 3),
+      row2 = Math.ceil((l - row1) / 2);
+
+    // First row
+    tag = -(row1 - 1) / 2;
+    for (let i = 0; i < row1; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[0] * Resolution
+      });
+      tag++;
+    }
+
+    // Second row
+    tag = -(row2 - 1) / 2;
+    for (let i = row1; i < row1 + row2; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[1] * Resolution
+      });
+      tag++;
+    }
+
+    // Third row
+    tag = -(l - row1 - row2 - 1) / 2;
+    for (let i = row1 + row2; i < l; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[2] * Resolution
+      });
+      tag++;
+    }
+  } else if (currentLuckys.length > 5) {
     let yPosition = [-87, 87],
       l = selectedCardIndex.length,
       mid = Math.ceil(l / 2);
@@ -839,7 +955,7 @@ function createHighlight() {
   // let year = new Date().getFullYear() + "";
   let year = "2025";
   let step = 4,
-    xoffset = 4,
+    xoffset = 2,
     yoffset = 2,
     highlight = [];
 
