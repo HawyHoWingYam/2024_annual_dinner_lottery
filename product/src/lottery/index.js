@@ -77,7 +77,7 @@ function initAll() {
       setPrizes(prizes);
 
       TOTAL_CARDS = ROW_COUNT * COLUMN_COUNT;
-
+      console.log("TOTAL_CARDS", TOTAL_CARDS);
       // 读取当前已设置的抽奖结果
       basicData.leftUsers = data.leftUsers;
       basicData.luckyUsers = data.luckyData;
@@ -160,6 +160,7 @@ function initCards() {
       var object = new THREE.Object3D();
       object.position.x = j * 140 - position.x;
       object.position.y = -(i * 120) + position.y;
+      object.position.y = -(i * 80) + position.y;
       targets.table.push(object);
       index++;
     }
@@ -950,7 +951,7 @@ function reset() {
   });
 }
 
-// 2024
+// 2025
 function createHighlight() {
   // let year = new Date().getFullYear() + "";
   let year = "2025";
