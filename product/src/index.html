@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Annual Dinner</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-    <!-- <link rel="stylesheet" href="./index.css"> -->
-  </head>
 
-  <body>
-    <script src="./lib/three.min.js"></script>
-    <script src="./lib/tween.min.js"></script>
-    <script src="./lib/TrackballControls.js"></script>
-    <script src="./lib/CSS3DRenderer.js"></script>
-    <script src="./lib/ajax.js"></script>
+<head>
+  <title>Annual Dinner</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <!-- <link rel="stylesheet" href="./index.css"> -->
+</head>
 
-    <div class="canvas-box">
-      <canvas id="canvas">你的浏览器不支持canvas</canvas>
-    </div>
+<body>
 
-    <div id="prizeBar"></div>
+  <script src="./lib/three.min.js"></script>
+  <script src="./lib/tween.min.js"></script>
+  <script src="./lib/TrackballControls.js"></script>
+  <script src="./lib/CSS3DRenderer.js"></script>
+  <script src="./lib/ajax.js"></script>
 
-    <div id="container"></div>
+  <div class="canvas-box">
+    <canvas id="canvas">你的浏览器不支持canvas</canvas>
+  </div>
 
-    <div id="menu">
-      <button id="enter" class="button">進入抽獎</button>
-      <div id="lotteryBar" class="none">
-        <button id="lottery" class="button">開始抽獎</button>
-        <div class="fixed-bar">
-          <button id="save" class="fixed-btn reset">EXPORT</button>
-          <button id="reset" class="fixed-btn reset">RESET</button>
-        </div>
+  <div id="prizeBar"></div>
+
+  <div id="container"></div>
+
+  <div id="menu">
+    <button id="enter" class="button">進入抽獎</button>
+    <div id="lotteryBar" class="none">
+      <button id="lottery" class="button">開始抽獎</button>
+      <div class="fixed-bar">
+        <button id="save" class="fixed-btn reset">EXPORT</button>
+        <button id="reset" class="fixed-btn reset">RESET</button>
       </div>
     </div>
+  </div>
 
-  </body>
+</body>
+
 </html>

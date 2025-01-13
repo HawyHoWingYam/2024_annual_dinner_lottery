@@ -10,7 +10,7 @@ import {
 } from "./prizeList";
 import { NUMBER_MATRIX } from "./config.js";
 
-const ROTATE_TIME = 3000;
+const ROTATE_TIME = 1000;
 const ROTATE_LOOP = 1000;
 const BASE_HEIGHT = 1080;
 
@@ -125,8 +125,8 @@ function initCards() {
     index = 0,
     totalMember = member.length,
     position = {
-      x: (140 * COLUMN_COUNT - 20) / 2,
-      y: (180 * ROW_COUNT - 20) / 2
+      x: (120 * COLUMN_COUNT - 20) / 2,
+      y: (70 * ROW_COUNT - 20) / 2
     };
 
   camera = new THREE.PerspectiveCamera(
