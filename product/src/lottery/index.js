@@ -493,8 +493,9 @@ function render() {
   renderer.render(scene, camera);
 }
 
-function selectCard(duration = 100) {
+function selectCard(currentPrizeData) {
   rotate = false;
+  var duration = 100;
   let width = 140,
     tag = -(currentLuckys.length - 1) / 2,
     locates = [];
@@ -646,14 +647,49 @@ function selectCard(duration = 100) {
       tag++;
     }
   }
+  console.log("prize_list", currentPrizeData.prize_list);
+  console.log("currentLuckys.length", currentLuckys.length);
 
-  let text = currentLuckys.map(item => item[1]);
-  addQipao(
-    `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
-  );
+  // Create prize inventory tracker
+  let prizeInventory = {};
+  Object.entries(currentPrizeData.prize_list).forEach(([prize, quantity]) => {
+    prizeInventory[prize] = quantity;
+  });
+
+  // Track assigned prizes
+  let assignedPrizes = [];
+  let current_count = 0;
+
+  let text = currentLuckys.map(function (item) {
+    // Find available prize
+    let availablePrizes = Object.entries(prizeInventory).filter(([_, qty]) => qty > 0);
+    if (availablePrizes.length > 0) {
+      // Select random prize from available ones
+      let prizeIndex = Math.floor(Math.random() * availablePrizes.length);
+      let [prizeName, _] = availablePrizes[prizeIndex];
+
+      // Decrease quantity
+      prizeInventory[prizeName]--;
+
+      // Track assignment
+      assignedPrizes.push({
+        winner: item[1],
+        prize: prizeName
+      });
+
+      console.log("prizeName", `${item[1]}(${prizeName})`);
+      return `${item[1]} : ${prizeName}`;
+    }
+    return item[1];
+  });
+  console.log("text", text);
+  // addQipao(
+  //   `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
+  // );
 
   selectedCardIndex.forEach((cardIndex, index) => {
-    changeCard(cardIndex, currentLuckys[index]);
+    console.log("selectedCardIndex currentLuckys", currentLuckys[index]);
+    changeCard(cardIndex, currentLuckys[index], text);
     var object = threeDCards[cardIndex];
     new TWEEN.Tween(object.position)
       .to(
@@ -793,8 +829,7 @@ function lottery() {
         break;
       }
     }
-
-    selectCard();
+    selectCard(currentPrize);
     // 每次抽奖前先保存上一次的抽奖数据
     // saveData();
 
@@ -853,11 +888,19 @@ function random(num) {
 /**
  * 切换名牌人员信息
  */
-function changeCard(cardIndex, user) {
+function changeCard(cardIndex, user, text = null) {
   let card = threeDCards[cardIndex].element;
-
-  card.innerHTML = `<div class="name">${user[1]
-    }`;
+  if (text) {
+    text.forEach(item => {
+      var temp_item = item.split(" :");
+      if (temp_item[0] == String(user[1])) {
+        console.log("temp_item", temp_item[0]);
+        card.innerHTML = `<div class="name">${user[1]} <span class="prize-text">${temp_item[1]}</span></div>`;
+      }
+    });
+  } else {
+    card.innerHTML = `<div class="name">${user[1]}`;
+  }
 }
 
 /**

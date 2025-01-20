@@ -516,6 +516,13 @@ button:active {
   padding: 0 6px;
 }
 
+.prize-text {
+  font-size: 0.3em;
+  color: #ffffff;
+  display: inline-block;
+  margin-top: -1vh;
+}
+
 /* Qipao container styles */
 .qipao-container {
   position: fixed;
@@ -582,6 +589,7 @@ button:active {
 .margin-l-40 {
   margin-left: 0px;
 }
+
 
 /* Fixed bar styles */
 .fixed-bar {
