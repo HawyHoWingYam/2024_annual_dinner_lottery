@@ -67,7 +67,7 @@ a {
 
 .element {
   width: 11vh;
-  height: 5vh;
+  height: 8vh;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
   border: 1px solid rgba(127, 255, 255, 0.25);
   text-align: center;
@@ -96,7 +96,7 @@ a {
   top: 0vh;
   left: 0;
   right: 0;
-  font-size: 4.5vh;
+  font-size: 3vh;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
