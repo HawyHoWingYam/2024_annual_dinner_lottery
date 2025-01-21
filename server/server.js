@@ -227,18 +227,21 @@ function loadData() {
 function loadUser() {
   // loop for 650 times to generate 650 users
   let users = [];
-  for (let i = 1; i < 610; i++) {
+  for (let i = 1; i < 1000; i++) {
     // add 1 or 2 0s before the number
-    let name = `00${i}`.slice(-3);
+    let name = (`000${i}`).slice(-4);
     // let name =
-    users.push([`00${i}`, name, `Hana-musubi`, 1]);
+    users.push([name, name, `Hana-musubi`, 1]);
   }
-  for (let i = 1000; i < 1096; i++) {
-    if (i != 1043 && i != 1009) {
-      users.push([i, i, `Guest`, 2]);
-    }
+  for (let i = 1000; i < 1100; i++) {
+    // if (i != 1043 && i != 1009) {
+    //   users.push([i, i, `Guest`, 2]);
+    // }
+    user_data = [i, i, `Guest`, 2];
+    console.log("user_data", user_data);
+    users.push(user_data);
   }
-  console.log(users.length, "users loaded");
+  console.log("users loaded", users.length);
   return users;
 }
 

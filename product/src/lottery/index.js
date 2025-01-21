@@ -92,7 +92,6 @@ function initAll() {
           continue;
         }
         currentPrizeIndex = prizeIndex;
-        // console.log(111111);
         currentPrize = basicData.prizes[currentPrizeIndex];
         break;
       }
@@ -647,8 +646,6 @@ function selectCard(currentPrizeData) {
       tag++;
     }
   }
-  console.log("prize_list", currentPrizeData.prize_list);
-  console.log("currentLuckys.length", currentLuckys.length);
 
   // Create prize inventory tracker
   let prizeInventory = {};
@@ -677,18 +674,15 @@ function selectCard(currentPrizeData) {
         prize: prizeName
       });
 
-      console.log("prizeName", `${item[1]}(${prizeName})`);
       return `${item[1]} : ${prizeName}`;
     }
     return item[1];
   });
-  console.log("text", text);
   // addQipao(
   //   `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
   // );
 
   selectedCardIndex.forEach((cardIndex, index) => {
-    console.log("selectedCardIndex currentLuckys", currentLuckys[index]);
     changeCard(cardIndex, currentLuckys[index], text);
     var object = threeDCards[cardIndex];
     new TWEEN.Tween(object.position)
@@ -812,8 +806,11 @@ function lottery() {
       let luckyId = random(leftCount);
       let luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
 
-      while (luckyUser === undefined || (luckyUser[3] == 2 && prizeKind != 3)) {
+      //如果是客人又是3等奖，则重新抽取
+      while (luckyUser === undefined || (luckyUser[3] == 2 && prizeKind == 3)) {
         luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
+        console.log("prizeKind", prizeKind);
+        console.log("luckyUser", luckyUser);
       }
       currentLuckys.push(luckyUser);
       leftCount--;
@@ -894,7 +891,6 @@ function changeCard(cardIndex, user, text = null) {
     text.forEach(item => {
       var temp_item = item.split(" :");
       if (temp_item[0] == String(user[1])) {
-        console.log("temp_item", temp_item[0]);
         card.innerHTML = `<div class="name">${user[1]} <span class="prize-text">${temp_item[1]}</span></div>`;
       }
     });
