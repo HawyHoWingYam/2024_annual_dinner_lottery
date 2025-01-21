@@ -267,10 +267,10 @@ let setPrizeData = (function () {
     elements.box.querySelector(".prize-sponsor").classList.remove("text_shadow");
 
     let nextBox = document.querySelector("#prize-item-" + (currentPrizeIndex - 1));
-    if (nextBox != undefined) {
-      nextBox.querySelector(".prize-sponsor").classList.remove("text_shadow");
-      nextBox.querySelector(".prize-title").classList.remove("text_shadow");
-    }
+    // if (nextBox != undefined) {
+    //   nextBox.querySelector(".prize-sponsor").classList.remove("text_shadow");
+    //   nextBox.querySelector(".prize-title").classList.remove("text_shadow");
+    // }
   };
 })();
 
@@ -302,12 +302,12 @@ function startMaoPao() {
             setTimeout(() => {
               this.start(DEFAULT_MESS[index++]);
               index = index > len ? 0 : index;
-            }, 1000);
+            }, 500);
           }
         })
       );
       index = index > len ? 0 : index;
-    }, 1500 * i);
+    }, 500 * i);
   }
 }
 

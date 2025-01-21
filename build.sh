@@ -1,6 +1,13 @@
-TAG=${1:-latest}
+#!/bin/bash
 
-rm -f lottery.tar.gz
-tar -czvf lottery.tar.gz ../lottery/
-docker build -t lottery:$TAG  -f ./Dockerfile .
+VERSION=$1
 
+if [ -z "$VERSION" ]; then
+  echo "Usage: ./build.sh <version>"
+  exit 1
+fi
+
+# Build docker image
+docker build -t lottery:${VERSION} .
+
+echo "Build complete: lottery:${VERSION}"

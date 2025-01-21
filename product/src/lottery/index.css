@@ -3,7 +3,7 @@ html,
 
 body {
   height: 100%;
-  background: linear-gradient(to bottom, #d4d4d4 0%, #ff8d22 100%);
+  background: linear-gradient(to bottom, #d4d4d4 0%, #00336a 100%);
   margin: 0;
   font-family: Helvetica, sans-serif;
   overflow: hidden;
@@ -13,7 +13,7 @@ body {
 /* Text shadow effect */
 .text_shadow {
   color: transparent;
-  text-shadow: 0 0 7px rgba(0, 255, 255, 0.95);
+  text-shadow: 0 0 0px rgba(255, 255, 255);
 }
 
 /* Anchor tag styles */
@@ -66,7 +66,7 @@ a {
 }
 
 .element {
-  width: 9vh;
+  width: 12vh;
   height: 8vh;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
   border: 1px solid rgba(127, 255, 255, 0.25);
@@ -99,7 +99,7 @@ a {
   font-size: 3vh;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
-  text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
+  text-shadow: 0 0 0vh rgba(255, 255, 255);
 }
 
 /* Details inside element */
@@ -233,7 +233,7 @@ button:active {
   margin-right: 1.2vh;
   border-radius: 50%;
   background-color: #fff;
-  text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
+  text-shadow: 0 0 0vh rgba(255, 255, 255);
   overflow: hidden;
 }
 
@@ -256,15 +256,31 @@ button:active {
   font-size: 2.5vh;
   margin-bottom: 10px;
   margin-top: 0px;
-  text-shadow: 0 0 1vh rgba(4, 255, 255, 0.95);
-  /* text-align: center; */
-  /* color:; */
+  text-shadow: 0 0 0vh rgba(255, 255, 255);
+}
+
+.prize-item .prize-sponsor {
+  font-size: 2.5vh;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  text-shadow: 0 0 1vh rgb(255, 255, 255);
+  transition: text-shadow 0.3s ease;
+}
+
+/* Enhanced blur effect for shine state */
+.prize-item.shine .prize-sponsor {
+  text-shadow: 0 0 0vh rgb(255, 255, 255);
 }
 
 /* Prize title styles */
 .prize-title {
   margin: 1px 0 10px 0;
   font-size: 2vh;
+  text-shadow: 0 0 1vh rgb(255, 255, 255);
+}
+
+.prize-item.shine .prize-title {
+  text-shadow: 0 0 0vh rgb(255, 255, 255);
 }
 
 /* Prize count styles */
@@ -517,10 +533,10 @@ button:active {
 }
 
 .prize-text {
-  font-size: 0.3em;
+  font-size: 0.5em;
   color: #ffffff;
   display: inline-block;
-  margin-top: -1vh;
+  margin-top: 0vh;
 }
 
 /* Qipao container styles */

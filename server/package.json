@@ -7,7 +7,9 @@
         "http-mini": "index.js"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "export NODE_OPTIONS=--openssl-legacy-provider && webpack --mode=production --progress --colors",
+        "dev": "export NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --config webpack.dev.js --mode=development --progress --colors"
     },
     "author": "moshang",
     "repository": {

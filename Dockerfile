@@ -1,33 +1,25 @@
-# Use the official Node.js 16 image as base image
 FROM node:16.14.0-buster
 
-# Upgrade npm to the latest version
-RUN npm install -g npm@9.6.2
+# Set OpenSSL configuration
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
-# Set the author of the Dockerfile
-LABEL maintainer="YIN"
+WORKDIR /app
 
-# Add the application source code to the container
-ADD lottery.tar.gz  /
+# Copy package files
+COPY server/package*.json ./server/
+COPY product/package*.json ./product/
 
-# Set the working directory to the root directory of the application
-WORKDIR /lottery
+# Install dependencies
+RUN cd server && npm install && \
+    cd ../product && npm install
 
-# Set the ownership of the application directory to root
-RUN chown -R root /lottery \
-    # Remove the line that opens the default browser when starting the server
-    && sed -i '/openBrowser/ d' ./server/server.js \
-    # Install dependencies for the server and product directories
-    && cd server && npm install \
-    && cd ../product && npm install \
-    # Build the application
-    && npm run build
+# Copy source files
+COPY . .
 
-# Expose port 8080 to the outside world
-EXPOSE 8080
+# Build frontend
+RUN cd product && npm run build
 
-# Set the working directory to the product directory
-WORKDIR /lottery/product
+# Expose port
+EXPOSE 18888
 
-# Start the server
-CMD ["npm", "run", "serve"]
+CMD ["node", "server/server.js"]

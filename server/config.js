@@ -142,174 +142,32 @@ const prizes = [
   },
   {
     type: 13,
-    count: 1,
-    title: "Foreo 斐珞爾UFO 3",
-    text: "彩光水份面膜儀 1份",
+    count: 23,
+    title: "綜合獎項",
+    text: "23份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "彩光水份面膜儀": 1
+      "熱感頸部按摩儀": 2,
+      "單片三文治機": 3,
+      "夾公仔卡": 2,
+      "瑰麗禮品卡": 2,
+      "多功能電熱鍋": 2,
+      "四季禮品卡": 2,
+      "JRL風筒": 2,
+      "AirPods Pro 2": 2,
+      "Oral-B 電動牙刷": 2,
+      "蝶苑禮品卡": 1,
+      "索尼耳機WH-1000XM5": 1,
+      "半島禮品卡": 1,
+      "面膜儀": 1
     }
   },
   {
     type: 14,
-    count: 1,
-    title: "半島酒店",
-    text: "現金禮品卡1份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "半島禮品卡": 1
-    }
-  },
-  {
-    type: 15,
-    count: 1,
-    title: "索尼 WH-1000XM5",
-    text: "耳機1份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "索尼耳機": 1
-    }
-  },
-  {
-    type: 16,
-    count: 1,
-    title: "瑰麗禮品卡(蝶苑)",
-    text: "禮品卡1份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "蝶苑禮品卡": 1
-    }
-  },
-  {
-    type: 17,
-    count: 2,
-    title: "Oral-BiO Series 9",
-    text: "充電電動牙刷2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "充電電動牙刷": 2
-    }
-  },
-  {
-    type: 18,
-    count: 2,
-    title: "Apple",
-    text: "AirPods Pro 2 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "AirPods Pro 2": 2
-    }
-  },
-  {
-    type: 19,
-    count: 2,
-    title: "JRL Forte Pro 2020H",
-    text: "超輕專業風筒 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "JRL 風筒": 2
-    }
-  },
-  {
-    type: 20,
-    count: 2,
-    title: "四季",
-    text: "禮品卡 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "四季禮品卡": 2
-    }
-  },
-  {
-    type: 21,
-    count: 2,
-    title: "Bruno 寶可夢聯動",
-    text: "多功能電熱鍋 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "多功能電熱鍋": 2
-    }
-  },
-  {
-    type: 22,
-    count: 2,
-    title: "瑰麗",
-    text: "禮品卡 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "瑰麗禮品卡": 2
-    }
-  },
-  {
-    type: 23,
-    count: 2,
-    title: "TAITO STATION",
-    text: "夾公仔卡 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "夾公仔卡": 2
-    }
-  },
-  {
-    type: 24,
-    count: 3,
-    title: "BRUNO 寶可夢聯動",
-    text: "單片三文治機 3份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "單片三文治機": 3
-    }
-  },
-  {
-    type: 25,
-    count: 2,
-    title: "Dr Heat Neck 第三代",
-    text: "EMS熱感頸部按摩儀 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "EMS熱感頸部按摩儀": 2
-    }
-  },
-  {
-    type: 26,
-    count: 2,
-    title: "RHYTHM Aromafun",
-    text: "風扇式香薰機 2份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "風扇香薰機": 2
-    }
-  },
-  {
-    type: 27,
     count: 25,
-    title: "LUCKY DRAW PART 3",
-    text: "花開富貴禮盒 25份",
-    img: "../img/gift.jpeg",
-    kind: 3,
-    prize_list: {
-      "花開富貴禮盒": 25
-    }
-  },
-  {
-    type: 28,
-    count: 25,
-    title: "LUCKY DRAW PART 2",
-    text: "花開富貴禮盒 25份",
+    title: "花開富貴",
+    text: "禮盒 25份",
     img: "../img/gift.jpeg",
     kind: 2,
     prize_list: {
@@ -324,10 +182,7 @@ const prizes = [
 const EACH_COUNT = [
   5, 5, 5, 5, 5,
   1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1,
-  1, 2, 2, 2, 2,
-  2, 2, 2, 3, 2,
-  2, 25,25
+  1, 1, 23, 25
 ]
 /**
  * 卡片公司名称标识

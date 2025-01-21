@@ -154,7 +154,6 @@ function initCards() {
       object.position.z = Math.random() * 4000 - 2000;
       scene.add(object);
       threeDCards.push(object);
-      //
 
       var object = new THREE.Object3D();
       object.position.x = j * 140 - position.x;
@@ -275,7 +274,7 @@ function bindEvent() {
         audio.play();
         setTimeout(() => {
           e.target.click();
-        }, 2800);
+        }, 2000);
         // stoplottery();
         // addQipao(`正在抽取[${currentPrize.title}],调整好姿势`);
         break;
@@ -313,7 +312,7 @@ function bindEvent() {
       audio.play();
       setTimeout(() => {
         btns.lottery.click();
-      }, 2800);
+      }, 2000);
 
     }
   })
@@ -327,12 +326,12 @@ function switchScreen(type) {
     case "enter":
       btns.enter.classList.remove("none");
       btns.lotteryBar.classList.add("none");
-      transform(targets.table, 2000);
+      transform(targets.table, 1000);
       break;
     default:
       btns.enter.classList.add("none");
       btns.lotteryBar.classList.remove("none");
-      transform(targets.sphere, 2000);
+      transform(targets.sphere, 1000);
       break;
   }
 }
@@ -494,7 +493,7 @@ function render() {
 
 function selectCard(currentPrizeData) {
   rotate = false;
-  var duration = 100;
+  var duration = 500;
   let width = 140,
     tag = -(currentLuckys.length - 1) / 2,
     locates = [];
@@ -932,7 +931,7 @@ function shineCard() {
       shine(cardIndex);
       changeCard(cardIndex, basicData.leftUsers[index]);
     }
-  }, 500);
+  }, 1000);
 }
 
 function setData(type, data) {
