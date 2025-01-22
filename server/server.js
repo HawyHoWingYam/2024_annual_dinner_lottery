@@ -1,9 +1,46 @@
-const express = require("express");
+const express = require('express');
+const port = process.env.PORT || 18888;
+const os = require('os');
+const app = express();
 const opn = require("opn");
 const bodyParser = require("body-parser");
 const path = require("path");
 const chokidar = require("chokidar");
 const cfg = require("./config");
+
+// Get local IP address
+function getLocalIP() {
+  const interfaces = os.networkInterfaces();
+  for (let iface of Object.values(interfaces)) {
+    for (let alias of iface) {
+      if (alias.family === 'IPv4' && !alias.internal) {
+        return alias.address;
+      }
+    }
+  }
+  return '0.0.0.0';
+}
+
+const localIP = getLocalIP();
+
+
+app.use(express.static('.')); 
+
+
+// Add CORS middleware
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By", "3.2.1");
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Lottery server running at:`);
+  console.log(`- Local: http://localhost:${port}`);
+  console.log(`- Network: http://${localIP}:${port}`);
+});
 
 const {
   loadXML,
@@ -14,11 +51,9 @@ const {
   saveErrorDataFile
 } = require("./help");
 
-let app = express(),
-  router = express.Router(),
+let router = express.Router(),
   cwd = process.cwd(),
   dataBath = __dirname,
-  port = 8090,
   curData = {},
   luckyData = {},
   errorData = [],
@@ -63,6 +98,17 @@ app.post("*", (req, res, next) => {
   log(`请求内容：${JSON.stringify(req.path, 2)}`);
   next();
 });
+
+app.get("/", (req, res) => {
+  console.log("Root route accessed");
+  res.redirect(301, "index.html");
+});
+
+app.use(express.static('.', {
+  setHeaders: (res, path, stat) => {
+    console.log(`Serving static file: ${path}`);
+  }
+}));
 
 // 获取之前设置的数据
 router.post("/getTempData", (req, res, next) => {

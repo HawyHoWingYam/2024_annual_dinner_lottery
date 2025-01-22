@@ -1,5 +1,5 @@
 const webpack = require("webpack");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
@@ -8,71 +8,40 @@ module.exports = {
   entry: path.join(__dirname, "/src/lottery/index.js"),
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "lottery.js"
+    filename: "lottery.js",
+    clean: true
   },
   module: {
     rules: [
       {
         test: /(\.jsx|\.js)$/,
         use: {
-          loader: "babel-loader"
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env']
+          }
         },
         exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "postcss-loader"
-          }
-        ]
+        use: ["style-loader", "css-loader", "postcss-loader"]
       }
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_OPTIONS': JSON.stringify('--openssl-legacy-provider')
-    }),
     new webpack.BannerPlugin("版权所有，翻版必究"),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "/src/index.html"),
-      filename: "./index.html",
-      minify: {
-        // 移除空属性
-        removeEmptyAttributes: true,
-        // 压缩css
-        minifyCSS: true,
-        // 压缩JS
-        minifyJS: true,
-        // 移除空格
-        collapseWhitespace: true
-      },
-      hash: true,
-      inject: true
+      filename: "./index.html"
     }),
-    new CopyWebpackPlugin([
-      {
-        from: "./src/css",
-        to: "./css"
-      },
-      {
-        from: "./src/data",
-        to: "./data"
-      },
-      {
-        from: "./src/img",
-        to: "./img"
-      },
-      {
-        from: "./src/lib",
-        to: "./lib"
-      }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "src/css", to: "css" },
+        { from: "src/data", to: "data" },
+        { from: "src/img", to: "img" },
+        { from: "src/lib", to: "lib" }
+      ]
+    })
   ]
 };

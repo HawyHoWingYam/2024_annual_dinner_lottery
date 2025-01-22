@@ -1,25 +1,25 @@
-FROM node:16.14.0-buster
-
-# Set OpenSSL configuration
-ENV NODE_OPTIONS=--openssl-legacy-provider
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
-# Copy package files
+COPY package*.json ./
 COPY server/package*.json ./server/
 COPY product/package*.json ./product/
 
-# Install dependencies
 RUN cd server && npm install && \
     cd ../product && npm install
 
-# Copy source files
 COPY . .
 
-# Build frontend
 RUN cd product && npm run build
 
-# Expose port
+FROM node:20-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/server ./server
+COPY --from=builder /app/product/dist ./product/dist
+
 EXPOSE 18888
 
 CMD ["node", "server/server.js"]
