@@ -4,7 +4,10 @@ html,
 body {
   height: 100%;
   background: linear-gradient(to bottom, #d4d4d4 0%, #00336a 100%);
-  margin: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
   font-family: Helvetica, sans-serif;
   overflow: hidden;
 }
@@ -113,15 +116,26 @@ a {
 }
 
 /* Button styles */
-button.button,
+button.button {
+  color: rgba(127, 255, 255, 0.75);
+  background: transparent;
+  outline: 1px solid rgba(127, 255, 255, 0.75);
+  border: 0;
+  padding: 1vh 3vh;
+  margin: 0 2vh;
+  font-size: 2vh;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 button.reset {
   color: rgba(127, 255, 255, 0.75);
   background: transparent;
   outline: 1px solid rgba(127, 255, 255, 0.75);
   border: 0;
-  padding: 1.6vh 4vh;
-  margin: 0 4.6vh;
-  font-size: 2vh;
+  /* padding: 1.6vh 4vh; */
+  /* margin: 0 4.6vh; */
+  font-size: 1vh;
   font-weight: bold;
   cursor: pointer;
 }
@@ -193,7 +207,7 @@ button:active {
 #prizeBar {
   position: fixed;
   left: 0;
-  padding-left: 1.2vh;
+  padding-left: 2vh;
   top: 1.2vh;
   z-index: 2;
   overflow: auto;
@@ -220,7 +234,7 @@ button:active {
   background-color: rgba(0, 127, 127, 0.37);
   border: 1px solid rgba(127, 255, 255, 0.25);
   color: rgba(127, 255, 255, 0.75);
-  width: 40vh;
+  width: 30vh;
   height: 17vh;
   box-sizing: border-box;
   transition: transform 1s ease-in;
@@ -608,17 +622,23 @@ button:active {
 
 
 /* Fixed bar styles */
-.fixed-bar {
+.fixed-bar.reset{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.fixed-bar.button{
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 1px;
 }
 
 /* Fixed button styles */
 .fixed-btn {
-  margin: 20px 0 0;
-  width: 200px;
-  text-align: center;
+  /* margin: 20px 0 0; */
+  width: 50px;
+  /* text-align: center; */
   display: block;
 }
 

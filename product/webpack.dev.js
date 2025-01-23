@@ -1,6 +1,10 @@
+// webpack.dev.js
 const { merge } = require("webpack-merge");
 const baseConfig = require("./webpack.config");
 const serve = require("../server/server.js");
+
+// Start server before webpack configuration
+serve.run(18888, "n");
 
 module.exports = merge(baseConfig, {
   mode: 'development',
@@ -12,9 +16,7 @@ module.exports = merge(baseConfig, {
     open: true,
     proxy: {
       "*": "http://localhost:18888"
-    },
-    onBeforeSetupMiddleware(devServer) {
-      serve.run(18888, "n");
     }
+    // Remove onBeforeSetupMiddleware to avoid double server start
   }
 });

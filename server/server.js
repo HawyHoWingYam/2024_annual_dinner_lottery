@@ -1,16 +1,16 @@
-const express = require('express');
-const port = process.env.PORT || 18888;
-const os = require('os');
-const app = express();
-const opn = require("opn");
-const bodyParser = require("body-parser");
-const path = require("path");
-const chokidar = require("chokidar");
-const cfg = require("./config");
+let express = require('express');
+let port = process.env.PORT || 18888;
+let os = require('os');
+let app = express();
+let opn = require("opn");
+let bodyParser = require("body-parser");
+let path = require("path");
+let chokidar = require("chokidar");
+let cfg = require("./config");
 
 // Get local IP address
 function getLocalIP() {
-  const interfaces = os.networkInterfaces();
+  let interfaces = os.networkInterfaces();
   for (let iface of Object.values(interfaces)) {
     for (let alias of iface) {
       if (alias.family === 'IPv4' && !alias.internal) {
@@ -21,7 +21,7 @@ function getLocalIP() {
   return '0.0.0.0';
 }
 
-const localIP = getLocalIP();
+let localIP = getLocalIP();
 
 
 app.use(express.static('.')); 
@@ -42,7 +42,7 @@ app.listen(port, '0.0.0.0', () => {
   console.log(`- Network: http://${localIP}:${port}`);
 });
 
-const {
+let {
   loadXML,
   loadTempData,
   writeXML,

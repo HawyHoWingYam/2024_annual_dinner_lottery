@@ -9,58 +9,66 @@
  */
 const prizes = [
   {
-    type: 1,
-    count: 5,
+    type: 0,
+    count: 1,
     title: "神秘獎項",
-    text: "5份",
+    text: "1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "神秘獎項": 5
+      "神秘獎項": 1
+    }
+  },
+  {
+    type: 1,
+    count: 1,
+    title: "神秘獎項",
+    text: "1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "神秘獎項": 1
     }
   },
   {
     type: 2,
-    count: 5,
+    count: 1,
     title: "神秘獎項",
-    text: "5份",
+    text: "1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "神秘獎項": 5
+      "神秘獎項": 1
     }
-  },
-  {
+  }, {
     type: 3,
-    count: 5,
+    count: 1,
     title: "神秘獎項",
-    text: "5份",
+    text: "1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "神秘獎項": 5
+      "神秘獎項": 1
     }
-  },
-  {
+  }, {
     type: 4,
-    count: 5,
+    count: 1,
     title: "神秘獎項",
-    text: "5份",
+    text: "1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "神秘獎項": 5
+      "神秘獎項": 1
     }
-  },
-  {
+  }, {
     type: 5,
-    count: 5,
+    count: 1,
     title: "神秘獎項",
-    text: "5份",
+    text: "1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "神秘獎項": 5
+      "神秘獎項": 1
     }
   },
   {
@@ -89,7 +97,7 @@ const prizes = [
     type: 8,
     count: 1,
     title: "華碩電競",
-    text: "Ally X 手提遊戲機1份",
+    text: "Ally X 手提遊戲機 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
@@ -111,7 +119,7 @@ const prizes = [
     type: 10,
     count: 1,
     title: "大疆Osmo Pocket 3",
-    text: "運動相機1份",
+    text: "運動相機 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
@@ -122,7 +130,7 @@ const prizes = [
     type: 11,
     count: 1,
     title: "STEAM Deck 電競",
-    text: "OLED手提遊戲機1份",
+    text: "OLED手提遊戲機 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
@@ -133,15 +141,158 @@ const prizes = [
     type: 12,
     count: 1,
     title: "Dyson Supersonic",
-    text: "HD08 風筒1份",
+    text: "HD08風筒 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "Dyson 風筒": 1
+      "Dyson風筒": 1
     }
   },
   {
     type: 13,
+    count: 1,
+    title: "Prizm",
+    text: "iPhone 16 Pro 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "iPhone 16 Pro": 1
+    }
+  },
+  {
+    type: 14,
+    count: 1,
+    title: "Prizm",
+    text: "現金$5000 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "現金$5000": 1
+    }
+  },
+  {
+    type: 15,
+    count: 1,
+    title: "明正",
+    text: "Dyson風筒 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "Dyson風筒": 1
+    }
+  },
+  {
+    type: 16,
+    count: 1,
+    title: "農林中央金庫",
+    text: "Yata禮品卡$3000 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "Yata禮品卡$3000": 1
+    }
+  },
+  {
+    type: 17,
+    count: 1,
+    title: "鉅發源",
+    text: "現金$2000 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "現金$2000": 1
+    }
+  },
+  {
+    type: 18,
+    count: 1,
+    title: "宏利人壽",
+    text: "現金優惠券$2000 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "現金優惠券$2000": 1
+    }
+  },
+  {
+    type: 19,
+    count: 3,
+    title: "Eggcellent",
+    text: "現金$1000 3份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "現金$1000": 3
+    }
+  },
+  {
+    type: 20,
+    count: 1,
+    title: "久保田",
+    text: "現金$1000 1份",
+    img: "../img/gift.jpeg",
+    kind: 1,
+    prize_list: {
+      "現金$1000": 1
+    }
+  },
+  {
+    type: 21,
+    count: 2,
+    title: "CS Advertising",
+    text: "惠康優惠券$1000 2份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "惠康優惠券$1000": 2
+    }
+  },
+  {
+    type: 22,
+    count: 2,
+    title: "Pan World",
+    text: "百佳優惠券$500 2份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "百佳優惠券$500": 2
+    }
+  },
+  {
+    type: 23,
+    count: 1,
+    title: "上組",
+    text: "清酒3支 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "上組清酒3支": 1
+    }
+  },
+  {
+    type: 24,
+    count: 1,
+    title: "ANA",
+    text: "十萬日元旅行支票 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "ANA十萬日元旅行支票": 1
+    }
+  },
+  {
+    type: 25,
+    count: 3,
+    title: "ANA",
+    text: "禮品包 3份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "ANA禮品包": 3
+    }
+  },
+  {
+    type: 26,
     count: 23,
     title: "綜合獎項",
     text: "23份",
@@ -164,7 +315,7 @@ const prizes = [
     }
   },
   {
-    type: 14,
+    type: 27,
     count: 25,
     title: "花開富貴",
     text: "禮盒 25份",
@@ -180,9 +331,12 @@ const prizes = [
  * 一次抽取的奖品个数与prizes对应
  */
 const EACH_COUNT = [
-  5, 5, 5, 5, 5,
+  1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1,
-  1, 1, 23, 25
+  1, 1, 1, 1, 1,
+  1, 1, 1, 3, 1,
+  2, 2, 1, 1, 3,
+  23,25
 ]
 /**
  * 卡片公司名称标识
