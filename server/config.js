@@ -237,11 +237,11 @@ const prizes = [
     type: 22,
     count: 1,
     title: "Apple",
-    text: "iPad Pro 11inch 1份",
+    text: "iPad Pro 11'' 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "iPad Pro 11inch": 1
+      "iPad Pro 11''": 1
     }
   },
   {
@@ -259,11 +259,11 @@ const prizes = [
     type: 24,
     count: 1,
     title: "Apple",
-    text: "iPad Air 11inch 1份",
+    text: "iPad Air 11'' 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "iPad Air 11inch": 1
+      "iPad Air 11''": 1
     }
   },
   {
@@ -280,7 +280,7 @@ const prizes = [
   {
     type: 26,
     count: 1,
-    title: "STEAM Deck 電競",
+    title: "Steam Deck電競",
     text: "OLED手提遊戲機 1份",
     img: "../img/gift.jpeg",
     kind: 3,
@@ -302,18 +302,18 @@ const prizes = [
   {
     type: 28,
     count: 1,
-    title: "Prizm",
-    text: "iPhone 16 Pro 1份",
+    title: "Legend World",
+    text: "iPhone 16 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "iPhone 16 Pro": 1
+      "iPhone 16": 1
     }
   },
   {
     type: 29,
     count: 1,
-    title: "Prizm",
+    title: "Legend World",
     text: "現金$5000 1份",
     img: "../img/gift.jpeg",
     kind: 3,
@@ -417,7 +417,7 @@ const prizes = [
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "上組清酒3支": 1
+      "清酒3支": 1
     }
   },
   {
