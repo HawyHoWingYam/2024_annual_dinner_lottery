@@ -280,7 +280,7 @@ const prizes = [
   {
     type: 26,
     count: 1,
-    title: "Steam Deck電競",
+    title: "Steam Deck",
     text: "OLED手提遊戲機 1份",
     img: "../img/gift.jpeg",
     kind: 3,
