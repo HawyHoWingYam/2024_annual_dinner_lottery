@@ -1,0 +1,8 @@
+prize_type,name,quantity,image
+6,iPhone 15,1,iphone.png
+5,iPad Pro,1,ipad.png
+5,AirPods Pro,1,airpods.png
+4,礼品卡,5,giftcard.png
+4,蓝牙音箱,5,speaker.png
+3,咖啡券,10,coffee.png
+3,电影票,10,movie.png

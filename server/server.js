@@ -6,6 +6,8 @@ let opn = require("opn");
 let bodyParser = require("body-parser");
 let path = require("path");
 let chokidar = require("chokidar");
+let fs = require('fs');
+const { parse } = require('csv-parse/sync');
 let cfg = require("./config");
 
 // Get local IP address
@@ -243,15 +245,72 @@ function setErrorData(data) {
 
 app.use(router);
 
+// CSV 读取函数
+function loadUsersFromCSV() {
+  const csvPath = path.join(__dirname, 'data/users.csv');
+  const fileContent = fs.readFileSync(csvPath, 'utf-8');
+  const records = parse(fileContent, {
+    columns: true,
+    skip_empty_lines: true
+  });
+
+  return records.map(row => [
+    row.id,
+    row.name,
+    row.department,
+    parseInt(row.type)
+  ]);
+}
+
+function loadPrizesFromCSV() {
+  const prizesPath = path.join(__dirname, 'data/prizes.csv');
+  const itemsPath = path.join(__dirname, 'data/prize_items.csv');
+
+  const prizesContent = fs.readFileSync(prizesPath, 'utf-8');
+  const itemsContent = fs.readFileSync(itemsPath, 'utf-8');
+
+  const prizes = parse(prizesContent, {
+    columns: true,
+    skip_empty_lines: true
+  });
+
+  const items = parse(itemsContent, {
+    columns: true,
+    skip_empty_lines: true
+  });
+
+  // 组合数据
+  return prizes.map(prize => {
+    const prizeItems = items.filter(item =>
+      item.prize_type === prize.type
+    );
+
+    const prize_list = {};
+    prizeItems.forEach(item => {
+      prize_list[item.name] = parseInt(item.quantity);
+    });
+
+    return {
+      type: parseInt(prize.type),
+      title: prize.title,
+      text: prize.text,
+      count: parseInt(prize.count),
+      kind: parseInt(prize.kind),
+      prize_list: prize_list
+    };
+  });
+}
+
 function loadData() {
-  console.log("加载EXCEL数据文件");
+  console.log("加载CSV数据文件");
   let cfgData = {};
 
-  //curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
-  //curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
   curData.users = loadUser();
   // 重新洗牌
   shuffle(curData.users);
+
+  // 加载奖品数据
+  cfg.prizes = loadPrizesFromCSV();
 
   // 读取已经抽取的结果
   loadTempData()
@@ -265,24 +324,7 @@ function loadData() {
 }
 
 function loadUser() {
-  // loop for 650 times to generate 650 users
-  let users = [];
-  for (let i = 1; i < 642; i++) {
-    // add 1 or 2 0s before the number
-    let name = (`000${i}`).slice(-4);
-    // let name =
-    users.push([name, name, `Hana-musubi`, 1]);
-  }
-  // for (let i = 1000; i < 1100; i++) {
-  //   // if (i != 1043 && i != 1009) {
-  //   //   users.push([i, i, `Guest`, 2]);
-  //   // }
-  //   user_data = [i, i, `Guest`, 2];
-  //   console.log("user_data", user_data);
-  //   users.push(user_data);
-  // }
-  console.log("users loaded", users.length);
-  return users;
+  return loadUsersFromCSV();
 }
 
 function getLeftUsers() {

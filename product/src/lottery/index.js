@@ -407,7 +407,9 @@ function createCard(user, isBold, id, showTable) {
   //添加公司标识
   // element.appendChild(createElement("company", COMPANY));
 
-  element.appendChild(createElement("name", user[1]));
+  // 显示格式: "部门 姓名"
+  const displayName = `${user[2]} ${user[1]}`;
+  element.appendChild(createElement("name", displayName));
 
   // element.appendChild(createElement("details", user[0] + "<br/>" + user[2]));
   return element;
@@ -962,15 +964,17 @@ function random(num) {
  */
 function changeCard(cardIndex, user, text = null) {
   let card = threeDCards[cardIndex].element;
+  const displayName = `${user[2]} ${user[1]}`;
+
   if (text) {
     text.forEach(item => {
       var temp_item = item.split(" :");
-      if (temp_item[0] == String(user[1])) {
-        card.innerHTML = `<div class="name">${user[1]} <span class="prize-text">${temp_item[1]}</span></div>`;
+      if (temp_item[0] == displayName) {
+        card.innerHTML = `<div class="name">${displayName} <span class="prize-text">${temp_item[1]}</span></div>`;
       }
     });
   } else {
-    card.innerHTML = `<div class="name">${user[1]}`;
+    card.innerHTML = `<div class="name">${displayName}`;
   }
 }
 
