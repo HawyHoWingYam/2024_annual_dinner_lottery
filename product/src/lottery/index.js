@@ -914,6 +914,14 @@ function changePrize() {
   setPrizeData(currentPrizeIndex, luckyCount);
 }
 
+function triggerSkipDimEffect() {
+  const overlay = document.getElementById('skipOverlay');
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+  setTimeout(() => {
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+  }, 300);
+}
+
 function skipToNextPrize() {
   // 防止在抽奖过程中跳过
   if (isLotting) {
@@ -937,6 +945,8 @@ function skipToNextPrize() {
   setPrizeData(currentPrizeIndex, luckys ? luckys.length : 0, true);
 
   addQipao(`已跳過至: ${currentPrize.text}`);
+
+  triggerSkipDimEffect();
 }
 
 /**
