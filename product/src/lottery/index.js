@@ -850,19 +850,30 @@ function lottery() {
 
       //如果是客人又是3等奖，则重新抽取
       while (luckyUser === undefined || (luckyUser[3] == 2 && prizeKind == 3)) {
+        // 检查是否还有可用用户
+        if (basicData.leftUsers.length === 0) {
+          console.error("No more users available for lottery");
+          break;
+        }
+        // 重新生成随机 ID
+        luckyId = random(basicData.leftUsers.length);
         luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
         console.log("prizeKind", prizeKind);
         console.log("luckyUser", luckyUser);
       }
-      currentLuckys.push(luckyUser);
-      leftCount--;
-      leftPrizeCount--;
 
-      let cardIndex = random(TOTAL_CARDS);
-      while (selectedCardIndex.includes(cardIndex)) {
-        cardIndex = random(TOTAL_CARDS);
+      // 添加安全检查
+      if (luckyUser) {
+        currentLuckys.push(luckyUser);
+        leftCount--;
+        leftPrizeCount--;
+
+        let cardIndex = random(TOTAL_CARDS);
+        while (selectedCardIndex.includes(cardIndex)) {
+          cardIndex = random(TOTAL_CARDS);
+        }
+        selectedCardIndex.push(cardIndex);
       }
-      selectedCardIndex.push(cardIndex);
 
       if (leftPrizeCount === 0) {
         break;

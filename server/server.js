@@ -8,7 +8,7 @@ let path = require("path");
 let chokidar = require("chokidar");
 let fs = require('fs');
 const { parse } = require('csv-parse/sync');
-let cfg = require("./config");
+let cfg = {}; // 将从CSV加载
 
 // Get local IP address
 function getLocalIP() {
@@ -53,7 +53,6 @@ let router = express.Router(),
   curData = {},
   luckyData = {},
   errorData = [],
-  defaultType = cfg.prizes[0]["type"],
   defaultPage = `default data`;
 
 //这里指定参数使用 json 格式
@@ -179,8 +178,7 @@ router.post("/errorData", (req, res, next) => {
 
 // 保存数据到excel中去
 router.post("/export", (req, res, next) => {
-  let type = [1, 2, 3, 4, 5, defaultType],
-    outData = [["工号", "姓名", "部门"]];
+  let outData = [["工号", "姓名", "部门"]];
   cfg.prizes.forEach(item => {
     outData.push([item.text]);
     outData = outData.concat(luckyData[item.type] || []);
@@ -279,7 +277,7 @@ function loadPrizesFromCSV() {
     skip_empty_lines: true
   });
 
-  // 组合数据
+  // 组合数据并按类型降序排序
   return prizes.map(prize => {
     const prizeItems = items.filter(item =>
       item.prize_type === prize.type
@@ -296,21 +294,42 @@ function loadPrizesFromCSV() {
       text: prize.text,
       count: parseInt(prize.count),
       kind: parseInt(prize.kind),
+      draw_count: parseInt(prize.draw_count),
       prize_list: prize_list
     };
-  });
+  }).sort((a, b) => b.type - a.type);
+}
+
+function getConfig() {
+  // 硬编码配置
+  return {
+    COMPANY: "Hana"
+  };
 }
 
 function loadData() {
   console.log("加载CSV数据文件");
-  let cfgData = {};
 
+  // 获取硬编码配置
+  const config = getConfig();
+
+  // 加载用户数据
   curData.users = loadUser();
   // 重新洗牌
   shuffle(curData.users);
 
-  // 加载奖品数据
-  cfg.prizes = loadPrizesFromCSV();
+  // 加载奖品数据（包含 draw_count）
+  const prizes = loadPrizesFromCSV();
+
+  // 构建 EACH_COUNT 数组
+  const EACH_COUNT = prizes.map(prize => prize.draw_count);
+
+  // 构建 cfg 对象（替代 config.js）
+  cfg = {
+    prizes: prizes,
+    EACH_COUNT: EACH_COUNT,
+    COMPANY: config.COMPANY
+  };
 
   // 读取已经抽取的结果
   loadTempData()
