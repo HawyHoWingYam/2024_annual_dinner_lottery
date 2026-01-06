@@ -231,7 +231,7 @@ let setPrizeData = (function () {
       }
       lastBox.classList.remove("shine");
       lastBox.classList.add("done");
-      elements.box.classList.remove("done");
+      elements.box && elements.box.classList.remove("done");
       elements.box && elements.box.classList.add("shine");
       // let currentTitle = elements.box.querySelector(".prize-title");
       // console.log(currentTitle);
@@ -261,10 +261,10 @@ let setPrizeData = (function () {
       prizeBar.scrollTo({
         top: elements.box.offsetTop - 190,
         behavior: "smooth"
-      }) 
-    }  
-    elements.box.querySelector(".prize-title").classList.remove("text_shadow");
-    elements.box.querySelector(".prize-sponsor").classList.remove("text_shadow");
+      });
+      elements.box.querySelector(".prize-title")?.classList.remove("text_shadow");
+      elements.box.querySelector(".prize-sponsor")?.classList.remove("text_shadow");
+    }
 
     let nextBox = document.querySelector("#prize-item-" + (currentPrizeIndex - 1));
     // if (nextBox != undefined) {

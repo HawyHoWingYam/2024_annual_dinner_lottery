@@ -1012,6 +1012,10 @@ function shineCard() {
       return;
     }
     maxUser = basicData.leftUsers.length;
+    // 如果没有剩余用户，跳过
+    if (maxUser === 0) {
+      return;
+    }
     for (let i = 0; i < shineCard; i++) {
       let index = random(maxUser),
         cardIndex = random(TOTAL_CARDS);
@@ -1019,8 +1023,12 @@ function shineCard() {
       if (selectedCardIndex.includes(cardIndex)) {
         continue;
       }
+      // 安全检查
+      const user = basicData.leftUsers[index];
+      if (!user) continue;
+
       shine(cardIndex);
-      changeCard(cardIndex, basicData.leftUsers[index]);
+      changeCard(cardIndex, user);
     }
   }, 1000);
 }
