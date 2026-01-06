@@ -303,11 +303,11 @@ const prizes = [
     type: 28,
     count: 1,
     title: "Legend World",
-    text: "iPhone 16 1份",
+    text: "iPhone 16 Pro 1份",
     img: "../img/gift.jpeg",
     kind: 3,
     prize_list: {
-      "iPhone 16": 1
+      "iPhone 16 Pro": 1
     }
   },
   {
@@ -324,6 +324,17 @@ const prizes = [
   {
     type: 30,
     count: 1,
+    title: "萬友富士",
+    text: "現金$5000 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "現金$5000": 1
+    }
+  },
+  {
+    type: 31,
+    count: 1,
     title: "明正",
     text: "Dyson風筒 1份",
     img: "../img/gift.jpeg",
@@ -333,7 +344,7 @@ const prizes = [
     }
   },
   {
-    type: 31,
+    type: 32,
     count: 1,
     title: "農林中央金庫",
     text: "Yata禮品卡$3000 1份",
@@ -344,7 +355,29 @@ const prizes = [
     }
   },
   {
-    type: 32,
+    type: 33,
+    count: 1,
+    title: "不二精機",
+    text: "LogOn現金禮券$3000 1份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "LogOn現金禮券$3000": 1
+    }
+  },
+  {
+    type: 34,
+    count: 3,
+    title: "不二精機",
+    text: "LogOn現金禮券$1000 3份",
+    img: "../img/gift.jpeg",
+    kind: 3,
+    prize_list: {
+      "LogOn現金禮券$1000": 3
+    }
+  },
+  {
+    type: 35,
     count: 1,
     title: "鉅發源",
     text: "現金$2000 1份",
@@ -355,7 +388,7 @@ const prizes = [
     }
   },
   {
-    type: 33,
+    type: 36,
     count: 1,
     title: "宏利人壽",
     text: "現金禮券$2000 1份",
@@ -366,7 +399,7 @@ const prizes = [
     }
   },
   {
-    type: 34,
+    type: 37,
     count: 3,
     title: "Eggcellent",
     text: "現金$1000 3份",
@@ -377,7 +410,7 @@ const prizes = [
     }
   },
   {
-    type: 35,
+    type: 38,
     count: 1,
     title: "久保田",
     text: "現金$1000 1份",
@@ -388,7 +421,7 @@ const prizes = [
     }
   },
   {
-    type: 36,
+    type: 39,
     count: 2,
     title: "CS Advertising",
     text: "現金禮券$1000 2份",
@@ -399,7 +432,7 @@ const prizes = [
     }
   },
   {
-    type: 37,
+    type: 40,
     count: 2,
     title: "Pan World",
     text: "現金禮券$500 2份",
@@ -410,7 +443,7 @@ const prizes = [
     }
   },
   {
-    type: 38,
+    type: 41,
     count: 1,
     title: "上組",
     text: "清酒3支 1份",
@@ -421,7 +454,7 @@ const prizes = [
     }
   },
   {
-    type: 39,
+    type: 42,
     count: 1,
     title: "ANA",
     text: "十萬日元旅行支票 1份",
@@ -432,7 +465,7 @@ const prizes = [
     }
   },
   {
-    type: 40,
+    type: 43,
     count: 3,
     title: "ANA",
     text: "禮品包 3份",
@@ -443,7 +476,7 @@ const prizes = [
     }
   },
   {
-    type: 41,
+    type: 44,
     count: 12,
     title: "綜合獎項",
     text: "12份",
@@ -461,7 +494,7 @@ const prizes = [
     }
   },
   {
-    type: 42,
+    type: 45,
     count: 11,
     title: "綜合獎項",
     text: "11份",
@@ -476,7 +509,7 @@ const prizes = [
     }
   },
   {
-    type: 43,
+    type: 46,
     count: 25,
     title: "花開富貴",
     text: "禮盒 25份",
@@ -494,18 +527,17 @@ const prizes = [
 const EACH_COUNT = [
   1, 1, 1, 1, 1,
   1, 1, 1, 1, 1,
-  
-  1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1,
-
 
   1, 1, 1, 1, 1,
   1, 1, 1, 1, 1,
-  
+
+  1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1,
+
   1, 1, 1, 1, 3,
-  1, 2, 2, 1, 1,
-  
-  3, 12, 11, 25
+  1, 1, 3, 1, 2,
+  2, 1, 1, 3, 12,
+  11, 25
 ]
 /**
  * 卡片公司名称标识

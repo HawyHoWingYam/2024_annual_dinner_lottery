@@ -33,6 +33,7 @@ let camera,
   scene,
   renderer,
   controls,
+  sphereGroup,
   threeDCards = [],
   targets = {
     table: [],
@@ -138,6 +139,9 @@ function initCards() {
 
   scene = new THREE.Scene();
 
+  sphereGroup = new THREE.Group();
+  scene.add(sphereGroup);
+
   for (let i = 0; i < ROW_COUNT; i++) {
     for (let j = 0; j < COLUMN_COUNT; j++) {
       isBold = HIGHLIGHT_CELL.includes(j + "-" + i);
@@ -152,7 +156,7 @@ function initCards() {
       object.position.x = Math.random() * 4000 - 2000;
       object.position.y = Math.random() * 4000 - 2000;
       object.position.z = Math.random() * 4000 - 2000;
-      scene.add(object);
+      sphereGroup.add(object);
       threeDCards.push(object);
 
       var object = new THREE.Object3D();
@@ -192,11 +196,8 @@ function initCards() {
 
   bindEvent();
 
-  if (showTable) {
-    switchScreen("enter");
-  } else {
-    switchScreen("lottery");
-  }
+  // Always go directly to lottery sphere
+  switchScreen("lottery");
 }
 
 function setLotteryStatus(status = false) {
@@ -258,7 +259,7 @@ function bindEvent() {
 
         resetPrize(currentPrizeIndex);
         reset();
-        switchScreen("enter");
+        switchScreen("lottery");
         break;
       // 抽奖
       case "lottery":
@@ -289,6 +290,10 @@ function bindEvent() {
           addQipao(`数据已保存到EXCEL中。`);
         });
         break;
+      // 跳过奖项
+      case "skip":
+        skipToNextPrize();
+        break;
     }
   });
 
@@ -316,6 +321,46 @@ function bindEvent() {
 
     }
   })
+
+  // press 'S' key to skip prize
+  document.addEventListener('keydown', event => {
+    if (event.code === 'KeyS') {
+      if (btns.lotteryBar.classList.contains("none")) {
+        return false;
+      }
+      event.stopPropagation();
+      skipToNextPrize();
+    }
+  });
+
+  // press 'R' key to reset
+  document.addEventListener('keydown', event => {
+    if (event.code === 'KeyR') {
+      if (btns.lotteryBar.classList.contains("none")) {
+        return false;
+      }
+      event.stopPropagation();
+
+      // Trigger reset logic
+      let doREset = window.confirm(
+        "是否确认重置数据，重置后，当前已抽的奖项全部清空？"
+      );
+      if (!doREset) {
+        return;
+      }
+      addQipao("重置所有数据，重新抽奖");
+      addHighlight();
+      resetCard();
+      currentLuckys = [];
+      basicData.leftUsers = Object.assign([], basicData.users);
+      basicData.luckyUsers = {};
+      currentPrizeIndex = basicData.prizes.length - 1;
+      currentPrize = basicData.prizes[currentPrizeIndex];
+      resetPrize(currentPrizeIndex);
+      reset();
+      switchScreen("lottery");
+    }
+  });
 
   window.addEventListener("resize", onWindowResize, false);
 }
@@ -446,8 +491,8 @@ function transform(targets, duration) {
 
 function rotateBall() {
   return new Promise((resolve, reject) => {
-    scene.rotation.y = 0;
-    rotateObj = new TWEEN.Tween(scene.rotation);
+    sphereGroup.rotation.y = 0;
+    rotateObj = new TWEEN.Tween(sphereGroup.rotation);
     rotateObj
       .to(
         {
@@ -455,11 +500,21 @@ function rotateBall() {
         },
         ROTATE_TIME * ROTATE_LOOP
       )
-      .onUpdate(render)
+      .onUpdate(() => {
+        // Counter-rotate each card to maintain facing direction
+        threeDCards.forEach(card => {
+          card.rotation.y = -sphereGroup.rotation.y;
+        });
+        render();
+      })
       // .easing(TWEEN.Easing.Linear)
       .start()
       .onStop(() => {
-        scene.rotation.y = 0;
+        sphereGroup.rotation.y = 0;
+        // Reset card rotations
+        threeDCards.forEach(card => {
+          card.rotation.y = 0;
+        });
         resolve();
       })
       .onComplete(() => {
@@ -871,6 +926,67 @@ function changePrize() {
   let luckyCount = (luckys ? luckys.length : 0) + EACH_COUNT[currentPrizeIndex];
   // 修改左侧prize的数目和百分比
   setPrizeData(currentPrizeIndex, luckyCount);
+}
+
+function triggerSkipRotation() {
+  // Store current rotation
+  const startRotation = sphereGroup.rotation.y;
+  const targetRotation = startRotation + Math.PI / 4; // Rotate 45 degrees
+
+  // Create rotation tween
+  new TWEEN.Tween(sphereGroup.rotation)
+    .to({ y: targetRotation }, 500) // 500ms duration
+    .easing(TWEEN.Easing.Quadratic.InOut)
+    .onUpdate(() => {
+      // Counter-rotate each card to maintain facing direction
+      threeDCards.forEach(card => {
+        card.rotation.y = -sphereGroup.rotation.y;
+      });
+      render();
+    })
+    .onComplete(() => {
+      // Rotate back to original position
+      new TWEEN.Tween(sphereGroup.rotation)
+        .to({ y: startRotation }, 500)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+          // Counter-rotate each card during return animation
+          threeDCards.forEach(card => {
+            card.rotation.y = -sphereGroup.rotation.y;
+          });
+          render();
+        })
+        .start();
+    })
+    .start();
+}
+
+function skipToNextPrize() {
+  // 防止在抽奖过程中跳过
+  if (isLotting) {
+    addQipao("正在抽獎中，無法跳過");
+    return;
+  }
+
+  // 检查是否还有更多奖项可以跳过
+  if (currentPrizeIndex <= 0) {
+    addQipao("已經是最後一個獎項了");
+    return;
+  }
+
+  // 移动到下一个奖项
+  currentPrizeIndex--;
+  currentPrize = basicData.prizes[currentPrizeIndex];
+
+  // 更新UI
+  showPrizeList(currentPrizeIndex);
+  let luckys = basicData.luckyUsers[currentPrize.type];
+  setPrizeData(currentPrizeIndex, luckys ? luckys.length : 0, true);
+
+  addQipao(`已跳過至: ${currentPrize.text}`);
+
+  // Trigger sphere rotation animation
+  triggerSkipRotation();
 }
 
 /**
