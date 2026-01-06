@@ -33,7 +33,6 @@ let camera,
   scene,
   renderer,
   controls,
-  sphereGroup,
   threeDCards = [],
   targets = {
     table: [],
@@ -139,9 +138,6 @@ function initCards() {
 
   scene = new THREE.Scene();
 
-  sphereGroup = new THREE.Group();
-  scene.add(sphereGroup);
-
   for (let i = 0; i < ROW_COUNT; i++) {
     for (let j = 0; j < COLUMN_COUNT; j++) {
       isBold = HIGHLIGHT_CELL.includes(j + "-" + i);
@@ -156,7 +152,7 @@ function initCards() {
       object.position.x = Math.random() * 4000 - 2000;
       object.position.y = Math.random() * 4000 - 2000;
       object.position.z = Math.random() * 4000 - 2000;
-      sphereGroup.add(object);
+      scene.add(object);
       threeDCards.push(object);
 
       var object = new THREE.Object3D();
@@ -491,8 +487,8 @@ function transform(targets, duration) {
 
 function rotateBall() {
   return new Promise((resolve, reject) => {
-    sphereGroup.rotation.y = 0;
-    rotateObj = new TWEEN.Tween(sphereGroup.rotation);
+    scene.rotation.y = 0;
+    rotateObj = new TWEEN.Tween(scene.rotation);
     rotateObj
       .to(
         {
@@ -500,21 +496,11 @@ function rotateBall() {
         },
         ROTATE_TIME * ROTATE_LOOP
       )
-      .onUpdate(() => {
-        // Counter-rotate each card to maintain facing direction
-        threeDCards.forEach(card => {
-          card.rotation.y = -sphereGroup.rotation.y;
-        });
-        render();
-      })
+      .onUpdate(render)
       // .easing(TWEEN.Easing.Linear)
       .start()
       .onStop(() => {
-        sphereGroup.rotation.y = 0;
-        // Reset card rotations
-        threeDCards.forEach(card => {
-          card.rotation.y = 0;
-        });
+        scene.rotation.y = 0;
         resolve();
       })
       .onComplete(() => {
@@ -928,39 +914,6 @@ function changePrize() {
   setPrizeData(currentPrizeIndex, luckyCount);
 }
 
-function triggerSkipRotation() {
-  // Store current rotation
-  const startRotation = sphereGroup.rotation.y;
-  const targetRotation = startRotation + Math.PI / 4; // Rotate 45 degrees
-
-  // Create rotation tween
-  new TWEEN.Tween(sphereGroup.rotation)
-    .to({ y: targetRotation }, 500) // 500ms duration
-    .easing(TWEEN.Easing.Quadratic.InOut)
-    .onUpdate(() => {
-      // Counter-rotate each card to maintain facing direction
-      threeDCards.forEach(card => {
-        card.rotation.y = -sphereGroup.rotation.y;
-      });
-      render();
-    })
-    .onComplete(() => {
-      // Rotate back to original position
-      new TWEEN.Tween(sphereGroup.rotation)
-        .to({ y: startRotation }, 500)
-        .easing(TWEEN.Easing.Quadratic.InOut)
-        .onUpdate(() => {
-          // Counter-rotate each card during return animation
-          threeDCards.forEach(card => {
-            card.rotation.y = -sphereGroup.rotation.y;
-          });
-          render();
-        })
-        .start();
-    })
-    .start();
-}
-
 function skipToNextPrize() {
   // 防止在抽奖过程中跳过
   if (isLotting) {
@@ -984,9 +937,6 @@ function skipToNextPrize() {
   setPrizeData(currentPrizeIndex, luckys ? luckys.length : 0, true);
 
   addQipao(`已跳過至: ${currentPrize.text}`);
-
-  // Trigger sphere rotation animation
-  triggerSkipRotation();
 }
 
 /**
