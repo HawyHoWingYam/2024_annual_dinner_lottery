@@ -637,7 +637,7 @@ function selectCard(currentPrizeData) {
   // 计算位置信息
   if (currentLuckys.length > 20) {
     // Five rows
-    let yPosition = [-448, -324, -200, -76, 48],
+    let yPosition = [-348, -224, -100, 24, 148],
       l = selectedCardIndex.length,
       row1 = Math.ceil(l / 5),
       row2 = Math.ceil((l - row1) / 4),
@@ -681,7 +681,7 @@ function selectCard(currentPrizeData) {
 
   } else if (currentLuckys.length > 15) {
     // Four rows
-    let yPosition = [-374, -258, -142, -26],
+    let yPosition = [-274, -158, -42, 74],
       l = selectedCardIndex.length,
       row1 = Math.ceil(l / 4),
       row2 = Math.ceil((l - row1) / 3),
@@ -716,7 +716,7 @@ function selectCard(currentPrizeData) {
     }
 
   } else if (currentLuckys.length > 10) {
-    let yPosition = [-374, -200, -26], // Three row positions
+    let yPosition = [-274, -100, 74], // Three row positions
       l = selectedCardIndex.length,
       row1 = Math.ceil(l / 3),
       row2 = Math.ceil((l - row1) / 2);
@@ -751,7 +751,7 @@ function selectCard(currentPrizeData) {
       tag++;
     }
   } else if (currentLuckys.length > 5) {
-    let yPosition = [-287, -113],
+    let yPosition = [-187, -13],
       l = selectedCardIndex.length,
       mid = Math.ceil(l / 2);
     tag = -(mid - 1) / 2;
@@ -775,7 +775,7 @@ function selectCard(currentPrizeData) {
     for (let i = selectedCardIndex.length; i > 0; i--) {
       locates.push({
         x: tag * width * Resolution,
-        y: -200 * Resolution
+        y: -100 * Resolution
       });
       tag++;
     }
