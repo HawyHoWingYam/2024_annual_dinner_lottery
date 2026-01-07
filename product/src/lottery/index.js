@@ -303,6 +303,9 @@ function bindEvent() {
 
   // Helper function to show prize intro overlay
   function showPrizeIntro() {
+    console.log('[PRIZE_INTRO] currentPrizeIndex:', currentPrizeIndex, 'type:', currentPrize.type, 'title:', currentPrize.title);
+    console.log('[PRIZE_INTRO] images:', currentPrize.images);
+
     const overlay = document.getElementById('prizeIntroOverlay');
     const prizeImage = document.getElementById('prizeIntroImage');
     const prizeName = document.getElementById('prizeIntroName');
@@ -347,6 +350,8 @@ function bindEvent() {
   document.addEventListener('keydown', event => {
 
     if (event.code === 'Space') {
+      console.log('[SPACE_KEY] showingPrizeIntro:', showingPrizeIntro, 'currentPrizeIndex:', currentPrizeIndex, 'type:', currentPrize?.type);
+
       if (isLotting || btns.lotteryBar.classList.contains("none")) {
         return false;
       };
@@ -355,16 +360,17 @@ function bindEvent() {
       // Two-step flow: first show prize intro, then start lottery
       if (!showingPrizeIntro) {
         // First press: show prize intro
+        console.log('[SPACE_KEY] First press - showing prize intro');
         showingPrizeIntro = true;
         showPrizeIntro();
         return;
       }
 
       // Second press: hide prize intro and start lottery
+      console.log('[SPACE_KEY] Second press - starting lottery');
       hidePrizeIntroWithAnimation().then(() => {
         setLotteryStatus(true);
-        // // 每次抽奖前先保存上一次的抽奖数据
-        saveData();
+        // REMOVED: saveData() - now handled in selectCard() onComplete
         //更新剩余抽奖数目的数据显示
         changePrize();
         resetCard().then(res => {
@@ -844,6 +850,30 @@ function selectCard(currentPrizeData) {
       // 动画结束后可以操作
       setLotteryStatus();
 
+      // FIRST: Save current lottery winners to the correct prize type
+      let type = currentPrize.type;
+      let curLucky = basicData.luckyUsers[type] || [];
+      curLucky = curLucky.concat(currentLuckys);
+      basicData.luckyUsers[type] = curLucky;
+      console.log('[SELECT_CARD] Saved winners - type:', type, 'total:', curLucky.length);
+
+      // THEN: Check if prize is complete and update to next prize
+      let totalCount = curLucky.length;
+      console.log('[SELECT_CARD] Before update - prizeIndex:', currentPrizeIndex, 'type:', currentPrize.type, 'totalCount:', totalCount, 'count:', currentPrize.count);
+
+      if (currentPrize.count <= totalCount) {
+        console.log('[SELECT_CARD] Prize complete! Updating to next prize');
+        currentPrizeIndex--;
+        if (currentPrizeIndex <= -1) {
+          currentPrizeIndex = 0;
+        }
+        currentPrize = basicData.prizes[currentPrizeIndex];
+        console.log('[SELECT_CARD] After update - prizeIndex:', currentPrizeIndex, 'type:', currentPrize.type, 'title:', currentPrize.title);
+
+        // Reset prize intro state for the new prize
+        showingPrizeIntro = false;
+      }
+
       // 保存详细结果到 CSV
       if (detailedResults.length > 0) {
         window.AJAX({
@@ -925,6 +955,7 @@ function lottery() {
   btns.lottery.style.display = "none";
   rotateBall().then(() => {
     console.log('[LOTTERY] 开始抽奖');
+    console.log('[LOTTERY] Prize Info - type:', currentPrize.type, 'title:', currentPrize.title, 'prize_list:', currentPrize.prize_list);
     // 将之前的记录置空
     currentLuckys = [];
     selectedCardIndex = [];
@@ -1030,13 +1061,16 @@ function saveData() {
 
   basicData.luckyUsers[type] = curLucky;
 
+  console.log('[SAVE_DATA] Before - prizeIndex:', currentPrizeIndex, 'type:', currentPrize.type, 'curLucky.length:', curLucky.length, 'count:', currentPrize.count);
+
   if (currentPrize.count <= curLucky.length) {
+    console.log('[SAVE_DATA] Prize complete! Updating to next prize');
     currentPrizeIndex--;
     if (currentPrizeIndex <= -1) {
       currentPrizeIndex = 0;
     }
     currentPrize = basicData.prizes[currentPrizeIndex];
-    // console.log(currentPrize);
+    console.log('[SAVE_DATA] After - prizeIndex:', currentPrizeIndex, 'type:', currentPrize.type, 'title:', currentPrize.title);
   }
 
   if (currentLuckys.length > 0) {
