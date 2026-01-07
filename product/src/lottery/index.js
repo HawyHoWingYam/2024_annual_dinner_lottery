@@ -56,7 +56,9 @@ let selectedCardIndex = [],
   // 正在抽奖
   isLotting = false,
   currentLuckys = [],
-  audio = new Audio("../data/audio.mp3");
+  audio = new Audio("../data/audio.mp3"),
+  // 是否显示奖品介绍
+  showingPrizeIntro = false;
 
 initAll();
 
@@ -253,6 +255,12 @@ function bindEvent() {
         currentPrizeIndex = basicData.prizes.length - 1;
         currentPrize = basicData.prizes[currentPrizeIndex];
 
+        // Reset prize intro state
+        showingPrizeIntro = false;
+        const overlay = document.getElementById('prizeIntroOverlay');
+        overlay.classList.remove('show', 'shrink-up');
+        overlay.classList.add('hidden');
+
         resetPrize(currentPrizeIndex);
         reset();
         switchScreen("lottery");
@@ -293,6 +301,48 @@ function bindEvent() {
     }
   });
 
+  // Helper function to show prize intro overlay
+  function showPrizeIntro() {
+    const overlay = document.getElementById('prizeIntroOverlay');
+    const prizeImage = document.getElementById('prizeIntroImage');
+    const prizeName = document.getElementById('prizeIntroName');
+
+    if (currentPrize && currentPrize.images && currentPrize.images.length > 0) {
+      prizeImage.src = `server/data/img/${currentPrize.images[0]}`;
+    }
+
+    prizeName.textContent = currentPrize.title || '';
+
+    overlay.classList.remove('hidden');
+    overlay.classList.add('show');
+  }
+
+  // Helper function to hide prize intro with animation
+  function hidePrizeIntroWithAnimation() {
+    const overlay = document.getElementById('prizeIntroOverlay');
+
+    overlay.classList.add('shrink-up');
+
+    return new Promise(resolve => {
+      const handleTransitionEnd = () => {
+        overlay.removeEventListener('transitionend', handleTransitionEnd);
+        overlay.classList.remove('show', 'shrink-up');
+        overlay.classList.add('hidden');
+        showingPrizeIntro = false;
+        resolve();
+      };
+
+      overlay.addEventListener('transitionend', handleTransitionEnd);
+
+      // Fallback timeout in case transitionend doesn't fire
+      setTimeout(() => {
+        if (overlay.classList.contains('shrink-up')) {
+          handleTransitionEnd();
+        }
+      }, 700);
+    });
+  }
+
   // press space
   document.addEventListener('keydown', event => {
 
@@ -301,20 +351,31 @@ function bindEvent() {
         return false;
       };
       event.stopPropagation();
-      setLotteryStatus(true);
-      // // 每次抽奖前先保存上一次的抽奖数据
-      saveData();
-      //更新剩余抽奖数目的数据显示
-      changePrize();
-      resetCard().then(res => {
-        // 抽奖
-        lottery();
-      });
-      audio.play();
-      setTimeout(() => {
-        btns.lottery.click();
-      }, 2000);
 
+      // Two-step flow: first show prize intro, then start lottery
+      if (!showingPrizeIntro) {
+        // First press: show prize intro
+        showingPrizeIntro = true;
+        showPrizeIntro();
+        return;
+      }
+
+      // Second press: hide prize intro and start lottery
+      hidePrizeIntroWithAnimation().then(() => {
+        setLotteryStatus(true);
+        // // 每次抽奖前先保存上一次的抽奖数据
+        saveData();
+        //更新剩余抽奖数目的数据显示
+        changePrize();
+        resetCard().then(res => {
+          // 抽奖
+          lottery();
+        });
+        audio.play();
+        setTimeout(() => {
+          btns.lottery.click();
+        }, 2000);
+      });
     }
   })
 
@@ -1017,6 +1078,12 @@ function skipToNextPrize() {
   // 移动到下一个奖项
   currentPrizeIndex--;
   currentPrize = basicData.prizes[currentPrizeIndex];
+
+  // Reset prize intro state when changing prize
+  showingPrizeIntro = false;
+  const overlay = document.getElementById('prizeIntroOverlay');
+  overlay.classList.remove('show', 'shrink-up');
+  overlay.classList.add('hidden');
 
   // 更新UI
   showPrizeList(currentPrizeIndex);

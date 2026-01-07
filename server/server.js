@@ -26,8 +26,10 @@ function getLocalIP() {
 let localIP = getLocalIP();
 
 
-app.use(express.static('.')); 
+app.use(express.static('.'));
 
+// Serve prize images explicitly
+app.use('/server/data/img', express.static(path.join(__dirname, 'data', 'img')));
 
 // Add CORS middleware
 app.use((req, res, next) => {
@@ -319,8 +321,12 @@ function loadPrizesFromCSV() {
     );
 
     const prize_list = {};
+    const images = [];
     prizeItems.forEach(item => {
       prize_list[item.name] = parseInt(item.quantity);
+      if (item.image && !images.includes(item.image)) {
+        images.push(item.image);
+      }
     });
 
     return {
@@ -330,7 +336,8 @@ function loadPrizesFromCSV() {
       count: parseInt(prize.count),
       kind: parseInt(prize.kind),
       draw_count: parseInt(prize.draw_count),
-      prize_list: prize_list
+      prize_list: prize_list,
+      images: images
     };
   }).sort((a, b) => b.type - a.type);
 }
