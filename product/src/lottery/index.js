@@ -329,8 +329,8 @@ function bindEvent() {
     return new Promise(resolve => {
       const handleTransitionEnd = () => {
         overlay.removeEventListener('transitionend', handleTransitionEnd);
-        overlay.classList.remove('show', 'shrink-up');
-        overlay.classList.add('hidden');
+        overlay.classList.remove('show');
+        // Keep shrink-up class and don't hide overlay - prize stays visible at top
         showingPrizeIntro = false;
         resolve();
       };
@@ -612,7 +612,7 @@ function selectCard(currentPrizeData) {
   // 计算位置信息
   if (currentLuckys.length > 20) {
     // Five rows
-    let yPosition = [-248, -124, 0, 124, 248],
+    let yPosition = [-448, -324, -200, -76, 48],
       l = selectedCardIndex.length,
       row1 = Math.ceil(l / 5),
       row2 = Math.ceil((l - row1) / 4),
@@ -656,7 +656,7 @@ function selectCard(currentPrizeData) {
 
   } else if (currentLuckys.length > 15) {
     // Four rows
-    let yPosition = [-174, -58, 58, 174],
+    let yPosition = [-374, -258, -142, -26],
       l = selectedCardIndex.length,
       row1 = Math.ceil(l / 4),
       row2 = Math.ceil((l - row1) / 3),
@@ -691,7 +691,7 @@ function selectCard(currentPrizeData) {
     }
 
   } else if (currentLuckys.length > 10) {
-    let yPosition = [-174, 0, 174], // Three row positions
+    let yPosition = [-374, -200, -26], // Three row positions
       l = selectedCardIndex.length,
       row1 = Math.ceil(l / 3),
       row2 = Math.ceil((l - row1) / 2);
@@ -726,7 +726,7 @@ function selectCard(currentPrizeData) {
       tag++;
     }
   } else if (currentLuckys.length > 5) {
-    let yPosition = [-87, 87],
+    let yPosition = [-287, -113],
       l = selectedCardIndex.length,
       mid = Math.ceil(l / 2);
     tag = -(mid - 1) / 2;
@@ -750,7 +750,7 @@ function selectCard(currentPrizeData) {
     for (let i = selectedCardIndex.length; i > 0; i--) {
       locates.push({
         x: tag * width * Resolution,
-        y: 0 * Resolution
+        y: -200 * Resolution
       });
       tag++;
     }

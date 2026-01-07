@@ -713,7 +713,8 @@ button:active {
 }
 
 #prizeIntroOverlay.shrink-up {
-  opacity: 0;
+  background-color: transparent;
+  opacity: 1;
   pointer-events: none;
 }
 
@@ -724,8 +725,17 @@ button:active {
 }
 
 #prizeIntroOverlay.shrink-up .prize-intro-content {
-  transform: scale(0.3) translateY(-200px);
-  opacity: 0;
+  transform: scale(0.85) translateY(-30vh);
+  opacity: 1;
+}
+
+#prizeIntroOverlay.shrink-up #prizeIntroImage {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+#prizeIntroOverlay.shrink-up .prize-intro-name {
+  font-size: 48px;
 }
 
 #prizeIntroImage {
