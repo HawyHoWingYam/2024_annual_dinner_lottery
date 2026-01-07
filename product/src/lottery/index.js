@@ -310,24 +310,36 @@ function bindEvent() {
     const prizeImage = document.getElementById('prizeIntroImage');
     const prizeName = document.getElementById('prizeIntroName');
 
+    console.log('[PRIZE_INTRO] Overlay element:', overlay);
+    console.log('[PRIZE_INTRO] Overlay classes before:', overlay.className);
+
     if (currentPrize && currentPrize.images && currentPrize.images.length > 0) {
       prizeImage.src = `server/data/img/${currentPrize.images[0]}`;
     }
 
     prizeName.textContent = currentPrize.title || '';
 
-    overlay.classList.remove('hidden');
+    overlay.classList.remove('hidden', 'shrink-up');
     overlay.classList.add('show');
+
+    console.log('[PRIZE_INTRO] Overlay classes after:', overlay.className);
+    console.log('[PRIZE_INTRO] Overlay computed background:', window.getComputedStyle(overlay).backgroundColor);
+    console.log('[PRIZE_INTRO] Overlay computed opacity:', window.getComputedStyle(overlay).opacity);
   }
 
   // Helper function to hide prize intro with animation
   function hidePrizeIntroWithAnimation() {
+    console.log('[PRIZE_INTRO] Hiding prize intro with animation');
     const overlay = document.getElementById('prizeIntroOverlay');
 
+    console.log('[PRIZE_INTRO] Overlay classes before shrink-up:', overlay.className);
     overlay.classList.add('shrink-up');
+    console.log('[PRIZE_INTRO] Overlay classes after shrink-up:', overlay.className);
+    console.log('[PRIZE_INTRO] Overlay computed background:', window.getComputedStyle(overlay).backgroundColor);
 
     return new Promise(resolve => {
       const handleTransitionEnd = () => {
+        console.log('[PRIZE_INTRO] Transition ended');
         overlay.removeEventListener('transitionend', handleTransitionEnd);
         overlay.classList.remove('show');
         // Keep shrink-up class and don't hide overlay - prize stays visible at top
@@ -340,6 +352,7 @@ function bindEvent() {
       // Fallback timeout in case transitionend doesn't fire
       setTimeout(() => {
         if (overlay.classList.contains('shrink-up')) {
+          console.log('[PRIZE_INTRO] Transition timeout - calling handleTransitionEnd');
           handleTransitionEnd();
         }
       }, 700);
@@ -350,7 +363,13 @@ function bindEvent() {
   document.addEventListener('keydown', event => {
 
     if (event.code === 'Space') {
-      console.log('[SPACE_KEY] showingPrizeIntro:', showingPrizeIntro, 'currentPrizeIndex:', currentPrizeIndex, 'type:', currentPrize?.type);
+      console.log('[SPACE_KEY] Pressed. showingPrizeIntro:', showingPrizeIntro, 'currentPrizeIndex:', currentPrizeIndex, 'type:', currentPrize?.type);
+
+      const overlay = document.getElementById('prizeIntroOverlay');
+      console.log('[SPACE_KEY] Overlay element:', overlay);
+      console.log('[SPACE_KEY] Overlay display:', window.getComputedStyle(overlay).display);
+      console.log('[SPACE_KEY] Overlay visibility:', window.getComputedStyle(overlay).visibility);
+      console.log('[SPACE_KEY] Overlay opacity:', window.getComputedStyle(overlay).opacity);
 
       if (isLotting || btns.lotteryBar.classList.contains("none")) {
         return false;
