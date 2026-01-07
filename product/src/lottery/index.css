@@ -713,6 +713,7 @@ button:active {
 }
 
 #prizeIntroOverlay.shrink-up {
+  background-color: transparent;
   opacity: 1;
   pointer-events: none;
 }

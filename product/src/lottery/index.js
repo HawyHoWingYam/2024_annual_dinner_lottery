@@ -313,6 +313,12 @@ function bindEvent() {
     console.log('[PRIZE_INTRO] Overlay element:', overlay);
     console.log('[PRIZE_INTRO] Overlay classes before:', overlay.className);
 
+    // Clear previous winner cards by resetting them to sphere
+    console.log('[PRIZE_INTRO] Resetting winner cards to sphere');
+    if (selectedCardIndex.length > 0) {
+      resetCard();  // Animates cards back to sphere and clears arrays
+    }
+
     if (currentPrize && currentPrize.images && currentPrize.images.length > 0) {
       prizeImage.src = `server/data/img/${currentPrize.images[0]}`;
     }
