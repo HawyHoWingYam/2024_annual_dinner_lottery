@@ -99,10 +99,12 @@ a {
   top: 0vh;
   left: 0;
   right: 0;
-  font-size: 3vh;
+  font-size: 2.5vh;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 0 0vh rgba(255, 255, 255);
+  white-space: pre-line;
+  line-height: 1.2;
 }
 
 /* Details inside element */
@@ -163,6 +165,7 @@ button:active {
 /* Prize element styles */
 .prize.element .name {
   text-shadow: none;
+  transform: scale(0.60);
 }
 
 .prize.element {

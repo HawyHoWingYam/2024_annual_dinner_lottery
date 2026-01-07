@@ -499,8 +499,8 @@ function createCard(user, isBold, id, showTable) {
   //添加公司标识
   // element.appendChild(createElement("company", COMPANY));
 
-  // 显示格式: "部门 姓名"
-  const displayName = `${user[2]} ${user[1]}`;
+  // 显示格式: "部门\n姓名"
+  const displayName = `${user[2]}\n${user[1]}`;
   element.appendChild(createElement("name", displayName));
 
   // element.appendChild(createElement("details", user[0] + "<br/>" + user[2]));
@@ -629,7 +629,7 @@ function render() {
 function selectCard(currentPrizeData) {
   rotate = false;
   var duration = 500;
-  let width = 140,
+  let width = 182,
     tag = -(currentLuckys.length - 1) / 2,
     locates = [];
 
@@ -864,6 +864,7 @@ function selectCard(currentPrizeData) {
       .start();
 
     object.element.classList.add("prize");
+    object.scale.set(1.3, 1.3, 1.3);  // 放大30%
     tag++;
   });
 
@@ -1167,12 +1168,12 @@ function random(num) {
  */
 function changeCard(cardIndex, user, text = null) {
   let card = threeDCards[cardIndex].element;
-  const displayName = `${user[2]} ${user[1]}`;
+  const displayName = `${user[2]}<br>${user[1]}`;
 
   if (text) {
     text.forEach(item => {
       var temp_item = item.split(" :");
-      if (temp_item[0] == displayName) {
+      if (temp_item[0].trim() == `${user[2]} ${user[1]}`) {
         card.innerHTML = `<div class="name">${displayName} <span class="prize-text">${temp_item[1]}</span></div>`;
       }
     });
