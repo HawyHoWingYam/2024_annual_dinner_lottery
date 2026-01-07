@@ -138,11 +138,43 @@ function shuffle(arr) {
   }
 }
 
+/**
+ * 保存 CSV 文件
+ * @param {Array} data - 二维数组，每行是一个数组
+ * @param {string} filename - 文件名
+ */
+function saveCSV(data, filename) {
+  const csvPath = path.join(cwd, filename);
+  // 将数组转换为 CSV 格式，处理包含逗号的字段
+  const csvContent = data.map(row =>
+    row.map(cell => {
+      const str = String(cell);
+      // 如果包含逗号、引号或换行，需要用引号包围并转义引号
+      if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+        return '"' + str.replace(/"/g, '""') + '"';
+      }
+      return str;
+    }).join(',')
+  ).join('\n');
+
+  return new Promise((resolve, reject) => {
+    fs.appendFile(csvPath, csvContent + '\n', 'utf8', (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve();
+      console.log("CSV数据写入成功");
+    });
+  });
+}
+
 module.exports = {
   loadTempData,
   loadXML,
   shuffle,
   writeXML,
   saveDataFile,
-  saveErrorDataFile
+  saveErrorDataFile,
+  saveCSV
 };

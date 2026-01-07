@@ -44,7 +44,8 @@ let {
   writeXML,
   saveDataFile,
   shuffle,
-  saveErrorDataFile
+  saveErrorDataFile,
+  saveCSV
 } = require("./help");
 
 let router = express.Router(),
@@ -199,6 +200,40 @@ router.post("/export", (req, res, next) => {
         error: err.error
       });
       log(`导出数据失败！`);
+    });
+});
+
+// 保存抽奖结果到 CSV
+router.post("/saveLotteryResults", (req, res, next) => {
+  let results = req.body.results;
+
+  if (!results || results.length === 0) {
+    res.json({ type: "error", error: "No results provided" });
+    return;
+  }
+
+  // 转换为 CSV 格式
+  let csvData = results.map(r => [
+    r.id, r.name, r.department,
+    r.prizeLevel, r.prizeItem, r.timestamp
+  ]);
+
+  // 检查文件是否存在，如果不存在则添加表头
+  const csvFilePath = path.join(__dirname, "cache", "lottery_results.csv");
+  const fileExists = fs.existsSync(csvFilePath);
+
+  if (!fileExists) {
+    csvData.unshift(['工号', '姓名', '部门', '奖项等级', '具体奖品', '时间']);
+  }
+
+  saveCSV(csvData, "lottery_results.csv")
+    .then(() => {
+      res.json({ type: "success" });
+      log(`抽奖结果保存到 CSV 成功`);
+    })
+    .catch(err => {
+      res.json({ type: "error", error: err.message });
+      log(`抽奖结果保存到 CSV 失败: ${err.message}`);
     });
 });
 

@@ -724,7 +724,27 @@ function selectCard(currentPrizeData) {
   //   `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
   // );
 
+  // 创建详细的中奖记录用于 CSV 导出
+  let detailedResults = [];
   selectedCardIndex.forEach((cardIndex, index) => {
+    const user = currentLuckys[index];
+    const prizeName = text[index].split(' :')[1] || text[index];
+
+    console.log(`[CSV] Index ${index}: User=${user ? user[1] : 'undefined'}, Prize=${prizeName}`);
+
+    detailedResults.push({
+      id: user[0],           // 工号
+      name: user[1],         // 姓名
+      department: user[2],   // 部门
+      prizeLevel: currentPrize.text,  // 奖项等级
+      prizeItem: prizeName,  // 具体奖品
+      timestamp: new Date().toISOString()
+    });
+  });
+
+  selectedCardIndex.forEach((cardIndex, index) => {
+    const user = currentLuckys[index];
+    console.log(`[UI] Index ${index}: CardIndex=${cardIndex}, User=${user ? user[1] : 'undefined'}, Department=${user ? user[2] : 'undefined'}`);
     changeCard(cardIndex, currentLuckys[index], text);
     var object = threeDCards[cardIndex];
     new TWEEN.Tween(object.position)
@@ -762,6 +782,20 @@ function selectCard(currentPrizeData) {
     .onComplete(() => {
       // 动画结束后可以操作
       setLotteryStatus();
+
+      // 保存详细结果到 CSV
+      if (detailedResults.length > 0) {
+        window.AJAX({
+          url: "/saveLotteryResults",
+          data: { results: detailedResults },
+          success() {
+            console.log("CSV保存成功");
+          },
+          error() {
+            console.error("CSV保存失败");
+          }
+        });
+      }
     });
 }
 
@@ -829,6 +863,7 @@ function lottery() {
   // btns.lottery.innerHTML = "結束抽獎";
   btns.lottery.style.display = "none";
   rotateBall().then(() => {
+    console.log('[LOTTERY] 开始抽奖');
     // 将之前的记录置空
     currentLuckys = [];
     selectedCardIndex = [];
@@ -839,13 +874,42 @@ function lottery() {
       leftPrizeCount = currentPrize.count - (luckyData ? luckyData.length : 0),
       prizeKind = currentPrize.kind;
 
-    if (leftCount < perCount) {
-      // addQipao("剩余参与抽奖人员不足，现在重新设置所有人员可以进行二次抽奖！");
-      basicData.leftUsers = basicData.users.slice();
-      leftCount = basicData.leftUsers.length;
+    console.log('[LOTTERY] currentPrizeIndex:', currentPrizeIndex, 'perCount:', perCount, 'leftCount:', leftCount, 'leftPrizeCount:', leftPrizeCount);
+
+    // 检查奖品是否已满
+    if (leftPrizeCount <= 0) {
+      console.log('[LOTTERY] 奖品已满，提前返回');
+      addQipao(`${currentPrize.text}已经抽完，请切换到下一个奖项`);
+      setLotteryStatus(false);
+      btns.lottery.style.display = "";
+      return;
     }
+
+    if (leftCount < perCount) {
+      // 重置时，排除已中奖的人
+      let allLuckyUsers = {};
+      Object.values(basicData.luckyUsers).forEach(users => {
+        if (Array.isArray(users)) {
+          users.forEach(user => {
+            allLuckyUsers[user[0]] = true; // 用工号作为 key
+          });
+        }
+      });
+
+      basicData.leftUsers = basicData.users.filter(user => !allLuckyUsers[user[0]]);
+      leftCount = basicData.leftUsers.length;
+
+      if (leftCount === 0) {
+        console.log('[LOTTERY] 所有人都已中奖，提前返回');
+        addQipao("所有人都已中奖，无法继续抽奖");
+        setLotteryStatus(false);
+        btns.lottery.style.display = "";
+        return;
+      }
+    }
+    console.log('[LOTTERY] 开始 for 循环，perCount:', perCount);
     for (let i = 0; i < perCount; i++) {
-      let luckyId = random(leftCount);
+      let luckyId = random(basicData.leftUsers.length);
       let luckyUser = basicData.leftUsers.splice(luckyId, 1)[0]
 
       //如果是客人又是3等奖，则重新抽取
@@ -879,6 +943,8 @@ function lottery() {
         break;
       }
     }
+    console.log('[LOTTERY] for 循环完成，currentLuckys.length:', currentLuckys.length);
+    console.log('[LOTTERY] 调用 selectCard()');
     selectCard(currentPrize);
     // 每次抽奖前先保存上一次的抽奖数据
     // saveData();
