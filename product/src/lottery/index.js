@@ -203,6 +203,74 @@ function setLotteryStatus(status = false) {
 }
 
 /**
+ * 显示奖品介绍
+ */
+function showPrizeIntro() {
+  console.log('[PRIZE_INTRO] currentPrizeIndex:', currentPrizeIndex, 'type:', currentPrize.type, 'title:', currentPrize.title);
+  console.log('[PRIZE_INTRO] images:', currentPrize.images);
+
+  const overlay = document.getElementById('prizeIntroOverlay');
+  const prizeImage = document.getElementById('prizeIntroImage');
+  const prizeName = document.getElementById('prizeIntroName');
+
+  console.log('[PRIZE_INTRO] Overlay element:', overlay);
+  console.log('[PRIZE_INTRO] Overlay classes before:', overlay.className);
+
+  // Clear previous winner cards by resetting them to sphere
+  console.log('[PRIZE_INTRO] Resetting winner cards to sphere');
+  if (selectedCardIndex.length > 0) {
+    resetCard();  // Animates cards back to sphere and clears arrays
+  }
+
+  if (currentPrize && currentPrize.images && currentPrize.images.length > 0) {
+    prizeImage.src = `server/data/img/${currentPrize.images[0]}`;
+  }
+
+  prizeName.textContent = currentPrize.title || '';
+
+  overlay.classList.remove('hidden', 'shrink-up');
+  overlay.classList.add('show');
+
+  console.log('[PRIZE_INTRO] Overlay classes after:', overlay.className);
+  console.log('[PRIZE_INTRO] Overlay computed background:', window.getComputedStyle(overlay).backgroundColor);
+  console.log('[PRIZE_INTRO] Overlay computed opacity:', window.getComputedStyle(overlay).opacity);
+}
+
+/**
+ * 隐藏奖品介绍并缩小到顶部
+ */
+function hidePrizeIntroWithAnimation() {
+  console.log('[PRIZE_INTRO] Hiding prize intro with animation');
+  const overlay = document.getElementById('prizeIntroOverlay');
+
+  console.log('[PRIZE_INTRO] Overlay classes before shrink-up:', overlay.className);
+  overlay.classList.add('shrink-up');
+  console.log('[PRIZE_INTRO] Overlay classes after shrink-up:', overlay.className);
+  console.log('[PRIZE_INTRO] Overlay computed background:', window.getComputedStyle(overlay).backgroundColor);
+
+  return new Promise(resolve => {
+    const handleTransitionEnd = () => {
+      console.log('[PRIZE_INTRO] Transition ended');
+      overlay.removeEventListener('transitionend', handleTransitionEnd);
+      overlay.classList.remove('show');
+      // Keep shrink-up class and don't hide overlay - prize stays visible at top
+      showingPrizeIntro = false;
+      resolve();
+    };
+
+    overlay.addEventListener('transitionend', handleTransitionEnd);
+
+    // Fallback timeout in case transitionend doesn't fire
+    setTimeout(() => {
+      if (overlay.classList.contains('shrink-up')) {
+        console.log('[PRIZE_INTRO] Transition timeout - calling handleTransitionEnd');
+        handleTransitionEnd();
+      }
+    }, 700);
+  });
+}
+
+/**
  * 事件绑定
  */
 function bindEvent() {
@@ -300,70 +368,6 @@ function bindEvent() {
         break;
     }
   });
-
-  // Helper function to show prize intro overlay
-  function showPrizeIntro() {
-    console.log('[PRIZE_INTRO] currentPrizeIndex:', currentPrizeIndex, 'type:', currentPrize.type, 'title:', currentPrize.title);
-    console.log('[PRIZE_INTRO] images:', currentPrize.images);
-
-    const overlay = document.getElementById('prizeIntroOverlay');
-    const prizeImage = document.getElementById('prizeIntroImage');
-    const prizeName = document.getElementById('prizeIntroName');
-
-    console.log('[PRIZE_INTRO] Overlay element:', overlay);
-    console.log('[PRIZE_INTRO] Overlay classes before:', overlay.className);
-
-    // Clear previous winner cards by resetting them to sphere
-    console.log('[PRIZE_INTRO] Resetting winner cards to sphere');
-    if (selectedCardIndex.length > 0) {
-      resetCard();  // Animates cards back to sphere and clears arrays
-    }
-
-    if (currentPrize && currentPrize.images && currentPrize.images.length > 0) {
-      prizeImage.src = `server/data/img/${currentPrize.images[0]}`;
-    }
-
-    prizeName.textContent = currentPrize.title || '';
-
-    overlay.classList.remove('hidden', 'shrink-up');
-    overlay.classList.add('show');
-
-    console.log('[PRIZE_INTRO] Overlay classes after:', overlay.className);
-    console.log('[PRIZE_INTRO] Overlay computed background:', window.getComputedStyle(overlay).backgroundColor);
-    console.log('[PRIZE_INTRO] Overlay computed opacity:', window.getComputedStyle(overlay).opacity);
-  }
-
-  // Helper function to hide prize intro with animation
-  function hidePrizeIntroWithAnimation() {
-    console.log('[PRIZE_INTRO] Hiding prize intro with animation');
-    const overlay = document.getElementById('prizeIntroOverlay');
-
-    console.log('[PRIZE_INTRO] Overlay classes before shrink-up:', overlay.className);
-    overlay.classList.add('shrink-up');
-    console.log('[PRIZE_INTRO] Overlay classes after shrink-up:', overlay.className);
-    console.log('[PRIZE_INTRO] Overlay computed background:', window.getComputedStyle(overlay).backgroundColor);
-
-    return new Promise(resolve => {
-      const handleTransitionEnd = () => {
-        console.log('[PRIZE_INTRO] Transition ended');
-        overlay.removeEventListener('transitionend', handleTransitionEnd);
-        overlay.classList.remove('show');
-        // Keep shrink-up class and don't hide overlay - prize stays visible at top
-        showingPrizeIntro = false;
-        resolve();
-      };
-
-      overlay.addEventListener('transitionend', handleTransitionEnd);
-
-      // Fallback timeout in case transitionend doesn't fire
-      setTimeout(() => {
-        if (overlay.classList.contains('shrink-up')) {
-          console.log('[PRIZE_INTRO] Transition timeout - calling handleTransitionEnd');
-          handleTransitionEnd();
-        }
-      }, 700);
-    });
-  }
 
   // press space
   document.addEventListener('keydown', event => {
@@ -1139,11 +1143,18 @@ function skipToNextPrize() {
   currentPrizeIndex--;
   currentPrize = basicData.prizes[currentPrizeIndex];
 
-  // Reset prize intro state when changing prize
-  showingPrizeIntro = false;
-  const overlay = document.getElementById('prizeIntroOverlay');
-  overlay.classList.remove('show', 'shrink-up');
-  overlay.classList.add('hidden');
+  // Reset winner cards and show new prize intro
+  if (selectedCardIndex.length > 0) {
+    resetCard().then(() => {
+      // After cards reset, show new prize intro
+      showingPrizeIntro = true;
+      showPrizeIntro();
+    });
+  } else {
+    // No winner cards to reset, show prize intro directly
+    showingPrizeIntro = true;
+    showPrizeIntro();
+  }
 
   // 更新UI
   showPrizeList(currentPrizeIndex);
@@ -1151,8 +1162,6 @@ function skipToNextPrize() {
   setPrizeData(currentPrizeIndex, luckys ? luckys.length : 0, true);
 
   addQipao(`已跳過至: ${currentPrize.text}`);
-
-  triggerSkipDimEffect();
 }
 
 /**
