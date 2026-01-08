@@ -137,10 +137,13 @@ router.post("/getUsers", (req, res, next) => {
   log(`成功返回抽奖用户数据`);
 });
 
-// 获取奖品信息
+// 获取奖品信息（用于热更新轮询）
 router.post("/getPrizes", (req, res, next) => {
-  // res.json(curData.prize);
-  log(`成功返回奖品数据`);
+  res.json({
+    prizes: cfg.prizes,
+    timestamp: Date.now()
+  });
+  log(`成功返回奖品数据用于热更新`);
 });
 
 // 保存抽奖数据
@@ -342,6 +345,21 @@ function loadPrizesFromCSV() {
   }).sort((a, b) => b.type - a.type);
 }
 
+// 重新加载奖品数据（用于热更新）
+function reloadPrizesFromCSV() {
+  console.log("重新加载奖品数据");
+  try {
+    const newPrizes = loadPrizesFromCSV();
+    cfg.prizes = newPrizes;
+    cfg.EACH_COUNT = newPrizes.map(prize => prize.draw_count);
+    console.log(`奖品数据已更新，共 ${newPrizes.length} 个奖项`);
+    return newPrizes;
+  } catch (error) {
+    console.error("重新加载奖品数据失败:", error);
+    return null;
+  }
+}
+
 function getConfig() {
   // 硬编码配置
   return {
@@ -410,6 +428,28 @@ function getLeftUsers() {
 }
 
 loadData();
+
+// 监听 CSV 文件变化（用于热更新）
+const prizesPath = path.join(__dirname, 'data/prizes.csv');
+const itemsPath = path.join(__dirname, 'data/prize_items.csv');
+
+const watcher = chokidar.watch([prizesPath, itemsPath], {
+  persistent: true,
+  ignoreInitial: true,
+  awaitWriteFinish: {
+    stabilityThreshold: 500,
+    pollInterval: 100
+  }
+});
+
+watcher.on('change', (filePath) => {
+  console.log(`检测到文件变化: ${filePath}`);
+  setTimeout(() => {
+    reloadPrizesFromCSV();
+  }, 200);
+});
+
+console.log("文件监听已启动，监听奖品CSV文件变化");
 
 module.exports = {
   run: function (devPort, noOpen) {

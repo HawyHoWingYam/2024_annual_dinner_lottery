@@ -58,7 +58,11 @@ let selectedCardIndex = [],
   currentLuckys = [],
   audio = new Audio("../data/audio.mp3"),
   // 是否显示奖品介绍
-  showingPrizeIntro = false;
+  showingPrizeIntro = false,
+  // 奖品热更新轮询相关变量
+  prizePollingInterval = null,
+  lastPrizeTimestamp = 0,
+  POLL_INTERVAL = 4000; // 4 seconds
 
 initAll();
 
@@ -100,6 +104,9 @@ function initAll() {
       showPrizeList(currentPrizeIndex);
       let curLucks = basicData.luckyUsers[currentPrize.type];
       setPrizeData(currentPrizeIndex, curLucks ? curLucks.length : 0, true);
+
+      // 启动奖品热更新轮询
+      startPrizePolling();
     }
   });
 
@@ -114,6 +121,139 @@ function initAll() {
       shineCard();
     }
   });
+}
+
+/**
+ * 启动奖品热更新轮询
+ */
+function startPrizePolling() {
+  // 清除已存在的轮询
+  if (prizePollingInterval) {
+    clearInterval(prizePollingInterval);
+  }
+
+  prizePollingInterval = setInterval(() => {
+    // 如果正在抽奖，跳过本次轮询
+    if (isLotting) {
+      console.log('[POLL] 跳过轮询 - 正在抽奖');
+      return;
+    }
+
+    checkForPrizeUpdates();
+  }, POLL_INTERVAL);
+
+  console.log('[POLL] 奖品热更新轮询已启动，间隔:', POLL_INTERVAL, 'ms');
+}
+
+/**
+ * 检查奖品更新
+ */
+function checkForPrizeUpdates() {
+  window.AJAX({
+    url: "/getPrizes",
+    success(data) {
+      if (!data || !data.prizes) {
+        console.log('[POLL] 无效的奖品数据');
+        return;
+      }
+
+      // 检查是否有新奖品
+      const hasChanges = detectPrizeChanges(data.prizes);
+
+      if (hasChanges) {
+        console.log('[POLL] 检测到奖品变化，开始合并');
+        mergePrizeUpdates(data.prizes);
+        lastPrizeTimestamp = data.timestamp;
+      }
+    },
+    error() {
+      console.error('[POLL] 获取奖品数据失败');
+    }
+  });
+}
+
+/**
+ * 检测奖品是否有变化
+ * @param {Array} newPrizes - 新的奖品列表
+ * @returns {boolean} - 是否有变化
+ */
+function detectPrizeChanges(newPrizes) {
+  // 比较奖品数量
+  if (newPrizes.length !== basicData.prizes.length) {
+    console.log('[POLL] 奖品数量变化:', basicData.prizes.length, '->', newPrizes.length);
+    return true;
+  }
+
+  // 比较每个奖品的关键属性
+  for (let i = 0; i < newPrizes.length; i++) {
+    const oldPrize = basicData.prizes.find(p => p.type === newPrizes[i].type);
+
+    if (!oldPrize) {
+      console.log('[POLL] 发现新奖品 type:', newPrizes[i].type);
+      return true;
+    }
+
+    // 检查关键字段变化
+    if (oldPrize.title !== newPrizes[i].title ||
+        oldPrize.text !== newPrizes[i].text ||
+        oldPrize.count !== newPrizes[i].count ||
+        oldPrize.draw_count !== newPrizes[i].draw_count ||
+        JSON.stringify(oldPrize.prize_list) !== JSON.stringify(newPrizes[i].prize_list) ||
+        JSON.stringify(oldPrize.images) !== JSON.stringify(newPrizes[i].images)) {
+      console.log('[POLL] 奖品属性变化 type:', newPrizes[i].type);
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * 合并奖品更新（智能合并，保留状态）
+ * @param {Array} newPrizes - 新的奖品列表
+ */
+function mergePrizeUpdates(newPrizes) {
+  console.log('[MERGE] 开始合并奖品数据');
+  console.log('[MERGE] 当前状态 - prizeIndex:', currentPrizeIndex, 'type:', currentPrize?.type);
+
+  // 保存当前奖品的 type，用于后续定位
+  const currentPrizeType = currentPrize ? currentPrize.type : null;
+
+  // 更新全局奖品列表
+  basicData.prizes = newPrizes;
+  prizes = newPrizes;
+  EACH_COUNT = newPrizes.map(prize => prize.draw_count);
+
+  // 重新定位 currentPrizeIndex
+  if (currentPrizeType !== null) {
+    const newIndex = newPrizes.findIndex(p => p.type === currentPrizeType);
+
+    if (newIndex !== -1) {
+      // 找到相同 type 的奖品，更新索引
+      currentPrizeIndex = newIndex;
+      currentPrize = basicData.prizes[currentPrizeIndex];
+      console.log('[MERGE] 当前奖品已更新 - newIndex:', currentPrizeIndex);
+    } else {
+      // 当前奖品被删除，切换到最后一个奖品
+      console.log('[MERGE] 当前奖品已被删除，切换到最后一个奖品');
+      currentPrizeIndex = basicData.prizes.length - 1;
+      currentPrize = basicData.prizes[currentPrizeIndex];
+    }
+  } else {
+    // 初始状态，设置为最后一个奖品
+    currentPrizeIndex = basicData.prizes.length - 1;
+    currentPrize = basicData.prizes[currentPrizeIndex];
+  }
+
+  // 更新 UI 显示
+  setPrizes(newPrizes);
+  showPrizeList(currentPrizeIndex);
+
+  // 更新当前奖品的进度显示
+  let curLucks = basicData.luckyUsers[currentPrize.type];
+  setPrizeData(currentPrizeIndex, curLucks ? curLucks.length : 0, true);
+
+  console.log('[MERGE] 奖品合并完成 - 新奖品数:', newPrizes.length);
 }
 
 function initCards() {
