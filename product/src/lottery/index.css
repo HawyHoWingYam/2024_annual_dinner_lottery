@@ -737,19 +737,19 @@ button:active {
 }
 
 #prizeIntroOverlay.shrink-up #prizeIntroImage {
-  width: 400px;
-  height: 300px;
-  object-fit: contain;
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
 }
 
 #prizeIntroOverlay.shrink-up .prize-intro-name {
-  font-size: 48px;
+  font-size: 32px;
 }
 
 #prizeIntroImage {
-  width: 300px;
-  height: 200px;
-  object-fit: contain;
+  width: 800px;
+  height: 600px;
+  object-fit: cover;
   margin-top: 0px;
   display: block;
   margin-left: auto;
@@ -758,7 +758,7 @@ button:active {
 
 .prize-intro-name {
   color: white;
-  font-size: 48px;
+  font-size: 64px;
   margin: 0;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
