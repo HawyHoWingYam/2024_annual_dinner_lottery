@@ -168,8 +168,15 @@ button:active {
   transform: scale(0.60);
 }
 
+/* Remove pink background from .prize - only use for text styling */
 .prize.element {
   transition: background-color 1.5s ease-in 0.3s;
+  /* background-color: rgb(228, 58, 115) !important; */  /* REMOVED - use .prize-display instead */
+  /* box-shadow: 0 0 12px rgb(255, 255, 255); */  /* REMOVED - use .prize-display instead */
+}
+
+/* Prize display styles - ONLY for cards moved to front */
+.prize-display.element {
   background-color: rgb(228, 58, 115) !important;
   box-shadow: 0 0 12px rgb(255, 255, 255);
 }
@@ -177,6 +184,9 @@ button:active {
 .prize .company,
 .prize .details,
 .prize .name,
+.prize-display .company,
+.prize-display .details,
+.prize-display .name,
 .highlight .company,
 .highlight .name,
 .highlight .details {

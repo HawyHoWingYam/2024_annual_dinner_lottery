@@ -853,7 +853,13 @@ function selectCard(currentPrizeData) {
         Math.random() * duration + duration
       )
       .easing(TWEEN.Easing.Exponential.InOut)
-      .start();
+      .start()
+      .onComplete(() => {
+        // Only add .prize-display class AFTER card is moved to front
+        // This ensures 3D sphere cards stay cyan, not pink
+        object.element.classList.add("prize-display");
+        object.scale.set(1.3, 1.3, 1.3);  // 放大30%
+      });
 
     new TWEEN.Tween(object.rotation)
       .to(
@@ -867,8 +873,6 @@ function selectCard(currentPrizeData) {
       .easing(TWEEN.Easing.Exponential.InOut)
       .start();
 
-    object.element.classList.add("prize");
-    object.scale.set(1.3, 1.3, 1.3);  // 放大30%
     tag++;
   });
 
@@ -966,6 +970,7 @@ function resetCard(duration = 500) {
         selectedCardIndex.forEach(index => {
           let object = threeDCards[index];
           object.element.classList.remove("prize");
+          object.element.classList.remove("prize-display");
         });
         resolve();
       });
