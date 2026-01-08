@@ -732,7 +732,7 @@ button:active {
 }
 
 #prizeIntroOverlay.shrink-up .prize-intro-content {
-  transform: scale(0.85) translateY(-30vh);
+  transform: scale(0.85) translateY(-40vh);
   opacity: 1;
 }
 

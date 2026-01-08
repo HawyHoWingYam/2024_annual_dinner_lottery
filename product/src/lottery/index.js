@@ -719,11 +719,11 @@ function selectCard(currentPrizeData) {
       tag++;
     }
 
-  } else if (currentLuckys.length > 10) {
-    let yPosition = [-274, -100, 74], // Three row positions
+  } else if (currentLuckys.length > 10 && currentLuckys.length <= 15) {
+    let yPosition = [-220, -100, 20], // Three row positions
       l = selectedCardIndex.length,
-      row1 = Math.ceil(l / 3),
-      row2 = Math.ceil((l - row1) / 2);
+      row1 = Math.min(5, l),
+      row2 = Math.min(5, Math.max(0, l - 5));
 
     // First row
     tag = -(row1 - 1) / 2;
@@ -754,8 +754,8 @@ function selectCard(currentPrizeData) {
       });
       tag++;
     }
-  } else if (currentLuckys.length > 5) {
-    let yPosition = [-187, -13],
+  } else if (currentLuckys.length > 2 && currentLuckys.length <= 10) {
+    let yPosition = [-200, 0],
       l = selectedCardIndex.length,
       mid = Math.ceil(l / 2);
     tag = -(mid - 1) / 2;
