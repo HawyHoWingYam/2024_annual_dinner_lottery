@@ -1327,8 +1327,8 @@ function changeCard(cardIndex, user, text = null) {
   if (text) {
     text.forEach(item => {
       var temp_item = item.split(" :");
-      if (temp_item[0].trim() == `${user[2]} ${user[1]}`) {
-        card.innerHTML = `<div class="name">${displayName} <span class="prize-text">${temp_item[1]}</span></div>`;
+      if (temp_item[0].trim() == user[1]) {
+        card.innerHTML = `<div class="name">${displayName}</div>`;
       }
     });
   } else {
