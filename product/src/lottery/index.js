@@ -1111,6 +1111,7 @@ function resetCard(duration = 500) {
           let object = threeDCards[index];
           object.element.classList.remove("prize");
           object.element.classList.remove("prize-display");
+          object.element.classList.remove("highlight");
         });
         resolve();
       });
@@ -1435,23 +1436,7 @@ function reset() {
   });
 }
 
-// 2025
+// 2026 pattern disabled - return empty array so all cards are cyan
 function createHighlight() {
-  // let year = new Date().getFullYear() + "";
-  let year = "2025";
-  let step = 4,
-    xoffset = 2,
-    yoffset = 2,
-    highlight = [];
-
-  year.split("").forEach(n => {
-    highlight = highlight.concat(
-      NUMBER_MATRIX[n].map(item => {
-        return `${item[0] + xoffset}-${item[1] + yoffset}`;
-      })
-    );
-    xoffset += step;
-  });
-
-  return highlight;
+  return [];  // Return empty array - no cards will be highlighted
 }
