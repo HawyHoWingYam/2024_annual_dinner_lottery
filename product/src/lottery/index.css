@@ -96,10 +96,11 @@ a {
 /* Name inside element */
 .element .name {
   position: absolute;
-  top: 0vh;
+  top: 50%;
   left: 0;
   right: 0;
-  font-size: 2.5vh;
+  transform: translateY(-50%);
+  font-size: 1.8vh;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 0 0vh rgba(255, 255, 255);
