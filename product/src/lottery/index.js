@@ -1144,7 +1144,17 @@ function resetCard(duration = 500) {
           object.element.classList.remove("prize");
           object.element.classList.remove("prize-display");
           object.element.classList.remove("highlight");
+
+          // 重置缩放到正常大小
+          object.scale.set(1, 1, 1);
+
+          // 将卡片从 winnersGroup 移回 sphereGroup，使其重新旋转
+          if (object.parent === winnersGroup) {
+            winnersGroup.remove(object);
+            sphereGroup.add(object);
+          }
         });
+        console.log('[RESET_CARD] Moved cards back to sphereGroup, count:', selectedCardIndex.length);
         resolve();
       });
   });
