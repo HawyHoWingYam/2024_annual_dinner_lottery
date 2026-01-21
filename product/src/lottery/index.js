@@ -1000,6 +1000,28 @@ function selectCard(currentPrizeData) {
     });
   });
 
+  // 先将选中的卡片从 sphereGroup 移到 winnersGroup，并设置到球体正面位置
+  // 这样所有卡片都会从球体正面飞出，动画一致
+  selectedCardIndex.forEach((cardIndex, index) => {
+    const object = threeDCards[cardIndex];
+
+    // 从旋转的球体容器移到静止容器
+    if (object.parent === sphereGroup) {
+      sphereGroup.remove(object);
+      winnersGroup.add(object);
+    }
+
+    // 设置到球体正面的起始位置
+    object.position.set(
+      locates[index].x * 0.3,  // 30% 的最终 x 位置
+      locates[index].y * Resolution * 0.3,  // 30% 的最终 y 位置
+      800  // 球体正面（z 坐标）
+    );
+
+    // 重置旋转，面向相机
+    object.rotation.set(0, 0, 0);
+  });
+
   selectedCardIndex.forEach((cardIndex, index) => {
     const user = currentLuckys[index];
     console.log(`[UI] Index ${index}: CardIndex=${cardIndex}, User=${user ? user[1] : 'undefined'}, Department=${user ? user[2] : 'undefined'}`);
@@ -1045,16 +1067,6 @@ function selectCard(currentPrizeData) {
     .onComplete(() => {
       // 动画结束后可以操作
       setLotteryStatus();
-
-      // 将当前中奖卡片从球体容器移到中奖容器
-      selectedCardIndex.forEach(index => {
-        if (threeDCards[index]) {
-          sphereGroup.remove(threeDCards[index]);
-          winnersGroup.add(threeDCards[index]);
-        }
-      });
-      console.log('[SELECT_CARD] Moved winners to winnersGroup');
-      console.log('[SELECT_CARD] sphereGroup children:', sphereGroup.children.length, 'winnersGroup children:', winnersGroup.children.length);
 
       // FIRST: Save current lottery winners to the correct prize type
       let type = currentPrize.type;
