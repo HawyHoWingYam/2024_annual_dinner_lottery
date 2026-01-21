@@ -33,6 +33,8 @@ let camera,
   scene,
   renderer,
   controls,
+  sphereGroup,    // 球体卡片容器
+  winnersGroup,   // 中奖卡片容器
   threeDCards = [],
   targets = {
     table: [],
@@ -42,7 +44,7 @@ let camera,
 let rotateObj;
 
 let selectedCardIndex = [],
-  rotate = false,
+  rotate = true,
   basicData = {
     prizes: [], //奖品信息
     users: [], //所有人员
@@ -280,6 +282,14 @@ function initCards() {
 
   scene = new THREE.Scene();
 
+  // 创建球体卡片容器
+  sphereGroup = new THREE.Group();
+  scene.add(sphereGroup);
+
+  // 创建中奖卡片容器
+  winnersGroup = new THREE.Group();
+  scene.add(winnersGroup);
+
   for (let i = 0; i < ROW_COUNT; i++) {
     for (let j = 0; j < COLUMN_COUNT; j++) {
       isBold = HIGHLIGHT_CELL.includes(j + "-" + i);
@@ -294,7 +304,7 @@ function initCards() {
       object.position.x = Math.random() * 4000 - 2000;
       object.position.y = Math.random() * 4000 - 2000;
       object.position.z = Math.random() * 4000 - 2000;
-      scene.add(object);
+      sphereGroup.add(object);
       threeDCards.push(object);
 
       var object = new THREE.Object3D();
@@ -435,7 +445,7 @@ function bindEvent() {
       // 显示数字墙
       case "welcome":
         switchScreen("enter");
-        rotate = false;
+        // rotate = false;
         break;
       // 进入抽奖
       case "enter":
@@ -725,6 +735,7 @@ function transform(targets, duration) {
 
 function rotateBall() {
   return new Promise((resolve, reject) => {
+    rotate = false; // 禁用手动旋转
     scene.rotation.y = 0;
     rotateObj = new TWEEN.Tween(scene.rotation);
     rotateObj
@@ -739,9 +750,11 @@ function rotateBall() {
       .start()
       .onStop(() => {
         scene.rotation.y = 0;
+        rotate = true; // 恢复手动旋转
         resolve();
       })
       .onComplete(() => {
+        rotate = true; // 恢复手动旋转
         resolve();
       });
   });
@@ -755,15 +768,24 @@ function onWindowResize() {
 }
 
 function animate() {
-  // 让场景通过x轴或者y轴旋转
-  // rotate && (scene.rotation.y += 0.088);
+  // 让球体容器旋转
+  if (rotate) {
+    const rotationAmount = 0.002;
+    sphereGroup.rotation.y += rotationAmount;
+
+    // 调试日志：每100帧输出一次旋转信息
+    if (Math.random() < 0.01) {
+      console.log('[ANIMATE] sphereGroup rotation.y:', sphereGroup.rotation.y.toFixed(4),
+                  'winnersGroup children:', winnersGroup.children.length);
+    }
+  }
 
   requestAnimationFrame(animate);
   TWEEN.update();
   controls.update();
 
   // 渲染循环
-  // render();
+  render();
 }
 
 function render() {
@@ -771,7 +793,7 @@ function render() {
 }
 
 function selectCard(currentPrizeData) {
-  rotate = false;
+  // rotate = false; // 移除此行，保持结果显示时的缓慢旋转
   var duration = 500;
   let width = 182,
     tag = -(currentLuckys.length - 1) / 2,
@@ -1023,6 +1045,16 @@ function selectCard(currentPrizeData) {
     .onComplete(() => {
       // 动画结束后可以操作
       setLotteryStatus();
+
+      // 将当前中奖卡片从球体容器移到中奖容器
+      selectedCardIndex.forEach(index => {
+        if (threeDCards[index]) {
+          sphereGroup.remove(threeDCards[index]);
+          winnersGroup.add(threeDCards[index]);
+        }
+      });
+      console.log('[SELECT_CARD] Moved winners to winnersGroup');
+      console.log('[SELECT_CARD] sphereGroup children:', sphereGroup.children.length, 'winnersGroup children:', winnersGroup.children.length);
 
       // FIRST: Save current lottery winners to the correct prize type
       let type = currentPrize.type;
@@ -1432,6 +1464,12 @@ function reset() {
     url: "/reset",
     success(data) {
       console.log("重置成功");
+      // 将所有卡片移回球体容器
+      winnersGroup.children.slice().forEach(card => {
+        winnersGroup.remove(card);
+        sphereGroup.add(card);
+      });
+      console.log('[RESET] Moved all cards back to sphereGroup');
     }
   });
 }
