@@ -9,6 +9,7 @@ import {
   resetPrize
 } from "./prizeList";
 import { NUMBER_MATRIX } from "./config.js";
+import { WebGLEffectsManager } from "./webglEffects.js";
 
 const ROTATE_TIME = 1000;
 const ROTATE_LOOP = 1000;
@@ -33,6 +34,7 @@ let camera,
   scene,
   renderer,
   controls,
+  webglEffects,  // WebGL effects manager
   sphereGroup,    // 球体卡片容器
   winnersGroup,   // 中奖卡片容器
   threeDCards = [],
@@ -334,7 +336,11 @@ function initCards() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById("container").appendChild(renderer.domElement);
 
-  //
+  // Initialize WebGL effects manager
+  webglEffects = new WebGLEffectsManager(
+    document.getElementById("container"),
+    camera
+  );
 
   controls = new THREE.TrackballControls(camera, renderer.domElement);
   controls.rotateSpeed = 0.5;
@@ -737,6 +743,20 @@ function rotateBall() {
   return new Promise((resolve, reject) => {
     rotate = false; // 禁用手动旋转
     scene.rotation.y = 0;
+
+    // Apply warp-speed effect to all cards
+    threeDCards.forEach(card => {
+      card.element.classList.add('warp-speed');
+    });
+
+    // Trigger WebGL warp effects
+    if (webglEffects) {
+      webglEffects.startWarpEffect();
+    }
+
+    // Trigger radial blur effect during spin
+    triggerRadialBlur();
+
     rotateObj = new TWEEN.Tween(scene.rotation);
     rotateObj
       .to(
@@ -745,15 +765,36 @@ function rotateBall() {
         },
         ROTATE_TIME * ROTATE_LOOP
       )
-      .onUpdate(render)
-      // .easing(TWEEN.Easing.Linear)
+      .onUpdate(() => {
+        // Update warp intensity based on rotation speed
+        if (webglEffects) {
+          const speed = Math.abs(scene.rotation.y % (Math.PI * 2));
+          webglEffects.setWarpIntensity(Math.min(speed / (Math.PI * 2), 1.0));
+        }
+        render();
+      })
+      .easing(TWEEN.Easing.Quadratic.InOut)
       .start()
       .onStop(() => {
         scene.rotation.y = 0;
+        // Remove warp-speed effect
+        threeDCards.forEach(card => {
+          card.element.classList.remove('warp-speed');
+        });
+        if (webglEffects) {
+          webglEffects.stopWarpEffect();
+        }
         rotate = true; // 恢复手动旋转
         resolve();
       })
       .onComplete(() => {
+        // Remove warp-speed effect
+        threeDCards.forEach(card => {
+          card.element.classList.remove('warp-speed');
+        });
+        if (webglEffects) {
+          webglEffects.stopWarpEffect();
+        }
         rotate = true; // 恢复手动旋转
         resolve();
       });
@@ -789,6 +830,12 @@ function animate() {
 }
 
 function render() {
+  // Sync WebGL effects with sphere rotation
+  if (webglEffects) {
+    webglEffects.setSphereRotation(sphereGroup.rotation.y);
+    webglEffects.render();
+  }
+
   renderer.render(scene, camera);
 }
 
@@ -798,6 +845,22 @@ function selectCard(currentPrizeData) {
   let width = 182,
     tag = -(currentLuckys.length - 1) / 2,
     locates = [];
+
+  // Trigger camera animations for dramatic effect
+  if (webglEffects) {
+    // Zoom in slightly for dramatic reveal
+    webglEffects.animateCameraZoom(2500, 300);
+
+    // Apply subtle camera shake
+    setTimeout(() => {
+      webglEffects.applyCameraShake(0.02, 200);
+    }, 150);
+  }
+
+  // Trigger glitch effect at selection moment
+  setTimeout(() => {
+    triggerGlitchEffect();
+  }, 100);
 
   // 计算位置信息, 大于10个分三排,大于5个分两排显示
   // 计算位置信息
@@ -1025,8 +1088,19 @@ function selectCard(currentPrizeData) {
   selectedCardIndex.forEach((cardIndex, index) => {
     const user = currentLuckys[index];
     console.log(`[UI] Index ${index}: CardIndex=${cardIndex}, User=${user ? user[1] : 'undefined'}, Department=${user ? user[2] : 'undefined'}`);
-    changeCard(cardIndex, currentLuckys[index], text);
+
+    // Add HUD overlay instead of just changing card
+    addHUDOverlay(cardIndex, currentLuckys[index]);
+
     var object = threeDCards[cardIndex];
+
+    // Trigger particle trail effect
+    if (webglEffects) {
+      const startPos = object.position.clone();
+      const endPos = new THREE.Vector3(locates[index].x, locates[index].y * Resolution, 2200);
+      webglEffects.createWinnerTrail(startPos, endPos);
+    }
+
     new TWEEN.Tween(object.position)
       .to(
         {
@@ -1387,8 +1461,57 @@ function changeCard(cardIndex, user, text = null) {
       }
     });
   } else {
-    card.innerHTML = `<div class="name">${displayName}`;
+    card.innerHTML = `<div class="name">${displayName}</div>`;
   }
+}
+
+/**
+ * Add HUD overlay to winner card
+ */
+function addHUDOverlay(cardIndex, user) {
+  let card = threeDCards[cardIndex].element;
+  const displayName = `${user[2]}<br>${user[1]}`;
+
+  // Generate random match percentage and ID
+  const matchPercent = (90 + Math.random() * 10).toFixed(1);
+  const winnerId = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+
+  card.innerHTML = `
+    <div class="name">${displayName}</div>
+    <div class="hud-overlay">
+      <div class="hud-param">MATCH: ${matchPercent}%</div>
+      <div class="hud-param">ID: #${winnerId}</div>
+      <div class="hud-param">STATUS: LOCKED</div>
+    </div>
+  `;
+}
+
+/**
+ * Trigger glitch effect on selected cards
+ */
+function triggerGlitchEffect() {
+  selectedCardIndex.forEach(cardIndex => {
+    const card = threeDCards[cardIndex].element;
+    card.classList.add('glitch-effect');
+
+    // Remove glitch effect after animation completes
+    setTimeout(() => {
+      card.classList.remove('glitch-effect');
+    }, 500);
+  });
+}
+
+/**
+ * Trigger radial blur effect on container
+ */
+function triggerRadialBlur() {
+  const container = document.getElementById('container');
+  container.classList.add('radial-blur');
+
+  // Remove blur effect after animation completes
+  setTimeout(() => {
+    container.classList.remove('radial-blur');
+  }, 500);
 }
 
 /**

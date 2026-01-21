@@ -26,8 +26,7 @@
     star;
   var i;
 
-  //var animate = true;
-  var animate = false;
+  var animate = true;
 
   initializeStars();
 
@@ -80,20 +79,26 @@
       c.fillStyle = "rgba(0,10,20,1)";
       c.fillRect(0, 0, canvas.width, canvas.height);
     }
-    // c.fillStyle = "rgba(209, 255, 255, " + radius + ")";
-    // for (i = 0; i < numStars; i++) {
-    //   star = stars[i];
 
-    //   pixelX = (star.x - centerX) * (focalLength / star.z);
-    //   pixelX += centerX;
-    //   pixelY = (star.y - centerY) * (focalLength / star.z);
-    //   pixelY += centerY;
-    //   pixelRadius = 1 * (focalLength / star.z);
+    // Draw stars with blue/cyan tint and parallax depth effect
+    for (i = 0; i < numStars; i++) {
+      star = stars[i];
 
-    //   c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius);
-    //   c.fillStyle = "rgba(209, 255, 255, " + star.o + ")";
-    //   //c.fill();
-    // }
+      pixelX = (star.x - centerX) * (focalLength / star.z);
+      pixelX += centerX;
+      pixelY = (star.y - centerY) * (focalLength / star.z);
+      pixelY += centerY;
+      pixelRadius = 1 * (focalLength / star.z);
+
+      // Depth-based opacity: closer stars are brighter
+      var depthOpacity = Math.min(star.z / canvas.width, 1);
+      var starOpacity = (0.3 + depthOpacity * 0.7) * star.o;
+
+      // Blue/cyan color with depth variation
+      var colorIntensity = Math.floor(100 + depthOpacity * 155);
+      c.fillStyle = "rgba(0, " + colorIntensity + ", 255, " + starOpacity + ")";
+      c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius);
+    }
   }
 
   // document.getElementById('warp').addEventListener("click", function(e) {
