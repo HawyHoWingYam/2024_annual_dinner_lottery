@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>飯糰小店舞台與員工影格</title>
+  <style>
+    :root{font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;color:#4c3525;background:#fbf2df;font-synthesis:none;text-rendering:optimizeLegibility;--ink:#4c3525;--muted:#81674d;--edge:#dfc59d;--paper:#fffaf0;--wood:#a85f32;--teal:#174d45;--gold:#d39a4e}
+    *{box-sizing:border-box}body{margin:0;min-width:320px;background:radial-gradient(ellipse at 50% 0,#fffaf0,#f4e4c6 78%)}.page{width:min(1440px,calc(100% - 40px));margin:0 auto;padding:38px 0 60px}.masthead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:24px}.eyebrow{margin:0 0 8px;color:var(--wood);font-size:11px;font-weight:900;letter-spacing:.2em}.masthead h1{margin:0;color:var(--ink);font-size:clamp(26px,4vw,42px)}.lead{max-width:800px;margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.7}.story-link{flex:none;padding:12px 16px;border-radius:7px;background:var(--teal);color:#fff7e8;text-decoration:none;font-size:13px;font-weight:900}.section-title{margin:28px 0 12px;font-size:18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}.card{overflow:hidden;border:1px solid var(--edge);border-radius:12px;background:#fffaf0;box-shadow:0 9px 24px #6a482315}.art{display:grid;place-items:center;height:220px;padding:16px;background:linear-gradient(145deg,#fff8e8,#f0dfbd)}.art img{width:100%;height:100%;object-fit:contain}.copy{padding:12px 15px 15px}.copy h3{margin:0 0 5px;font-size:14px}.copy p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}.wide{grid-column:1/-1}.wide .art{height:clamp(210px,38vw,490px)}.workers{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;width:100%;height:100%}.workers img{width:100%;height:100%;object-fit:contain}.footer{margin-top:25px;color:var(--muted);font-size:11px;line-height:1.6}@media(max-width:650px){.page{width:calc(100% - 28px);padding-top:24px}.masthead{display:block}.story-link{display:inline-block;margin-top:15px}.art{height:190px}.wide .art{height:250px}.workers{gap:2px;grid-template-columns:repeat(4,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <div><p class="eyebrow">HANA · WORKER FRAME REFERENCE</p><h1>飯糰小店舞台與員工影格</h1><p class="lead">飯糰、木造店面與舞台素材沿用統一的奶油色與焦糖木配色；員工動畫直接使用 <code>product/src/worker/</code> 的透明 PNG 影格，依手持飯糰與空手行進方向切換。</p></div>
+      <a class="story-link" href="storyboard/index.html">檢視 12 張動畫關鍵幀 →</a>
+    </header>
+    <h2 class="section-title">飯糰與貨架</h2>
+    <section class="grid">
+      <article class="card"><div class="art"><img src="../img/onigiri-plain.svg" alt="標準無表情飯糰"></div><div class="copy"><h3>標準飯糰</h3><p>圓角三角外型、米粒細節、海苔包覆，不帶表情或文字。</p></div></article>
+      <article class="card"><div class="art"><img src="../img/onigiri.svg" alt="大飯糰主視覺"></div><div class="copy"><h3>主視覺飯糰</h3><p>與商品同造型，中央米白區保留給名字文字層。</p></div></article>
+      <article class="card"><div class="art"><img src="../img/onigiri-half.svg" alt="飯糰剖面半片"></div><div class="copy"><h3>揭曉動畫半片</h3><p>左右鏡像後組成打開的飯糰剖面。</p></div></article>
+      <article class="card"><div class="art"><img src="../img/onigiri-shelf.svg" alt="三層滿載飯糰展示架"></div><div class="copy"><h3>三層滿載展示架</h3><p>每層十顆同款飯糰；整組可作滿架向下退場。</p></div></article>
+      <article class="card"><div class="art"><img src="../img/onigiri-shelf-empty.svg" alt="三層空木製展示架"></div><div class="copy"><h3>三層空展示架</h3><p>和滿載架同尺寸，供交替升降與後續補貨。</p></div></article>
+    </section>
+    <h2 class="section-title">店鋪與補貨員</h2>
+    <section class="grid">
+      <article class="card wide"><div class="art"><img src="../img/onigiri-shopfront.svg" alt="焦糖木色飯糰店鋪正面"></div><div class="copy"><h3>飯糰小店正面</h3><p>留白店招、屋頂出貨口與中央開放展示窗，便於分層組成場景。</p></div></article>
+      <article class="card wide"><div class="art"><img src="../img/shop-background.svg" alt="奶油色牆面與暖木地板舞台背景"></div><div class="copy"><h3>舞台背景</h3><p>暖奶油牆面與淺焦糖木地板，店面、飯糰和人物分層疊加。</p></div></article>
+      <article class="card wide"><div class="art workers walk-frames"><img src="../worker/frame-walk-01.png" alt="手持飯糰影格 01"><img src="../worker/frame-walk-02.png" alt="手持飯糰影格 02"><img src="../worker/frame-walk-03.png" alt="手持飯糰影格 03"><img src="../worker/frame-walk-04.png" alt="手持飯糰影格 04"><img src="../worker/frame-walk-05.png" alt="手持飯糰影格 05"><img src="../worker/frame-walk-06.png" alt="手持飯糰影格 06"><img src="../worker/frame-walk-07.png" alt="手持飯糰影格 07"><img src="../worker/frame-walk-08.png" alt="手持飯糰影格 08"></div><div class="copy"><h3>手持飯糰步行循環</h3><p>由 key_frames_set_01 裁切出的 8 張統一尺寸影格。</p></div></article>
+      <article class="card wide"><div class="art workers carry-frames"><img src="../worker/frame-carry-01.png" alt="空手步行影格 01"><img src="../worker/frame-carry-02.png" alt="空手步行影格 02"><img src="../worker/frame-carry-03.png" alt="空手步行影格 03"><img src="../worker/frame-carry-04.png" alt="空手步行影格 04"><img src="../worker/frame-carry-05.png" alt="空手步行影格 05"><img src="../worker/frame-carry-06.png" alt="空手步行影格 06"><img src="../worker/frame-carry-07.png" alt="空手步行影格 07"><img src="../worker/frame-carry-08.png" alt="空手步行影格 08"></div><div class="copy"><h3>空手步行循環</h3><p>由 key_frames_set_02 裁切出的 8 張影格，空手向右離場。</p></div></article>
+      <article class="card"><div class="art"><img src="../worker/anim-walk-01.png" alt="店員手持飯糰向右步行"></div><div class="copy"><h3>隊伍補貨影格</h3><p>手持飯糰的步行影格；抵達貨架時放上飯糰，再改用空手影格向右離場。</p></div></article>
+    </section>
+    <p class="footer">人物 PNG 影格：<code>product/src/worker/frame-walk-01.png</code>–<code>frame-walk-08.png</code> 是手持飯糰組；<code>frame-carry-01.png</code>–<code>frame-carry-08.png</code> 是空手向右步行組。主舞台使用同動作的 <code>anim-walk-*</code>（手持）與 <code>anim-carry-*</code>（空手）影格。</p>
+  </main>
+</body>
+</html>

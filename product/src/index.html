@@ -1,48 +1,10 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Annual Dinner</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <!-- <link rel="stylesheet" href="./index.css"> -->
-</head>
-
-<body>
-
-  <div id="skipOverlay"></div>
-
-  <div id="prizeIntroOverlay" class="prize-intro-overlay hidden">
-    <div class="prize-intro-content">
-      <h1 id="prizeIntroName" class="prize-intro-name"></h1>
-      <img id="prizeIntroImage" src="" alt="Prize">
-    </div>
-  </div>
-
-  <script src="./lib/three.min.js"></script>
-  <script src="./lib/tween.min.js"></script>
-  <script src="./lib/TrackballControls.js"></script>
-  <script src="./lib/CSS3DRenderer.js"></script>
-  <script src="./lib/ajax.js"></script>
-
-  <div class="canvas-box">
-    <canvas id="canvas">你的浏览器不支持canvas</canvas>
-  </div>
-
-  <div id="prizeBar"></div>
-
-  <div id="container"></div>
-
-  <div id="menu">
-    <button id="enter" class="button">進入抽獎</button>
-    <div id="lotteryBar" class="none">
-      <!-- <button id="lottery" class="button">開始抽獎</button> -->
-      <button id="lottery" class="button fixed-bar">開始抽獎</button>
-      <button id="skip" class="button fixed-bar">跳過獎項</button>
-      <button id="reset" class="fixed-btn reset fixed-bar">RESET</button>
-    </div>
-  </div>
-
-</body>
-
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3ead7" />
+    <title>Hana 飯糰工坊抽獎</title>
+  </head>
+  <body><div id="app"></div></body>
 </html>

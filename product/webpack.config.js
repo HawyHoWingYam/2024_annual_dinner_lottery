@@ -37,10 +37,10 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "src/css", to: "css" },
-        { from: "src/data", to: "data" },
-        { from: "src/img", to: "img" },
-        { from: "src/lib", to: "lib" }
+        { from: "src/img", to: "img", globOptions: { ignore: ["**/.DS_Store"] } },
+        { from: "src/worker", to: "worker", globOptions: { ignore: ["**/.DS_Store"] } },
+        { from: "src/lottery/stage-design-prototype.html", to: "lottery/stage-design-prototype.html" },
+        { from: "src/lottery/storyboard", to: "lottery/storyboard", globOptions: { ignore: ["**/.DS_Store"] } }
       ]
     })
   ]

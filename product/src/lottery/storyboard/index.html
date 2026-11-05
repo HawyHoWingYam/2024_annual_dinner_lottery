@@ -1,0 +1,49 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>長廊店鋪關鍵幀</title>
+<style>
+:root{font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;color:#263f38;background:#e7dfd0;font-synthesis:none;text-rendering:optimizeLegibility;--ink:#263f38;--muted:#68786f;--paper:#fbf7ec;--edge:#d2c3a9;--teal:#39776d;--teal-deep:#244c46;--gold:#c79542;--redline:#df5f55}
+*{box-sizing:border-box}body{margin:0;min-width:1000px;padding:24px 28px 36px;background:linear-gradient(135deg,#eee7d9,#e2d8c6)}.page{width:min(1840px,100%);margin:0 auto}.topline{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;border-bottom:1px solid #c9b99f;padding-bottom:18px}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.2em;color:#a35e4b}.topline h1{margin:6px 0 5px;font-size:30px;color:var(--ink);letter-spacing:.03em}.intro{max-width:1000px;margin:0;color:var(--muted);font-size:13px;line-height:1.7}.identity{padding:10px 14px;border:1px solid #bcc7b8;border-radius:999px;background:var(--paper);color:var(--teal-deep);font-size:11px;font-weight:900;white-space:nowrap}.progress{display:flex;align-items:center;gap:12px;margin:18px 0 12px}.progress strong{font-size:12px;letter-spacing:.08em;font-variant-numeric:tabular-nums}.progress span{font-size:11px;color:var(--muted)}.frame-nav{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;margin-bottom:14px}.frame-nav a{display:grid;place-items:center;min-height:42px;border:1px solid var(--edge);border-radius:6px;background:#f6f0e3;color:#68766d;font-size:11px;font-weight:900;text-decoration:none;transition:background .15s,color .15s,border .15s}.frame-nav a:hover{border-color:#7a9a87;color:#2e6154}.frame-nav a[aria-current="step"]{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff8e8}.viewer{overflow:hidden;border:1px solid #c8b89c;border-radius:10px;background:#f5ecdb;box-shadow:0 18px 52px #4c3d2817}.frame-stage{position:relative;overflow:hidden;width:min(100%,1450px);aspect-ratio:16 / 9;margin:0 auto;background:linear-gradient(180deg,#f5ecdc,#e9dec9)}.frame-stage iframe{position:absolute;top:0;left:50%;display:block;width:1920px;height:1080px;border:0;background:#f7f1e5;transform:translateX(-50%) scale(var(--frame-scale,.875));transform-origin:top center}.caption{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;padding:15px 21px;background:var(--paper);border-top:1px solid var(--edge)}.caption h2{margin:0 0 5px;font-size:18px;color:var(--ink)}.caption p{margin:0;max-width:1050px;color:var(--muted);font-size:12px;line-height:1.6}.caption a{padding:10px 14px;border:1px solid #bfd0c1;border-radius:6px;background:#f4f6ed;color:var(--teal-deep);font-size:11px;font-weight:900;text-decoration:none;white-space:nowrap}.caption a:hover{border-color:var(--teal);background:#e8f0e7}.bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:13px}.sequence{color:#66776d;font-size:11px;letter-spacing:.04em}.controls{display:flex;gap:8px}.controls button{min-width:112px;padding:10px 14px;border:1px solid #b8c6b8;border-radius:6px;background:#f7f2e7;color:#315b51;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.controls button:hover{background:#e5eee4}.controls button:focus-visible,.frame-nav a:focus-visible,.caption a:focus-visible{outline:3px solid #cb9840;outline-offset:3px}.footnote{margin-top:13px;color:#8b8577;font-size:10px}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="topline">
+    <div><div class="eyebrow">HANA · LONG SHOP / STORYBOARD</div><h1>長廊式飯糰小店：分鏡與動畫關鍵幀</h1><p class="intro">每張關鍵幀都是單獨的 1920 × 1080 SVG，店鋪正面構圖、焦糖木造店面、奶油色背景與深青綠招牌保持一致。員工使用透明 PNG 步態影格；補貨時手持飯糰靠近展示架，滿架向下退出、空架上升；抽獎時飯糰先從屋頂向上與左右噴發，再接成密集飯糰雨，雨散並停穩後才顯示姓名。</p></div>
+    <div class="identity">逐幀 SVG　·　尚未製作動畫</div>
+  </header>
+  <div class="progress"><strong id="progress-label">01 / 12</strong><span id="progress-group">待機補貨</span></div>
+  <nav class="frame-nav" id="frame-nav" aria-label="各個獨立 SVG 關鍵幀"></nav>
+  <section class="viewer" aria-label="放大檢視目前關鍵幀">
+    <div class="frame-stage"><iframe id="frame-image" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080' viewBox='0 0 1920 1080'%3E%3Crect width='1920' height='1080' fill='%23eee'/%3E%3C/svg%3E" title="同一位員工的 PNG 步態影格，沿暖木店鋪前列隊補貨"></iframe></div>
+    <div class="caption"><div><h2 id="frame-title">01 · 待機：員工列隊步行</h2><p id="frame-desc">同一位員工的八張手持飯糰 PNG 步態影格，在暖木店鋪前列隊呈現。</p></div><a id="open-svg" href="01-idle-queue.svg" target="_blank" rel="noopener">單獨開啟這張 SVG ↗</a></div>
+  </section>
+  <div class="bottom"><div class="sequence">步行上架 → 滿架下退／空架上升 → 屋頂飯糰雨 → 飯糰穩定 → 姓名揭曉</div><div class="controls"><button id="prev" type="button">← 上一幀</button><button id="next" type="button">下一幀 →</button></div></div>
+  <p class="footnote">按上方 01–12 查看各張大圖，亦可另開目前幀的獨立 SVG。人物使用 <code>product/src/worker/</code> 的透明 PNG；01–08 是手持飯糰，11–14 向右空手，21–24 向左空手。</p>
+</main>
+<script>
+const frames=[
+ {file:"01-idle-queue.svg",title:"待機：員工列隊步行",group:"待機補貨",desc:"同一位補貨員的八張手持飯糰 PNG 步態影格，在暖木店鋪前列隊呈現。"},
+ {file:"02-approach-shelf.svg",title:"靠近貨架：停步對準空位",group:"待機補貨",desc:"手持飯糰 PNG 店員步態停在展示架前，對準第二層空位。"},
+ {file:"03-place-riceball.svg",title:"手動上架：飯糰放入空格",group:"待機補貨",desc:"使用指定的手持飯糰 PNG 姿勢靠近第二層空位，飯糰仍清楚可見。"},
+ {file:"04-continue-walking.svg",title:"放妥後：員工繼續向右",group:"待機補貨",desc:"展示架已補滿，空手員工沿隊伍向右離開，下一位手持飯糰的同事接續前來。"},
+ {file:"05-rack-full.svg",title:"展示架填滿：交接前停一拍",group:"滿架交替",desc:"三層木架整齊放滿三十顆無表情飯糰，員工退到兩側讓出視線。"},
+ {file:"06-full-rack-lowers.svg",title:"滿架整組下退",group:"滿架交替",desc:"空架留在展示窗內，滿載木架作為一個整體垂直下降；店面保持固定。"},
+ {file:"07-empty-rack-rises.svg",title:"空架上升、滿架退下",group:"滿架交替",desc:"新空架向上移入展示窗，原本滿載的同尺寸木架繼續向下退出。"},
+ {file:"08-restock-resumes.svg",title:"空架到位：上架循環恢復",group:"滿架交替",desc:"空架到位後，使用手持飯糰 PNG 姿勢呈現員工開始補貨，其他員工改用空手 PNG 步行影格。"},
+ {file:"09-roof-opens.svg",title:"抽獎：屋頂艙門開啟、飯糰向外噴發",group:"飯糰雨揭曉",desc:"大量無姓名飯糰由屋頂連續噴出，扇形雲團緊密交錯並飛越上緣消失；店鋪仍清楚可見。"},
+ {file:"10-rice-rain-fullscreen.svg",title:"飯糰雨：密集落下遮滿全畫面",group:"飯糰雨揭曉",desc:"噴發飯糰消失後，新一批從畫面上方進入，交錯落雨鋪滿螢幕四邊；不顯示候選姓名。"},
+ {file:"11-winners-settle.svg",title:"飯糰雨散去：得獎飯糰停在中央",group:"飯糰雨揭曉",desc:"飯糰雨離開後，只留下與得獎人數相同的幾顆飯糰。它們先穩定停住，仍不顯示姓名。"},
+ {file:"12-names-reveal.svg",title:"揭曉：姓名顯示在飯糰正中央",group:"飯糰雨揭曉",desc:"飯糰全部停穩後，得獎姓名才顯示在各自飯糰的中央米面；不另加漂浮姓名牌。"}
+];
+const nav=document.getElementById('frame-nav'),img=document.getElementById('frame-image'),title=document.getElementById('frame-title'),desc=document.getElementById('frame-desc'),label=document.getElementById('progress-label'),group=document.getElementById('progress-group'),open=document.getElementById('open-svg');let current=0;
+function fitFrame(){const stage=document.querySelector('.frame-stage');stage.style.setProperty('--frame-scale',Math.min(stage.clientWidth/1920,stage.clientHeight/1080))}
+function render(i,writeUrl=true){current=(i+frames.length)%frames.length;const f=frames[current];img.src=f.file;img.title=f.title+"。"+f.desc;title.textContent=String(current+1).padStart(2,'0')+" · "+f.title;desc.textContent=f.desc;label.textContent=String(current+1).padStart(2,'0')+" / "+String(frames.length).padStart(2,'0');group.textContent=f.group;open.href=f.file;for(const a of nav.children){const active=Number(a.dataset.index)===current;if(active)a.setAttribute('aria-current','step');else a.removeAttribute('aria-current')}if(writeUrl){const u=new URL(location.href);u.searchParams.set('frame',String(current+1).padStart(2,'0'));history.replaceState(null,'',u)}}
+frames.forEach((f,i)=>{const a=document.createElement('a');a.href='?frame='+String(i+1).padStart(2,'0');a.dataset.index=i;a.textContent=String(i+1).padStart(2,'0');a.title=f.title;a.addEventListener('click',e=>{e.preventDefault();render(i)});nav.append(a)});
+const initial=Number(new URLSearchParams(location.search).get('frame'))-1;render(Number.isInteger(initial)&&initial>=0&&initial<frames.length?initial:0,false);fitFrame();window.addEventListener('resize',fitFrame);document.getElementById('prev').addEventListener('click',()=>render(current-1));document.getElementById('next').addEventListener('click',()=>render(current+1));document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')render(current-1);if(e.key==='ArrowRight')render(current+1)});
+</script>
+</body>
+</html>
